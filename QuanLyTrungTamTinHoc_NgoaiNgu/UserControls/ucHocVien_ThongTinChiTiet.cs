@@ -41,7 +41,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.UserControls
                         picAvatar.Image = Properties.Resources.nu_avatar;
                     }
                 }
-                //Họ tên, mã số học viên
+                //Họ tên, mã số học viên 
+
                 txtHoTen.Text = hv.HoTenHV;
                 txtMaHV.Text =  hv.MaHV;
                 //Ngày sinh
