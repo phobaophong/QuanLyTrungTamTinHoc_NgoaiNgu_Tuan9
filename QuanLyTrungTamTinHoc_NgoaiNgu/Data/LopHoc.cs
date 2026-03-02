@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,18 +8,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Data
     public class LopHoc
     {
         public int ID { get; set; }
-        public string MaLop { get; set; } = null!;
-        public string TenLop { get; set; } = null!;
-        public DateTime? NgayBD { get; set; }
-        public DateTime? NgayKT { get; set; }
-        public bool TrangThai { get; set; }
+        public string TenLopHoc { get; set; }
+        public DateTime NgayBatDau { get; set; }
+        public DateTime NgayKetThuc { get; set; }
+        public bool TrangThai { get; set; } 
         public int KhoaHocID { get; set; }
 
         public virtual KhoaHoc KhoaHoc { get; set; } = null!;
-        public virtual ICollection<LichHoc> LichHocs { get; set; } = new List<LichHoc>();
-        public virtual ICollection<KetQua> KetQuas { get; set; } = new List<KetQua>();
-        public virtual ICollection<HocPhi> HocPhis { get; set; } = new List<HocPhi>();
-        public virtual ICollection<HocVien> HocViens { get; set; } = new List<HocVien>();
-
+        public virtual ObservableCollectionListSource<LichHoc> LichHoc { get; } = new();
+        public virtual ObservableCollectionListSource<KetQua> KetQua { get; } = new();
+        public virtual ObservableCollectionListSource<HocPhi> HocPhi { get; } = new();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,15 +8,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Data
     public class GiangVien
     {
         public int ID { get; set; }
-        public string MaGV { get; set; } = null!;
-        public string HoTenGV { get; set; } = null!;
+        public string HoVaTen { get; set; }
+        public DateTime NgaySinh { get; set; }
+        public string GioiTinh { get; set; }
         public string? Sdt { get; set; }
-        public string? EmailGV { get; set; }
-        public string? ChuyenMon {  get; set; }
-        public string? HinhAnhGV { get; set; }
+        public string? DiaChi { get; set; }
+        public string? Email { get; set; }
+        public string? HinhAnh { get; set; } 
+        public string ChuyenMon { get; set; }
         public int TaiKhoanID { get; set; }
-        public virtual TaiKhoan TaiKhoan { get; set; } = null!;
 
-        public virtual ICollection<LichHoc> LichHocs { get; set; } = new List<LichHoc>();
+        public virtual TaiKhoan TaiKhoan { get; set; } = null!;
+        public virtual ObservableCollectionListSource<LichHoc> LichHoc { get; } = new();
     }
 }
