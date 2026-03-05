@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using QuanLyTrungTamTinHoc_NgoaiNgu.UserControls.NhanViens;
 
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
@@ -13,6 +14,28 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public frmNhanVien()
         {
             InitializeComponent();
+        }
+
+        private void frmNhanVien_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addUserControls(UserControl uc)
+        {
+            pnlCha.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            pnlCha.Controls.Add(uc);
+            uc.BringToFront();
+        }
+        private void btnQuanLyKhoaHoc_Click(object sender, EventArgs e)
+        {
+            addUserControls(new ucQuanLyKhoaHoc());
+        }
+
+        private void btnQuanLyLopHoc_Click(object sender, EventArgs e)
+        {
+            addUserControls(new ucQuanLyLopHoc());
         }
     }
 }
