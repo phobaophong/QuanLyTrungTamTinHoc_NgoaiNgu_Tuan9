@@ -21,7 +21,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         }
 
-        private void addUserControls(UserControl uc)
+        public void ShowUserControls(UserControl uc)
         {
             pnlCha.Controls.Clear();
             uc.Dock = DockStyle.Fill;
@@ -30,12 +30,12 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
         private void btnQuanLyKhoaHoc_Click(object sender, EventArgs e)
         {
-            addUserControls(new ucQuanLyKhoaHoc());
+            ShowUserControls(new ucQuanLyKhoaHoc());
         }
 
         private void btnQuanLyLopHoc_Click(object sender, EventArgs e)
         {
-            addUserControls(new ucQuanLyLopHoc());
+            ShowUserControls(new ucQuanLyLopHoc());
         }
     }
 }

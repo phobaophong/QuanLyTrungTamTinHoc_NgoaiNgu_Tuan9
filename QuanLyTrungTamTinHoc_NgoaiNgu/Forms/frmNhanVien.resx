@@ -117,4 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="hopePictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAS
+        cQAAEnEB89x6jgAAAGNJREFUWEftkiEKAEEQw+a3qw7u/2bPxLW2x4gG4goxnVJW8T7n/iE5xY0TklPc
+        OCE5xY0TkitlIe6xCckpbpyQnOLGCckpbpyQXCkLcY9NSE5x44TkFDdOSE5x44TkStnAzAe2M8HHI7dR
+        awAAAABJRU5ErkJggg==
+</value>
+  </data>
 </root>
