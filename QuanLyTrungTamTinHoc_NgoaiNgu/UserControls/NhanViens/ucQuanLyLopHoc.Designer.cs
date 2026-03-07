@@ -30,6 +30,9 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
+            button1 = new Button();
+            btnThoiKhoaBieu = new Button();
+            btnDanhSachHocVien = new Button();
             btnXuat = new Button();
             btnHienThiTatCa = new Button();
             cboTenKhoaHoc = new ComboBox();
@@ -54,6 +57,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(btnThoiKhoaBieu);
+            groupBox1.Controls.Add(btnDanhSachHocVien);
             groupBox1.Controls.Add(btnXuat);
             groupBox1.Controls.Add(btnHienThiTatCa);
             groupBox1.Controls.Add(cboTenKhoaHoc);
@@ -61,15 +67,49 @@
             groupBox1.Dock = DockStyle.Top;
             groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(820, 77);
+            groupBox1.Size = new Size(825, 124);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Danh sách lớp thuộc khóa";
             // 
+            // button1
+            // 
+            button1.BackColor = Color.White;
+            button1.Location = new Point(678, 65);
+            button1.Name = "button1";
+            button1.Size = new Size(129, 39);
+            button1.TabIndex = 21;
+            button1.Text = "Trang chủ";
+            button1.UseVisualStyleBackColor = false;
+            // 
+            // btnThoiKhoaBieu
+            // 
+            btnThoiKhoaBieu.BackColor = Color.White;
+            btnThoiKhoaBieu.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnThoiKhoaBieu.Location = new Point(510, 65);
+            btnThoiKhoaBieu.Name = "btnThoiKhoaBieu";
+            btnThoiKhoaBieu.Size = new Size(129, 39);
+            btnThoiKhoaBieu.TabIndex = 20;
+            btnThoiKhoaBieu.Text = "Thời khóa biểu";
+            btnThoiKhoaBieu.UseVisualStyleBackColor = false;
+            // 
+            // btnDanhSachHocVien
+            // 
+            btnDanhSachHocVien.BackColor = Color.White;
+            btnDanhSachHocVien.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDanhSachHocVien.ForeColor = Color.Black;
+            btnDanhSachHocVien.Location = new Point(342, 65);
+            btnDanhSachHocVien.Name = "btnDanhSachHocVien";
+            btnDanhSachHocVien.Size = new Size(129, 39);
+            btnDanhSachHocVien.TabIndex = 16;
+            btnDanhSachHocVien.Text = "Danh sách học viên";
+            btnDanhSachHocVien.UseVisualStyleBackColor = false;
+            btnDanhSachHocVien.Click += btnDanhSachHocVien_Click;
+            // 
             // btnXuat
             // 
             btnXuat.BackColor = Color.White;
-            btnXuat.Location = new Point(681, 20);
+            btnXuat.Location = new Point(678, 20);
             btnXuat.Name = "btnXuat";
             btnXuat.Size = new Size(129, 39);
             btnXuat.TabIndex = 19;
@@ -116,6 +156,7 @@
             btnXoa.TabIndex = 12;
             btnXoa.Text = "Xóa Lớp";
             btnXoa.UseVisualStyleBackColor = false;
+            btnXoa.Click += btnXoa_Click;
             // 
             // btnHuyBo
             // 
@@ -141,6 +182,7 @@
             // btnSua
             // 
             btnSua.BackColor = Color.White;
+            btnSua.ForeColor = Color.Black;
             btnSua.Location = new Point(342, 26);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(129, 39);
@@ -164,9 +206,9 @@
             // 
             groupBox2.Controls.Add(dataGridView);
             groupBox2.Dock = DockStyle.Top;
-            groupBox2.Location = new Point(0, 77);
+            groupBox2.Location = new Point(0, 124);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(820, 467);
+            groupBox2.Size = new Size(825, 487);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             // 
@@ -185,10 +227,11 @@
             dataGridView.Name = "dataGridView";
             dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidth = 51;
-            dataGridView.Size = new Size(814, 441);
+            dataGridView.Size = new Size(819, 461);
             dataGridView.TabIndex = 0;
             dataGridView.CellContentClick += dataGridView_CellContentClick;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
+            dataGridView.SelectionChanged += dataGridView_SelectionChanged;
             // 
             // ID
             // 
@@ -233,9 +276,9 @@
             groupBox3.Controls.Add(btnHuyBo);
             groupBox3.Controls.Add(btnXoa);
             groupBox3.Dock = DockStyle.Fill;
-            groupBox3.Location = new Point(0, 544);
+            groupBox3.Location = new Point(0, 611);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(820, 105);
+            groupBox3.Size = new Size(825, 89);
             groupBox3.TabIndex = 2;
             groupBox3.TabStop = false;
             // 
@@ -243,11 +286,12 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "ucQuanLyLopHoc";
-            Size = new Size(820, 649);
+            Size = new Size(825, 700);
             Load += ucQuanLyLopHoc_Load;
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
@@ -275,5 +319,8 @@
         private DataGridViewTextBoxColumn TenLopHoc;
         private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewLinkColumn ChiTiet;
+        private Button btnThoiKhoaBieu;
+        private Button btnDanhSachHocVien;
+        private Button button1;
     }
 }

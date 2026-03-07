@@ -11,15 +11,22 @@ using System.Windows.Forms;
 
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.UserControls.NhanViens
 {
-    public partial class ucQuanLyLopHoc_ThemLop : UserControl
+    public partial class ucQuanLyLopHoc_ChiTiet : UserControl
     {
         int id;
         bool trangthai = true;
         QuanLyTrungTamContext context = new QuanLyTrungTamContext();
-        public ucQuanLyLopHoc_ThemLop(int idQuanLy = 0)
+        public ucQuanLyLopHoc_ChiTiet(int idQuanLy = 0)
         {
             InitializeComponent();
             id = idQuanLy;
+        }
+        private void HienThiDanhSachHocVien()
+        {
+            pnlDanhSachHocVien.Controls.Clear();
+            ucQuanLyLopHoc_DanhSachHocVien ucDS = new ucQuanLyLopHoc_DanhSachHocVien(this.id);
+            ucDS.Dock = DockStyle.Fill;
+            pnlDanhSachHocVien.Controls.Add(ucDS);
         }
         private void BatTatChucNang(bool giaTri)
         {
@@ -34,6 +41,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.UserControls.NhanViens
 
             btnThem.Enabled = !giaTri;
             btnSua.Enabled = !giaTri;
+            btnDanhSachHocVien.Enabled = !giaTri;
         }
         private void LayKhoaHocVaoComboBox()
         {
@@ -67,6 +75,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.UserControls.NhanViens
             {
                 LoadData();
                 BatTatChucNang(true);
+                btnDanhSachHocVien.Enabled = true;
                 trangthai = false;
             }
         }
@@ -178,6 +187,16 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.UserControls.NhanViens
             {
                 ckbDangMo.Checked = false;
             }
+        }
+
+        private void dtpNgayKetThuc_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDanhSachHocVien_Click(object sender, EventArgs e)
+        {
+            HienThiDanhSachHocVien();
         }
     }
 }

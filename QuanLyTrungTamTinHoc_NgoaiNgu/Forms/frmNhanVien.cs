@@ -37,5 +37,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             ShowUserControls(new ucQuanLyLopHoc());
         }
+
+        private void btnDangXuat_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

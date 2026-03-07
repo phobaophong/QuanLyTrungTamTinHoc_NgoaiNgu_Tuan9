@@ -42,6 +42,8 @@
             panel4 = new Panel();
             button4 = new Button();
             pnlCha = new Panel();
+            panel5 = new Panel();
+            btnDangXuat = new Button();
             flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)hopePictureBox1).BeginInit();
             flowLayoutPanel2.SuspendLayout();
@@ -49,6 +51,7 @@
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // nightControlBox1
@@ -65,7 +68,7 @@
             nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
             nightControlBox1.EnableMinimizeButton = true;
             nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(981, 0);
+            nightControlBox1.Location = new Point(967, 0);
             nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
             nightControlBox1.MaximizeHoverForeColor = Color.White;
             nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
@@ -81,7 +84,7 @@
             flowLayoutPanel1.Dock = DockStyle.Top;
             flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1102, 44);
+            flowLayoutPanel1.Size = new Size(1088, 44);
             flowLayoutPanel1.TabIndex = 1;
             // 
             // hopePictureBox1
@@ -105,11 +108,12 @@
             flowLayoutPanel2.Controls.Add(panel2);
             flowLayoutPanel2.Controls.Add(panel3);
             flowLayoutPanel2.Controls.Add(panel4);
+            flowLayoutPanel2.Controls.Add(panel5);
             flowLayoutPanel2.Dock = DockStyle.Left;
             flowLayoutPanel2.Location = new Point(0, 44);
             flowLayoutPanel2.Margin = new Padding(0);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(262, 722);
+            flowLayoutPanel2.Size = new Size(262, 700);
             flowLayoutPanel2.TabIndex = 2;
             // 
             // panel1
@@ -172,7 +176,7 @@
             button3.Name = "button3";
             button3.Size = new Size(262, 72);
             button3.TabIndex = 3;
-            button3.Text = "button3";
+            button3.Text = "Quản Lý Giảng Viên";
             button3.UseVisualStyleBackColor = false;
             // 
             // panel4
@@ -192,22 +196,46 @@
             button4.Name = "button4";
             button4.Size = new Size(262, 72);
             button4.TabIndex = 3;
-            button4.Text = "button4";
+            button4.Text = "Quản Lý Học Viên";
             button4.UseVisualStyleBackColor = false;
             // 
             // pnlCha
             // 
+            pnlCha.BackgroundImage = (Image)resources.GetObject("pnlCha.BackgroundImage");
+            pnlCha.BackgroundImageLayout = ImageLayout.Stretch;
             pnlCha.Dock = DockStyle.Fill;
             pnlCha.Location = new Point(262, 44);
             pnlCha.Name = "pnlCha";
-            pnlCha.Size = new Size(840, 722);
+            pnlCha.Size = new Size(826, 700);
             pnlCha.TabIndex = 3;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(btnDangXuat);
+            panel5.Location = new Point(0, 288);
+            panel5.Margin = new Padding(0);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(262, 72);
+            panel5.TabIndex = 5;
+            // 
+            // btnDangXuat
+            // 
+            btnDangXuat.BackColor = Color.Brown;
+            btnDangXuat.ForeColor = Color.Black;
+            btnDangXuat.Location = new Point(0, 0);
+            btnDangXuat.Margin = new Padding(0);
+            btnDangXuat.Name = "btnDangXuat";
+            btnDangXuat.Size = new Size(262, 72);
+            btnDangXuat.TabIndex = 3;
+            btnDangXuat.Text = "Đăng Xuất";
+            btnDangXuat.UseVisualStyleBackColor = false;
+            btnDangXuat.Click += btnDangXuat_Click;
             // 
             // frmNhanVien
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1102, 766);
+            ClientSize = new Size(1088, 744);
             Controls.Add(pnlCha);
             Controls.Add(flowLayoutPanel2);
             Controls.Add(flowLayoutPanel1);
@@ -225,6 +253,7 @@
             panel2.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
+            panel5.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -243,5 +272,7 @@
         private Button button4;
         private Panel pnlCha;
         private ReaLTaiizor.Controls.HopePictureBox hopePictureBox1;
+        private Panel panel5;
+        private Button btnDangXuat;
     }
 }

@@ -50,10 +50,13 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     int quyen = tk.QuyenHan;
                     if (quyen == 1)
                     {
-                        frmNhanVien f = new frmNhanVien();
-                        this.Hide();
-                        f.ShowDialog();
+                        using (frmNhanVien f = new frmNhanVien())
+                        {
+                            f.ShowDialog();
+                        }
+                        Loadfrm(); 
                         this.Show();
+                        txtTenDangNhap.Focus();
                     }
                     else if (quyen == 2)
                     {
@@ -74,9 +77,20 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Lỗi");
             }
         }
+        private void Loadfrm()
+        {
+            txtTenDangNhap.Clear();
+            txtMatKhau.Clear();
+        }
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            
+            Loadfrm();
+            this.AcceptButton = btnLogin;
+        }
+
+        private void frmLogin_Shown(object sender, EventArgs e)
+        {
+            txtTenDangNhap.Focus();
         }
     }
 }
