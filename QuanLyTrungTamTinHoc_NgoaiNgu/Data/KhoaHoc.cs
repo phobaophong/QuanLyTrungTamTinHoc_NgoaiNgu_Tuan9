@@ -13,5 +13,13 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Data
         public int ThoiLuong { get; set; }
 
         public virtual ObservableCollectionListSource<LopHoc> LopHoc { get; } = new();
+
+        public int SoLopDangMo
+        {
+            get
+            {
+                return LopHoc.Count(x => x.TrangThai);
+            }
+        }
     }
 }

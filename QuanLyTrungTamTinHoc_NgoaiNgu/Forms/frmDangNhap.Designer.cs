@@ -1,6 +1,6 @@
 ﻿namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
-    partial class frmLogin
+    partial class frmDangNhap
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDangNhap));
             nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
             panel1 = new Panel();
             pictureBox1 = new PictureBox();
