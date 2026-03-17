@@ -29,6 +29,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             txtHocPhi.Enabled = giaTri;
             txtThoiLuong.Enabled = giaTri;
 
+
             btnThem.Enabled = !giaTri;
             btnSua.Enabled = !giaTri;
             btnXoa.Enabled = !giaTri;
@@ -137,5 +138,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             frmQuanLyKhoaHoc_Load(sender, e);
         }
+
+       
     }
 }

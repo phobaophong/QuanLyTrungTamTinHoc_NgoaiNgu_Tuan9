@@ -1,6 +1,6 @@
 ﻿namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
-    partial class frmQuanLyKhoaHoc
+    partial class frmQuanLyLopHoc
     {
         /// <summary>
         /// Required designer variable.
@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyKhoaHoc));
-            groupBox1 = new GroupBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyLopHoc));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             pictureBox1 = new PictureBox();
             btnXuatExcel = new Button();
             btnNhapExcel = new Button();
@@ -39,59 +40,38 @@
             btnLuu = new Button();
             btnSua = new Button();
             btnThem = new Button();
-            txtHocPhi = new TextBox();
-            txtThoiLuong = new TextBox();
-            txtTenKhoaHoc = new TextBox();
+            groupBox1 = new GroupBox();
+            rdoDaDong = new RadioButton();
+            rdoDangMo = new RadioButton();
+            dtpNgayKetThuc = new DateTimePicker();
+            dtpNgayBatDau = new DateTimePicker();
+            btnTimKiem = new Button();
+            label4 = new Label();
+            txtTenLopHoc = new TextBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             groupBox2 = new GroupBox();
             dataGridView = new DataGridView();
             colID = new DataGridViewTextBoxColumn();
-            TenKhoaHoc = new DataGridViewTextBoxColumn();
-            HocPhi = new DataGridViewTextBoxColumn();
-            ThoiLuong = new DataGridViewTextBoxColumn();
-            SoLopDangMo = new DataGridViewTextBoxColumn();
-            groupBox1.SuspendLayout();
+            TenLopHoc = new DataGridViewTextBoxColumn();
+            NgayBatDau = new DataGridViewTextBoxColumn();
+            NgayKetThuc = new DataGridViewTextBoxColumn();
+            TrangThai = new DataGridViewTextBoxColumn();
+            SiSo = new DataGridViewTextBoxColumn();
+            KhoaHocID = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            groupBox1.BackColor = Color.White;
-            groupBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            groupBox1.Controls.Add(pictureBox1);
-            groupBox1.Controls.Add(btnXuatExcel);
-            groupBox1.Controls.Add(btnNhapExcel);
-            groupBox1.Controls.Add(btnThoat);
-            groupBox1.Controls.Add(btnXoa);
-            groupBox1.Controls.Add(btnHuyBo);
-            groupBox1.Controls.Add(btnLuu);
-            groupBox1.Controls.Add(btnSua);
-            groupBox1.Controls.Add(btnThem);
-            groupBox1.Controls.Add(txtHocPhi);
-            groupBox1.Controls.Add(txtThoiLuong);
-            groupBox1.Controls.Add(txtTenKhoaHoc);
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Dock = DockStyle.Top;
-            groupBox1.Font = new Font("Segoe UI", 10.2F);
-            groupBox1.Location = new Point(0, 0);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1257, 230);
-            groupBox1.TabIndex = 0;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Thông tin khóa học";
             // 
             // pictureBox1
             // 
             pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Location = new Point(975, 29);
+            pictureBox1.Location = new Point(2014, 29);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(253, 165);
             pictureBox1.TabIndex = 25;
@@ -107,6 +87,7 @@
             btnXuatExcel.TabIndex = 24;
             btnXuatExcel.Text = "Xuất Excel...";
             btnXuatExcel.UseVisualStyleBackColor = false;
+            btnXuatExcel.Click += btnXuatExcel_Click;
             // 
             // btnNhapExcel
             // 
@@ -118,6 +99,7 @@
             btnNhapExcel.TabIndex = 23;
             btnNhapExcel.Text = "Nhập Excel...";
             btnNhapExcel.UseVisualStyleBackColor = false;
+            btnNhapExcel.Click += btnNhapExcel_Click;
             // 
             // btnThoat
             // 
@@ -129,6 +111,7 @@
             btnThoat.TabIndex = 22;
             btnThoat.Text = "Thoát";
             btnThoat.UseVisualStyleBackColor = false;
+            btnThoat.Click += btnThoat_Click;
             // 
             // btnXoa
             // 
@@ -157,7 +140,7 @@
             // 
             // btnLuu
             // 
-            btnLuu.BackColor = Color.DodgerBlue;
+            btnLuu.BackColor = Color.FromArgb(0, 192, 0);
             btnLuu.Font = new Font("Segoe UI", 10.2F);
             btnLuu.ForeColor = Color.Black;
             btnLuu.Location = new Point(659, 41);
@@ -189,33 +172,107 @@
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(129, 39);
             btnThem.TabIndex = 13;
-            btnThem.Text = "Thêm";
+            btnThem.Text = "Thêm Lớp";
             btnThem.UseVisualStyleBackColor = false;
             btnThem.Click += btnThem_Click;
             // 
-            // txtHocPhi
+            // groupBox1
             // 
-            txtHocPhi.Font = new Font("Segoe UI", 10.2F);
-            txtHocPhi.Location = new Point(160, 95);
-            txtHocPhi.Name = "txtHocPhi";
-            txtHocPhi.Size = new Size(321, 30);
-            txtHocPhi.TabIndex = 17;
+            groupBox1.BackColor = Color.White;
+            groupBox1.BackgroundImageLayout = ImageLayout.Zoom;
+            groupBox1.Controls.Add(rdoDaDong);
+            groupBox1.Controls.Add(rdoDangMo);
+            groupBox1.Controls.Add(dtpNgayKetThuc);
+            groupBox1.Controls.Add(dtpNgayBatDau);
+            groupBox1.Controls.Add(btnTimKiem);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(pictureBox1);
+            groupBox1.Controls.Add(btnXuatExcel);
+            groupBox1.Controls.Add(btnNhapExcel);
+            groupBox1.Controls.Add(btnThoat);
+            groupBox1.Controls.Add(btnXoa);
+            groupBox1.Controls.Add(btnHuyBo);
+            groupBox1.Controls.Add(btnLuu);
+            groupBox1.Controls.Add(btnSua);
+            groupBox1.Controls.Add(btnThem);
+            groupBox1.Controls.Add(txtTenLopHoc);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Dock = DockStyle.Top;
+            groupBox1.Font = new Font("Segoe UI", 10.2F);
+            groupBox1.Location = new Point(0, 0);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(1239, 261);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Thông tin lớp học";
             // 
-            // txtThoiLuong
+            // rdoDaDong
             // 
-            txtThoiLuong.Font = new Font("Segoe UI", 10.2F);
-            txtThoiLuong.Location = new Point(160, 144);
-            txtThoiLuong.Name = "txtThoiLuong";
-            txtThoiLuong.Size = new Size(321, 30);
-            txtThoiLuong.TabIndex = 16;
+            rdoDaDong.AutoSize = true;
+            rdoDaDong.Location = new Point(310, 196);
+            rdoDaDong.Name = "rdoDaDong";
+            rdoDaDong.Size = new Size(97, 27);
+            rdoDaDong.TabIndex = 34;
+            rdoDaDong.TabStop = true;
+            rdoDaDong.Text = "Đã đóng";
+            rdoDaDong.UseVisualStyleBackColor = true;
             // 
-            // txtTenKhoaHoc
+            // rdoDangMo
             // 
-            txtTenKhoaHoc.Font = new Font("Segoe UI", 10.2F);
-            txtTenKhoaHoc.Location = new Point(160, 46);
-            txtTenKhoaHoc.Name = "txtTenKhoaHoc";
-            txtTenKhoaHoc.Size = new Size(321, 30);
-            txtTenKhoaHoc.TabIndex = 15;
+            rdoDangMo.AutoSize = true;
+            rdoDangMo.Location = new Point(178, 196);
+            rdoDangMo.Name = "rdoDangMo";
+            rdoDangMo.Size = new Size(102, 27);
+            rdoDangMo.TabIndex = 33;
+            rdoDangMo.TabStop = true;
+            rdoDangMo.Text = "Đang mở";
+            rdoDangMo.UseVisualStyleBackColor = true;
+            // 
+            // dtpNgayKetThuc
+            // 
+            dtpNgayKetThuc.Location = new Point(178, 141);
+            dtpNgayKetThuc.Name = "dtpNgayKetThuc";
+            dtpNgayKetThuc.Size = new Size(303, 30);
+            dtpNgayKetThuc.TabIndex = 32;
+            // 
+            // dtpNgayBatDau
+            // 
+            dtpNgayBatDau.Location = new Point(178, 92);
+            dtpNgayBatDau.Name = "dtpNgayBatDau";
+            dtpNgayBatDau.Size = new Size(303, 30);
+            dtpNgayBatDau.TabIndex = 31;
+            // 
+            // btnTimKiem
+            // 
+            btnTimKiem.BackColor = Color.DodgerBlue;
+            btnTimKiem.Font = new Font("Segoe UI", 10.2F);
+            btnTimKiem.Location = new Point(804, 139);
+            btnTimKiem.Name = "btnTimKiem";
+            btnTimKiem.Size = new Size(129, 39);
+            btnTimKiem.TabIndex = 30;
+            btnTimKiem.Text = "Tìm kiếm ";
+            btnTimKiem.UseVisualStyleBackColor = false;
+            btnTimKiem.Click += btnTimKiem_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10.2F);
+            label4.Location = new Point(12, 196);
+            label4.Name = "label4";
+            label4.Size = new Size(113, 23);
+            label4.TabIndex = 27;
+            label4.Text = "Trạng thái (*):";
+            // 
+            // txtTenLopHoc
+            // 
+            txtTenLopHoc.Font = new Font("Segoe UI", 10.2F);
+            txtTenLopHoc.Location = new Point(178, 46);
+            txtTenLopHoc.Name = "txtTenLopHoc";
+            txtTenLopHoc.Size = new Size(303, 30);
+            txtTenLopHoc.TabIndex = 15;
             // 
             // label3
             // 
@@ -223,9 +280,9 @@
             label3.Font = new Font("Segoe UI", 10.2F);
             label3.Location = new Point(12, 147);
             label3.Name = "label3";
-            label3.Size = new Size(118, 23);
+            label3.Size = new Size(143, 23);
             label3.TabIndex = 14;
-            label3.Text = "Thời lượng (*):";
+            label3.Text = "Ngày kết thúc (*):";
             // 
             // label2
             // 
@@ -233,9 +290,9 @@
             label2.Font = new Font("Segoe UI", 10.2F);
             label2.Location = new Point(12, 98);
             label2.Name = "label2";
-            label2.Size = new Size(95, 23);
+            label2.Size = new Size(160, 23);
             label2.TabIndex = 12;
-            label2.Text = "Học phí (*):";
+            label2.Text = "Ngày khai giảng (*):";
             // 
             // label1
             // 
@@ -243,40 +300,41 @@
             label1.Font = new Font("Segoe UI", 10.2F);
             label1.Location = new Point(12, 49);
             label1.Name = "label1";
-            label1.Size = new Size(142, 23);
+            label1.Size = new Size(91, 23);
             label1.TabIndex = 11;
-            label1.Text = "Tên khóa học (*): ";
+            label1.Text = "Tên lớp (*):";
             // 
             // groupBox2
             // 
             groupBox2.BackColor = Color.White;
             groupBox2.Controls.Add(dataGridView);
             groupBox2.Dock = DockStyle.Fill;
-            groupBox2.Font = new Font("Segoe UI", 10.2F);
-            groupBox2.Location = new Point(0, 230);
+            groupBox2.Location = new Point(0, 261);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(1257, 522);
-            groupBox2.TabIndex = 1;
+            groupBox2.Size = new Size(1239, 444);
+            groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
-            groupBox2.Text = "Danh sách các khóa học hiện tại";
+            groupBox2.Text = "Danh sách lớp học";
             // 
             // dataGridView
             // 
             dataGridView.AllowUserToAddRows = false;
             dataGridView.AllowUserToDeleteRows = false;
+            dataGridView.AllowUserToOrderColumns = true;
             dataGridView.AllowUserToResizeColumns = false;
             dataGridView.AllowUserToResizeRows = false;
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.Columns.AddRange(new DataGridViewColumn[] { colID, TenKhoaHoc, HocPhi, ThoiLuong, SoLopDangMo });
+            dataGridView.Columns.AddRange(new DataGridViewColumn[] { colID, TenLopHoc, NgayBatDau, NgayKetThuc, TrangThai, SiSo, KhoaHocID });
             dataGridView.Dock = DockStyle.Fill;
-            dataGridView.Location = new Point(3, 26);
+            dataGridView.Location = new Point(3, 23);
             dataGridView.Name = "dataGridView";
             dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidth = 51;
-            dataGridView.Size = new Size(1251, 493);
+            dataGridView.Size = new Size(1233, 418);
             dataGridView.TabIndex = 0;
-
+            dataGridView.CellFormatting += dataGridView_CellFormatting;
+            dataGridView.SelectionChanged += dataGridView_SelectionChanged;
             // 
             // colID
             // 
@@ -286,52 +344,67 @@
             colID.MinimumWidth = 6;
             colID.Name = "colID";
             // 
-            // TenKhoaHoc
+            // TenLopHoc
             // 
-            TenKhoaHoc.DataPropertyName = "TenKhoaHoc";
-            TenKhoaHoc.FillWeight = 150F;
-            TenKhoaHoc.HeaderText = "Tên khóa học";
-            TenKhoaHoc.MinimumWidth = 6;
-            TenKhoaHoc.Name = "TenKhoaHoc";
+            TenLopHoc.DataPropertyName = "TenLopHoc";
+            TenLopHoc.FillWeight = 120F;
+            TenLopHoc.HeaderText = "Tên lớp";
+            TenLopHoc.MinimumWidth = 6;
+            TenLopHoc.Name = "TenLopHoc";
             // 
-            // HocPhi
+            // NgayBatDau
             // 
-            HocPhi.DataPropertyName = "HocPhi";
-            HocPhi.HeaderText = "Học phí";
-            HocPhi.MinimumWidth = 6;
-            HocPhi.Name = "HocPhi";
+            NgayBatDau.DataPropertyName = "NgayBatDau";
+            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
+            NgayBatDau.DefaultCellStyle = dataGridViewCellStyle1;
+            NgayBatDau.HeaderText = "Ngày khai giảng";
+            NgayBatDau.MinimumWidth = 6;
+            NgayBatDau.Name = "NgayBatDau";
             // 
-            // ThoiLuong
+            // NgayKetThuc
             // 
-            ThoiLuong.DataPropertyName = "ThoiLuong";
-            ThoiLuong.HeaderText = "Thời lượng";
-            ThoiLuong.MinimumWidth = 6;
-            ThoiLuong.Name = "ThoiLuong";
+            NgayKetThuc.DataPropertyName = "NgayKetThuc";
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            NgayKetThuc.DefaultCellStyle = dataGridViewCellStyle2;
+            NgayKetThuc.HeaderText = "Ngày kết thúc";
+            NgayKetThuc.MinimumWidth = 6;
+            NgayKetThuc.Name = "NgayKetThuc";
             // 
-            // SoLopDangMo
+            // TrangThai
             // 
-            SoLopDangMo.DataPropertyName = "SoLopDangMo";
-            SoLopDangMo.HeaderText = "Số lớp đang mở";
-            SoLopDangMo.MinimumWidth = 6;
-            SoLopDangMo.Name = "SoLopDangMo";
+            TrangThai.DataPropertyName = "TrangThai";
+            TrangThai.HeaderText = "Trạng thái";
+            TrangThai.MinimumWidth = 6;
+            TrangThai.Name = "TrangThai";
             // 
-            // frmQuanLyKhoaHoc
+            // SiSo
+            // 
+            SiSo.DataPropertyName = "SiSo";
+            SiSo.HeaderText = "Sĩ số";
+            SiSo.MinimumWidth = 6;
+            SiSo.Name = "SiSo";
+            // 
+            // KhoaHocID
+            // 
+            KhoaHocID.DataPropertyName = "KhoaHocID";
+            KhoaHocID.HeaderText = "Khóa học";
+            KhoaHocID.MinimumWidth = 6;
+            KhoaHocID.Name = "KhoaHocID";
+            // 
+            // frmQuanLyLopHoc
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1257, 752);
+            ClientSize = new Size(1239, 705);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "frmQuanLyKhoaHoc";
-            Text = "Quản lý khóa học";
-            WindowState = FormWindowState.Maximized;
-            Load += frmQuanLyKhoaHoc_Load;
+            Name = "frmQuanLyLopHoc";
+            Text = "frmQuanLyLopHoc";
+            Load += frmQuanLyLopHoc_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
@@ -339,28 +412,34 @@
 
         #endregion
 
-        private GroupBox groupBox1;
-        private GroupBox groupBox2;
+        private PictureBox pictureBox1;
+        private Button btnXuatExcel;
+        private Button btnNhapExcel;
         private Button btnThoat;
         private Button btnXoa;
         private Button btnHuyBo;
         private Button btnLuu;
         private Button btnSua;
         private Button btnThem;
-        private TextBox txtHocPhi;
-        private TextBox txtThoiLuong;
-        private TextBox txtTenKhoaHoc;
+        private GroupBox groupBox1;
+        private TextBox txtTenLopHoc;
         private Label label3;
         private Label label2;
         private Label label1;
-        private Button btnXuatExcel;
-        private Button btnNhapExcel;
+        private Label label4;
+        private GroupBox groupBox2;
         private DataGridView dataGridView;
+        private Button btnTimKiem;
+        private DateTimePicker dtpNgayKetThuc;
+        private DateTimePicker dtpNgayBatDau;
+        private RadioButton rdoDangMo;
+        private RadioButton rdoDaDong;
         private DataGridViewTextBoxColumn colID;
-        private DataGridViewTextBoxColumn TenKhoaHoc;
-        private DataGridViewTextBoxColumn HocPhi;
-        private DataGridViewTextBoxColumn ThoiLuong;
-        private DataGridViewTextBoxColumn SoLopDangMo;
-        private PictureBox pictureBox1;
+        private DataGridViewTextBoxColumn TenLopHoc;
+        private DataGridViewTextBoxColumn NgayBatDau;
+        private DataGridViewTextBoxColumn NgayKetThuc;
+        private DataGridViewTextBoxColumn TrangThai;
+        private DataGridViewTextBoxColumn SiSo;
+        private DataGridViewTextBoxColumn KhoaHocID;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             menuStrip1 = new MenuStrip();
             mnuHeThong = new ToolStripMenuItem();
             mnuDangNhap = new ToolStripMenuItem();
@@ -49,6 +50,7 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.BackColor = Color.White;
             menuStrip1.Font = new Font("Segoe UI", 10.2F);
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { mnuHeThong, mnuQuanLy, mnuXemTKB, mnuXemLichThi, mnuXemDiem, mnuHocPhi });
@@ -71,21 +73,21 @@
             // 
             mnuDangNhap.Font = new Font("Segoe UI", 10.2F);
             mnuDangNhap.Name = "mnuDangNhap";
-            mnuDangNhap.Size = new Size(224, 28);
+            mnuDangNhap.Size = new Size(198, 28);
             mnuDangNhap.Text = "Đăng nhập";
             // 
             // mnuDangXuat
             // 
             mnuDangXuat.Font = new Font("Segoe UI", 10.2F);
             mnuDangXuat.Name = "mnuDangXuat";
-            mnuDangXuat.Size = new Size(224, 28);
+            mnuDangXuat.Size = new Size(198, 28);
             mnuDangXuat.Text = "Đăng xuất";
             // 
             // mnuDoiMatKhau
             // 
             mnuDoiMatKhau.Font = new Font("Segoe UI", 10.2F);
             mnuDoiMatKhau.Name = "mnuDoiMatKhau";
-            mnuDoiMatKhau.Size = new Size(224, 28);
+            mnuDoiMatKhau.Size = new Size(198, 28);
             mnuDoiMatKhau.Text = "Đổi mật khẩu";
             // 
             // mnuThoat
@@ -93,7 +95,7 @@
             mnuThoat.Font = new Font("Segoe UI", 10.2F);
             mnuThoat.Name = "mnuThoat";
             mnuThoat.ShortcutKeys = Keys.Alt | Keys.F4;
-            mnuThoat.Size = new Size(224, 28);
+            mnuThoat.Size = new Size(198, 28);
             mnuThoat.Text = "Thoát";
             // 
             // mnuQuanLy
@@ -135,13 +137,13 @@
             // lịchHọcToolStripMenuItem
             // 
             lịchHọcToolStripMenuItem.Name = "lịchHọcToolStripMenuItem";
-            lịchHọcToolStripMenuItem.Size = new Size(224, 28);
+            lịchHọcToolStripMenuItem.Size = new Size(157, 28);
             lịchHọcToolStripMenuItem.Text = "Lịch học";
             // 
             // lịchDạyToolStripMenuItem
             // 
             lịchDạyToolStripMenuItem.Name = "lịchDạyToolStripMenuItem";
-            lịchDạyToolStripMenuItem.Size = new Size(224, 28);
+            lịchDạyToolStripMenuItem.Size = new Size(157, 28);
             lịchDạyToolStripMenuItem.Text = "Lịch dạy";
             // 
             // mnuXemLichThi
@@ -166,6 +168,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1184, 607);
             Controls.Add(menuStrip1);

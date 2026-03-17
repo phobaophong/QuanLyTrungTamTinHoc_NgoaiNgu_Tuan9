@@ -11,7 +11,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Data
         public string TenLopHoc { get; set; }
         public DateTime NgayBatDau { get; set; }
         public DateTime NgayKetThuc { get; set; }
-        public bool TrangThai { get; set; } 
+        public bool TrangThai { get; set; }
+        public int SiSo { get; set; }
         public int KhoaHocID { get; set; }
 
         public virtual KhoaHoc KhoaHoc { get; set; } = null!;
