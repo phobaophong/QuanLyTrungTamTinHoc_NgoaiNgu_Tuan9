@@ -12,7 +12,9 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
     public partial class frmMain : Form
     {
-        frmQuanLyKhoaHoc quanLyKhoaHoc = null; 
+        frmQuanLyKhoaHoc quanLyKhoaHoc = null;
+        frmQuanLyLopHoc quanLyLopHoc = null;
+        frmQuanLyHocVien quanLyHocVien = null;
         public frmMain()
         {
             InitializeComponent();
@@ -20,7 +22,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void mnuQuanLyKhoaHoc_Click(object sender, EventArgs e)
         {
-            if(quanLyKhoaHoc == null || quanLyKhoaHoc.IsDisposed)
+            if (quanLyKhoaHoc == null || quanLyKhoaHoc.IsDisposed)
             {
                 quanLyKhoaHoc = new frmQuanLyKhoaHoc();
                 quanLyKhoaHoc.MdiParent = this;
@@ -29,6 +31,32 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             }
             else
                 quanLyKhoaHoc.Activate();
+        }
+
+        private void mnuQuanLyLopHoc_Click(object sender, EventArgs e)
+        {
+            if (quanLyLopHoc == null || quanLyLopHoc.IsDisposed)
+            {
+                quanLyLopHoc = new frmQuanLyLopHoc();
+                quanLyLopHoc.MdiParent = this;
+                quanLyLopHoc.Dock = DockStyle.Fill;
+                quanLyLopHoc.Show();
+            }
+            else
+                quanLyLopHoc.Activate();
+        }
+
+        private void mnuQuanLySinhVien_Click(object sender, EventArgs e)
+        {
+            if (quanLyHocVien == null || quanLyHocVien.IsDisposed)
+            {
+                quanLyHocVien = new frmQuanLyHocVien();
+                quanLyHocVien.MdiParent = this;
+                quanLyHocVien.Dock = DockStyle.Fill;
+                quanLyHocVien.Show();
+            }
+            else
+                quanLyHocVien.Activate();
         }
     }
 }

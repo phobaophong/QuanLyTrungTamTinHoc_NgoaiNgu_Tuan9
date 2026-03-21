@@ -103,8 +103,8 @@
             mnuQuanLy.DropDownItems.AddRange(new ToolStripItem[] { mnuQuanLyKhoaHoc, mnuQuanLyLopHoc, mnuQuanLySinhVien });
             mnuQuanLy.Font = new Font("Segoe UI", 10.2F);
             mnuQuanLy.Name = "mnuQuanLy";
-            mnuQuanLy.Size = new Size(86, 27);
-            mnuQuanLy.Text = "Quản Lý";
+            mnuQuanLy.Size = new Size(83, 27);
+            mnuQuanLy.Text = "Quản lý";
             // 
             // mnuQuanLyKhoaHoc
             // 
@@ -120,12 +120,14 @@
             mnuQuanLyLopHoc.Name = "mnuQuanLyLopHoc";
             mnuQuanLyLopHoc.Size = new Size(228, 28);
             mnuQuanLyLopHoc.Text = "Quản lý lớp học";
+            mnuQuanLyLopHoc.Click += mnuQuanLyLopHoc_Click;
             // 
             // mnuQuanLySinhVien
             // 
             mnuQuanLySinhVien.Name = "mnuQuanLySinhVien";
             mnuQuanLySinhVien.Size = new Size(228, 28);
-            mnuQuanLySinhVien.Text = "Quản lý sinh viên";
+            mnuQuanLySinhVien.Text = "Quản lý học viên";
+            mnuQuanLySinhVien.Click += mnuQuanLySinhVien_Click;
             // 
             // mnuXemTKB
             // 

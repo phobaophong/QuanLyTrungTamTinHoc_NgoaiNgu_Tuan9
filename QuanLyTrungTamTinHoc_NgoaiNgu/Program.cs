@@ -13,7 +13,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new frmQuanLyLopHoc());
+            Application.Run(new frmMain());
 
         }
     }

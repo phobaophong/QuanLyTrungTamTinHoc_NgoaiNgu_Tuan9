@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyLopHoc));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             pictureBox1 = new PictureBox();
             btnXuatExcel = new Button();
             btnNhapExcel = new Button();
@@ -60,6 +60,7 @@
             TrangThai = new DataGridViewTextBoxColumn();
             SiSo = new DataGridViewTextBoxColumn();
             KhoaHocID = new DataGridViewTextBoxColumn();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -180,6 +181,7 @@
             // 
             groupBox1.BackColor = Color.White;
             groupBox1.BackgroundImageLayout = ImageLayout.Zoom;
+            groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(rdoDaDong);
             groupBox1.Controls.Add(rdoDangMo);
             groupBox1.Controls.Add(dtpNgayKetThuc);
@@ -355,8 +357,8 @@
             // NgayBatDau
             // 
             NgayBatDau.DataPropertyName = "NgayBatDau";
-            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
-            NgayBatDau.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
+            NgayBatDau.DefaultCellStyle = dataGridViewCellStyle3;
             NgayBatDau.HeaderText = "Ngày khai giảng";
             NgayBatDau.MinimumWidth = 6;
             NgayBatDau.Name = "NgayBatDau";
@@ -364,8 +366,8 @@
             // NgayKetThuc
             // 
             NgayKetThuc.DataPropertyName = "NgayKetThuc";
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            NgayKetThuc.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Format = "dd/MM/yyyy";
+            NgayKetThuc.DefaultCellStyle = dataGridViewCellStyle4;
             NgayKetThuc.HeaderText = "Ngày kết thúc";
             NgayKetThuc.MinimumWidth = 6;
             NgayKetThuc.Name = "NgayKetThuc";
@@ -390,6 +392,17 @@
             KhoaHocID.HeaderText = "Khóa học";
             KhoaHocID.MinimumWidth = 6;
             KhoaHocID.Name = "KhoaHocID";
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.DodgerBlue;
+            button1.Font = new Font("Segoe UI", 10.2F);
+            button1.Location = new Point(659, 188);
+            button1.Name = "button1";
+            button1.Size = new Size(129, 39);
+            button1.TabIndex = 35;
+            button1.Text = "Chi tiết";
+            button1.UseVisualStyleBackColor = false;
             // 
             // frmQuanLyLopHoc
             // 
@@ -441,5 +454,6 @@
         private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewTextBoxColumn SiSo;
         private DataGridViewTextBoxColumn KhoaHocID;
+        private Button button1;
     }
 }

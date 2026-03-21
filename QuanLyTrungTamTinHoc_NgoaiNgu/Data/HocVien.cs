@@ -8,13 +8,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Data
     public class HocVien
     {
         public int ID { get; set; }
+        public string MaSo { get; set; }
         public string HoVaTen { get; set; }
         public DateTime NgaySinh { get; set; }
-        public string GioiTinh { get; set; }
+        public bool GioiTinh { get; set; }
         public string? Sdt { get; set; }
         public string? DiaChi { get; set; }
         public string? Email { get; set; }
         public string? HinhAnh { get; set; } 
+        public int TrangThai { get; set; }
         public int TaiKhoanID { get; set; }
 
         public virtual TaiKhoan TaiKhoan { get; set; } = null!;
