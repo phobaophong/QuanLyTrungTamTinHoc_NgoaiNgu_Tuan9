@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             menuStrip1 = new MenuStrip();
             mnuHeThong = new ToolStripMenuItem();
             mnuDangNhap = new ToolStripMenuItem();
@@ -38,14 +37,21 @@
             mnuQuanLy = new ToolStripMenuItem();
             mnuQuanLyKhoaHoc = new ToolStripMenuItem();
             mnuQuanLyLopHoc = new ToolStripMenuItem();
-            mnuQuanLySinhVien = new ToolStripMenuItem();
+            mnuQuanLyHocVien = new ToolStripMenuItem();
+            mnuQuanLyNhanSu = new ToolStripMenuItem();
+            mnuQuanLyHocPhi = new ToolStripMenuItem();
+            mnuQuanLyDiemSo = new ToolStripMenuItem();
             mnuXemTKB = new ToolStripMenuItem();
             lịchHọcToolStripMenuItem = new ToolStripMenuItem();
-            lịchDạyToolStripMenuItem = new ToolStripMenuItem();
-            mnuXemLichThi = new ToolStripMenuItem();
-            mnuXemDiem = new ToolStripMenuItem();
             mnuHocPhi = new ToolStripMenuItem();
+            mnuTraCuuDiemThiThu = new ToolStripMenuItem();
+            mnuTraCuuTTCN = new ToolStripMenuItem();
+            statusStrip1 = new StatusStrip();
+            lblTrangThai = new ToolStripStatusLabel();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
+            lblLienKet = new ToolStripStatusLabel();
             menuStrip1.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -53,7 +59,7 @@
             menuStrip1.BackColor = Color.White;
             menuStrip1.Font = new Font("Segoe UI", 10.2F);
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { mnuHeThong, mnuQuanLy, mnuXemTKB, mnuXemLichThi, mnuXemDiem, mnuHocPhi });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { mnuHeThong, mnuQuanLy, mnuXemTKB, mnuHocPhi });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(7, 2, 0, 2);
@@ -82,6 +88,7 @@
             mnuDangXuat.Name = "mnuDangXuat";
             mnuDangXuat.Size = new Size(198, 28);
             mnuDangXuat.Text = "Đăng xuất";
+            mnuDangXuat.Click += mnuDangXuat_Click;
             // 
             // mnuDoiMatKhau
             // 
@@ -100,7 +107,7 @@
             // 
             // mnuQuanLy
             // 
-            mnuQuanLy.DropDownItems.AddRange(new ToolStripItem[] { mnuQuanLyKhoaHoc, mnuQuanLyLopHoc, mnuQuanLySinhVien });
+            mnuQuanLy.DropDownItems.AddRange(new ToolStripItem[] { mnuQuanLyKhoaHoc, mnuQuanLyLopHoc, mnuQuanLyHocVien, mnuQuanLyNhanSu, mnuQuanLyHocPhi, mnuQuanLyDiemSo });
             mnuQuanLy.Font = new Font("Segoe UI", 10.2F);
             mnuQuanLy.Name = "mnuQuanLy";
             mnuQuanLy.Size = new Size(83, 27);
@@ -122,57 +129,106 @@
             mnuQuanLyLopHoc.Text = "Quản lý lớp học";
             mnuQuanLyLopHoc.Click += mnuQuanLyLopHoc_Click;
             // 
-            // mnuQuanLySinhVien
+            // mnuQuanLyHocVien
             // 
-            mnuQuanLySinhVien.Name = "mnuQuanLySinhVien";
-            mnuQuanLySinhVien.Size = new Size(228, 28);
-            mnuQuanLySinhVien.Text = "Quản lý học viên";
-            mnuQuanLySinhVien.Click += mnuQuanLySinhVien_Click;
+            mnuQuanLyHocVien.Name = "mnuQuanLyHocVien";
+            mnuQuanLyHocVien.Size = new Size(228, 28);
+            mnuQuanLyHocVien.Text = "Quản lý học viên";
+            mnuQuanLyHocVien.Click += mnuQuanLySinhVien_Click;
+            // 
+            // mnuQuanLyNhanSu
+            // 
+            mnuQuanLyNhanSu.Name = "mnuQuanLyNhanSu";
+            mnuQuanLyNhanSu.Size = new Size(228, 28);
+            mnuQuanLyNhanSu.Text = "Quản lý nhân sự";
+            mnuQuanLyNhanSu.Click += quảnLýNhânSựToolStripMenuItem_Click;
+            // 
+            // mnuQuanLyHocPhi
+            // 
+            mnuQuanLyHocPhi.Name = "mnuQuanLyHocPhi";
+            mnuQuanLyHocPhi.Size = new Size(228, 28);
+            mnuQuanLyHocPhi.Text = "Quan lý học phí";
+            mnuQuanLyHocPhi.Click += mnuQuanLyHocPhi_Click;
+            // 
+            // mnuQuanLyDiemSo
+            // 
+            mnuQuanLyDiemSo.Name = "mnuQuanLyDiemSo";
+            mnuQuanLyDiemSo.Size = new Size(228, 28);
+            mnuQuanLyDiemSo.Text = "Quản lý điểm số";
+            mnuQuanLyDiemSo.Click += mnuQuanLyDiemSo_Click;
             // 
             // mnuXemTKB
             // 
-            mnuXemTKB.DropDownItems.AddRange(new ToolStripItem[] { lịchHọcToolStripMenuItem, lịchDạyToolStripMenuItem });
+            mnuXemTKB.DropDownItems.AddRange(new ToolStripItem[] { lịchHọcToolStripMenuItem });
             mnuXemTKB.Name = "mnuXemTKB";
-            mnuXemTKB.Size = new Size(92, 27);
-            mnuXemTKB.Text = "Xem TKB";
+            mnuXemTKB.Size = new Size(137, 27);
+            mnuXemTKB.Text = "Thời khóa biểu";
             // 
             // lịchHọcToolStripMenuItem
             // 
             lịchHọcToolStripMenuItem.Name = "lịchHọcToolStripMenuItem";
-            lịchHọcToolStripMenuItem.Size = new Size(157, 28);
-            lịchHọcToolStripMenuItem.Text = "Lịch học";
-            // 
-            // lịchDạyToolStripMenuItem
-            // 
-            lịchDạyToolStripMenuItem.Name = "lịchDạyToolStripMenuItem";
-            lịchDạyToolStripMenuItem.Size = new Size(157, 28);
-            lịchDạyToolStripMenuItem.Text = "Lịch dạy";
-            // 
-            // mnuXemLichThi
-            // 
-            mnuXemLichThi.Name = "mnuXemLichThi";
-            mnuXemLichThi.Size = new Size(114, 27);
-            mnuXemLichThi.Text = "Xem lịch thi";
-            // 
-            // mnuXemDiem
-            // 
-            mnuXemDiem.Name = "mnuXemDiem";
-            mnuXemDiem.Size = new Size(101, 27);
-            mnuXemDiem.Text = "Xem điểm";
+            lịchHọcToolStripMenuItem.Size = new Size(243, 28);
+            lịchHọcToolStripMenuItem.Text = "Xem thời khóa biểu";
+            lịchHọcToolStripMenuItem.Click += lịchHọcToolStripMenuItem_Click;
             // 
             // mnuHocPhi
             // 
+            mnuHocPhi.DropDownItems.AddRange(new ToolStripItem[] { mnuTraCuuDiemThiThu, mnuTraCuuTTCN });
             mnuHocPhi.Name = "mnuHocPhi";
-            mnuHocPhi.Size = new Size(83, 27);
-            mnuHocPhi.Text = "Học phí";
+            mnuHocPhi.Size = new Size(80, 27);
+            mnuHocPhi.Text = "Tra cứu";
+            // 
+            // mnuTraCuuDiemThiThu
+            // 
+            mnuTraCuuDiemThiThu.Name = "mnuTraCuuDiemThiThu";
+            mnuTraCuuDiemThiThu.Size = new Size(234, 28);
+            mnuTraCuuDiemThiThu.Text = "Điểm thi thử";
+            mnuTraCuuDiemThiThu.Click += mnuTraCuuDiemThiThu_Click;
+            // 
+            // mnuTraCuuTTCN
+            // 
+            mnuTraCuuTTCN.Name = "mnuTraCuuTTCN";
+            mnuTraCuuTTCN.Size = new Size(234, 28);
+            mnuTraCuuTTCN.Text = "Thông tin cá nhân";
+            mnuTraCuuTTCN.Click += mnuTraCuuTTCN_Click;
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.ImageScalingSize = new Size(20, 20);
+            statusStrip1.Items.AddRange(new ToolStripItem[] { lblTrangThai, toolStripStatusLabel1, lblLienKet });
+            statusStrip1.Location = new Point(0, 581);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1184, 26);
+            statusStrip1.TabIndex = 5;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // lblTrangThai
+            // 
+            lblTrangThai.Name = "lblTrangThai";
+            lblTrangThai.Size = new Size(125, 20);
+            lblTrangThai.Text = "Chưa đăng nhập. ";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(963, 20);
+            toolStripStatusLabel1.Spring = true;
+            // 
+            // lblLienKet
+            // 
+            lblLienKet.IsLink = true;
+            lblLienKet.Name = "lblLienKet";
+            lblLienKet.Size = new Size(81, 20);
+            lblLienKet.Text = "© 2026 FIT";
+            lblLienKet.Click += lblLienKet_Click;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1184, 607);
+            Controls.Add(statusStrip1);
             Controls.Add(menuStrip1);
             Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -182,8 +238,11 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Quản lý trung tâm tin học";
             WindowState = FormWindowState.Maximized;
+            Load += frmMain_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -199,12 +258,18 @@
         private ToolStripMenuItem mnuQuanLy;
         private ToolStripMenuItem mnuQuanLyKhoaHoc;
         private ToolStripMenuItem mnuQuanLyLopHoc;
-        private ToolStripMenuItem mnuQuanLySinhVien;
+        private ToolStripMenuItem mnuQuanLyHocVien;
         private ToolStripMenuItem mnuXemTKB;
         private ToolStripMenuItem lịchHọcToolStripMenuItem;
-        private ToolStripMenuItem lịchDạyToolStripMenuItem;
-        private ToolStripMenuItem mnuXemLichThi;
         private ToolStripMenuItem mnuHocPhi;
-        private ToolStripMenuItem mnuXemDiem;
+        private ToolStripMenuItem mnuQuanLyNhanSu;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel lblTrangThai;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripStatusLabel lblLienKet;
+        private ToolStripMenuItem mnuQuanLyHocPhi;
+        private ToolStripMenuItem mnuQuanLyDiemSo;
+        private ToolStripMenuItem mnuTraCuuDiemThiThu;
+        private ToolStripMenuItem mnuTraCuuTTCN;
     }
 }

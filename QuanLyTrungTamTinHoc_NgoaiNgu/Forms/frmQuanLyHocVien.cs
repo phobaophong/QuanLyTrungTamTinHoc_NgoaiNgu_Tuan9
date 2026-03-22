@@ -8,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using BC = BCrypt.Net.BCrypt;
+    
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
     public partial class frmQuanLyHocVien : Form
@@ -401,7 +402,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         // tạo tài khoản
                         TaiKhoan tk = new TaiKhoan();
                         tk.TenDN = txtMaSo.Text.Trim();
-                        tk.MatKhau = "1";
+                        tk.MatKhau = BC.HashPassword("1");
                         tk.TrangThai = true;
                         tk.QuyenHan = 3;
 
@@ -428,6 +429,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         HocPhi hp = new HocPhi();
                         hp.HocVienID = hv.ID;
                         hp.LopHocID = idLop;
+                        hp.NgayDong = DateTime.Now;
 
                         context.HocPhi.Add(hp);
                         context.SaveChanges();

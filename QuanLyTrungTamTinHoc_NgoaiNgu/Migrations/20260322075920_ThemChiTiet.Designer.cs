@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuanLyTrungTamTinHoc_NgoaiNgu.Data;
 
@@ -11,9 +12,11 @@ using QuanLyTrungTamTinHoc_NgoaiNgu.Data;
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.Migrations
 {
     [DbContext(typeof(QuanLyTrungTamContext))]
-    partial class QuanLyTrungTamContextModelSnapshot : ModelSnapshot
+    [Migration("20260322075920_ThemChiTiet")]
+    partial class ThemChiTiet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

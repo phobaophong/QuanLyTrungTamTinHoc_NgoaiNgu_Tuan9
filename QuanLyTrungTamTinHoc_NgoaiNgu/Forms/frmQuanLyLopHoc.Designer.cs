@@ -41,6 +41,7 @@
             btnSua = new Button();
             btnThem = new Button();
             groupBox1 = new GroupBox();
+            button1 = new Button();
             rdoDaDong = new RadioButton();
             rdoDangMo = new RadioButton();
             dtpNgayKetThuc = new DateTimePicker();
@@ -60,7 +61,6 @@
             TrangThai = new DataGridViewTextBoxColumn();
             SiSo = new DataGridViewTextBoxColumn();
             KhoaHocID = new DataGridViewTextBoxColumn();
-            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -210,6 +210,17 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin lớp học";
             // 
+            // button1
+            // 
+            button1.BackColor = Color.DodgerBlue;
+            button1.Font = new Font("Segoe UI", 10.2F);
+            button1.Location = new Point(659, 188);
+            button1.Name = "button1";
+            button1.Size = new Size(129, 39);
+            button1.TabIndex = 35;
+            button1.Text = "Chi tiết";
+            button1.UseVisualStyleBackColor = false;
+            // 
             // rdoDaDong
             // 
             rdoDaDong.AutoSize = true;
@@ -234,6 +245,8 @@
             // 
             // dtpNgayKetThuc
             // 
+            dtpNgayKetThuc.CustomFormat = "dd/MM/yyyy";
+            dtpNgayKetThuc.Format = DateTimePickerFormat.Custom;
             dtpNgayKetThuc.Location = new Point(178, 141);
             dtpNgayKetThuc.Name = "dtpNgayKetThuc";
             dtpNgayKetThuc.Size = new Size(303, 30);
@@ -241,6 +254,8 @@
             // 
             // dtpNgayBatDau
             // 
+            dtpNgayBatDau.CustomFormat = "dd/MM/yyyy";
+            dtpNgayBatDau.Format = DateTimePickerFormat.Custom;
             dtpNgayBatDau.Location = new Point(178, 92);
             dtpNgayBatDau.Name = "dtpNgayBatDau";
             dtpNgayBatDau.Size = new Size(303, 30);
@@ -392,17 +407,6 @@
             KhoaHocID.HeaderText = "Khóa học";
             KhoaHocID.MinimumWidth = 6;
             KhoaHocID.Name = "KhoaHocID";
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.DodgerBlue;
-            button1.Font = new Font("Segoe UI", 10.2F);
-            button1.Location = new Point(659, 188);
-            button1.Name = "button1";
-            button1.Size = new Size(129, 39);
-            button1.TabIndex = 35;
-            button1.Text = "Chi tiết";
-            button1.UseVisualStyleBackColor = false;
             // 
             // frmQuanLyLopHoc
             // 

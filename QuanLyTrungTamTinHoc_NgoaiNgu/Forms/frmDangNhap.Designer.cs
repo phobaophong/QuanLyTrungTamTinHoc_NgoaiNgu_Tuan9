@@ -184,7 +184,7 @@
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
-            // frmLogin
+            // frmDangNhap
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -197,7 +197,9 @@
             Controls.Add(nightControlBox1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "frmLogin";
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "frmDangNhap";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Load += frmLogin_Load;
@@ -217,13 +219,13 @@
         private Panel panel1;
         private Panel panel2;
         private Label label1;
-        private TextBox txtTenDangNhap;
         private PictureBox pictureBox1;
         private Panel panel3;
         private PictureBox pictureBox2;
         private Panel panel4;
-        private TextBox txtMatKhau;
         private Label label2;
         private Button btnLogin;
+        public TextBox txtTenDangNhap;
+        public TextBox txtMatKhau;
     }
 }

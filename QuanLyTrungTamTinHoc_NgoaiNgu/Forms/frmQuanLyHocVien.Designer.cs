@@ -44,9 +44,13 @@
             label2 = new Label();
             cbbKhoaHoc = new ComboBox();
             groupBox1 = new GroupBox();
+            label8 = new Label();
+            txtEmail = new TextBox();
+            label9 = new Label();
+            txtDiaChi = new TextBox();
+            label10 = new Label();
+            txtSdt = new TextBox();
             dtpNgaySinh = new DateTimePicker();
-            btnXuatExcel = new Button();
-            btnNhapExcel = new Button();
             btnHuyBo = new Button();
             btnXacNhan = new Button();
             btnXoa = new Button();
@@ -65,13 +69,6 @@
             label4 = new Label();
             txtMaSo = new TextBox();
             dataGridView = new DataGridView();
-            grbDataGrid = new GroupBox();
-            label8 = new Label();
-            txtEmail = new TextBox();
-            label9 = new Label();
-            txtDiaChi = new TextBox();
-            label10 = new Label();
-            txtSdt = new TextBox();
             colID = new DataGridViewTextBoxColumn();
             MaSo = new DataGridViewTextBoxColumn();
             HoVaTen = new DataGridViewTextBoxColumn();
@@ -83,6 +80,7 @@
             TrangThai = new DataGridViewTextBoxColumn();
             HinhAnh = new DataGridViewTextBoxColumn();
             XemChiTiet = new DataGridViewLinkColumn();
+            grbDataGrid = new GroupBox();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -260,8 +258,6 @@
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(txtSdt);
             groupBox1.Controls.Add(dtpNgaySinh);
-            groupBox1.Controls.Add(btnXuatExcel);
-            groupBox1.Controls.Add(btnNhapExcel);
             groupBox1.Controls.Add(btnHuyBo);
             groupBox1.Controls.Add(btnXacNhan);
             groupBox1.Controls.Add(btnXoa);
@@ -285,6 +281,54 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin học viên";
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(527, 135);
+            label8.Name = "label8";
+            label8.Size = new Size(55, 23);
+            label8.TabIndex = 37;
+            label8.Text = "Email:";
+            // 
+            // txtEmail
+            // 
+            txtEmail.Location = new Point(647, 135);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(335, 30);
+            txtEmail.TabIndex = 36;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(527, 90);
+            label9.Name = "label9";
+            label9.Size = new Size(66, 23);
+            label9.TabIndex = 35;
+            label9.Text = "Địa chỉ:";
+            // 
+            // txtDiaChi
+            // 
+            txtDiaChi.Location = new Point(647, 90);
+            txtDiaChi.Name = "txtDiaChi";
+            txtDiaChi.Size = new Size(335, 30);
+            txtDiaChi.TabIndex = 34;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(526, 42);
+            label10.Name = "label10";
+            label10.Size = new Size(115, 23);
+            label10.TabIndex = 33;
+            label10.Text = "Số điện thoại:";
+            // 
+            // txtSdt
+            // 
+            txtSdt.Location = new Point(647, 40);
+            txtSdt.Name = "txtSdt";
+            txtSdt.Size = new Size(334, 30);
+            txtSdt.TabIndex = 32;
+            // 
             // dtpNgaySinh
             // 
             dtpNgaySinh.CustomFormat = "dd/MM/yyyy";
@@ -293,24 +337,6 @@
             dtpNgaySinh.Name = "dtpNgaySinh";
             dtpNgaySinh.Size = new Size(357, 30);
             dtpNgaySinh.TabIndex = 24;
-            // 
-            // btnXuatExcel
-            // 
-            btnXuatExcel.Location = new Point(762, 195);
-            btnXuatExcel.Name = "btnXuatExcel";
-            btnXuatExcel.Size = new Size(121, 34);
-            btnXuatExcel.TabIndex = 23;
-            btnXuatExcel.Text = "Xuất Excel...";
-            btnXuatExcel.UseVisualStyleBackColor = true;
-            // 
-            // btnNhapExcel
-            // 
-            btnNhapExcel.Location = new Point(614, 195);
-            btnNhapExcel.Name = "btnNhapExcel";
-            btnNhapExcel.Size = new Size(129, 34);
-            btnNhapExcel.TabIndex = 22;
-            btnNhapExcel.Text = "Nhập Excel...";
-            btnNhapExcel.UseVisualStyleBackColor = true;
             // 
             // btnHuyBo
             // 
@@ -492,65 +518,6 @@
             dataGridView.CellContentClick += dataGridView_CellContentClick;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
             // 
-            // grbDataGrid
-            // 
-            grbDataGrid.BackColor = Color.White;
-            grbDataGrid.Controls.Add(dataGridView);
-            grbDataGrid.Dock = DockStyle.Fill;
-            grbDataGrid.Location = new Point(355, 248);
-            grbDataGrid.Name = "grbDataGrid";
-            grbDataGrid.Size = new Size(1475, 588);
-            grbDataGrid.TabIndex = 3;
-            grbDataGrid.TabStop = false;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(527, 135);
-            label8.Name = "label8";
-            label8.Size = new Size(55, 23);
-            label8.TabIndex = 37;
-            label8.Text = "Email:";
-            // 
-            // txtEmail
-            // 
-            txtEmail.Location = new Point(647, 135);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(335, 30);
-            txtEmail.TabIndex = 36;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(527, 90);
-            label9.Name = "label9";
-            label9.Size = new Size(66, 23);
-            label9.TabIndex = 35;
-            label9.Text = "Địa chỉ:";
-            // 
-            // txtDiaChi
-            // 
-            txtDiaChi.Location = new Point(647, 90);
-            txtDiaChi.Name = "txtDiaChi";
-            txtDiaChi.Size = new Size(335, 30);
-            txtDiaChi.TabIndex = 34;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(526, 42);
-            label10.Name = "label10";
-            label10.Size = new Size(115, 23);
-            label10.TabIndex = 33;
-            label10.Text = "Số điện thoại:";
-            // 
-            // txtSdt
-            // 
-            txtSdt.Location = new Point(647, 40);
-            txtSdt.Name = "txtSdt";
-            txtSdt.Size = new Size(334, 30);
-            txtSdt.TabIndex = 32;
-            // 
             // colID
             // 
             colID.DataPropertyName = "ID";
@@ -634,6 +601,17 @@
             XemChiTiet.Resizable = DataGridViewTriState.True;
             XemChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
+            // grbDataGrid
+            // 
+            grbDataGrid.BackColor = Color.White;
+            grbDataGrid.Controls.Add(dataGridView);
+            grbDataGrid.Dock = DockStyle.Fill;
+            grbDataGrid.Location = new Point(355, 248);
+            grbDataGrid.Name = "grbDataGrid";
+            grbDataGrid.Size = new Size(1475, 588);
+            grbDataGrid.TabIndex = 3;
+            grbDataGrid.TabStop = false;
+            // 
             // frmQuanLyHocVien
             // 
             AutoScaleDimensions = new SizeF(9F, 23F);
@@ -697,8 +675,6 @@
         private Button btnDoiAnh;
         private Button btnSua;
         private Button btnThem;
-        private Button btnXuatExcel;
-        private Button btnNhapExcel;
         private Button btnHuyBo;
         private Button btnXacNhan;
         private Button btnXoa;

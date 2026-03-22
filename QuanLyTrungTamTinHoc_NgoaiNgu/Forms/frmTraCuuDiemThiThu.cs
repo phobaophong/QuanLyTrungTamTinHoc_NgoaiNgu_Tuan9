@@ -1,0 +1,59 @@
+﻿using Microsoft.EntityFrameworkCore;
+using QuanLyTrungTamTinHoc_NgoaiNgu.Data;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
+{
+    public partial class frmTraCuuDiemThiThu : Form
+    {
+        QuanLyTrungTamContext context = new QuanLyTrungTamContext();
+        public frmTraCuuDiemThiThu()
+        {
+            InitializeComponent();
+        }
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            string maSoTimKiem = txtMaSo.Text.Trim();
+
+            if (string.IsNullOrEmpty(maSoTimKiem))
+            {
+                MessageBox.Show("Vui lòng nhập mã số học viên!", "Thông báo");
+                return;
+            }
+
+            var hocVien = context.HocVien
+                .Include(hv => hv.KetQua) 
+                .ThenInclude(kq => kq.LopHoc) 
+                .FirstOrDefault(hv => hv.MaSo == maSoTimKiem);
+
+            if (hocVien != null)
+            {
+                var ketQua = hocVien.KetQua.FirstOrDefault();
+
+                string hoTen = hocVien.HoVaTen;
+                string tenLop = ketQua != null ? ketQua.LopHoc.TenLopHoc : "(Chưa xếp lớp)";
+                string diemSo = ketQua != null ? ketQua.DiemThiThu.ToString() : "Chưa có điểm";
+
+                lblHienThi.Text = $"Học viên: {hoTen}\n" +
+                                 $"Lớp học: {tenLop}\n" +
+                                 $"Điểm thi thử: {diemSo}";
+
+                lblHienThi.ForeColor = Color.DarkBlue;
+            }
+            else
+            {
+                lblHienThi.Text = "Không tìm thấy học viên có mã số này!";
+                lblHienThi.ForeColor = Color.Red;
+            }
+        }
+    }
+}

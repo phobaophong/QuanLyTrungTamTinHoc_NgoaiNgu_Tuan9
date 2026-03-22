@@ -30,24 +30,24 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyLopHoc_ThemLop));
             groupBox1 = new GroupBox();
+            label6 = new Label();
+            label4 = new Label();
+            label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             btnThoat = new Button();
             btnHuyBo = new Button();
             btnLuu = new Button();
             numSiSo = new NumericUpDown();
-            label6 = new Label();
             label5 = new Label();
             cbbKhoaHoc = new ComboBox();
             rdoDaDong = new RadioButton();
             rdoDangMo = new RadioButton();
             dtpNgayKetThuc = new DateTimePicker();
             dtpNgayBatDau = new DateTimePicker();
-            label4 = new Label();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             txtTenLopHoc = new TextBox();
-            label3 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numSiSo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -84,6 +84,36 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin lớp học";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 10.2F);
+            label6.Location = new Point(12, 238);
+            label6.Name = "label6";
+            label6.Size = new Size(71, 23);
+            label6.TabIndex = 37;
+            label6.Text = "Sĩ số (*):";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 10.2F);
+            label4.Location = new Point(12, 194);
+            label4.Name = "label4";
+            label4.Size = new Size(113, 23);
+            label4.TabIndex = 27;
+            label4.Text = "Trạng thái (*):";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 10.2F);
+            label3.Location = new Point(12, 147);
+            label3.Name = "label3";
+            label3.Size = new Size(143, 23);
+            label3.TabIndex = 14;
+            label3.Text = "Ngày kết thúc (*):";
             // 
             // label2
             // 
@@ -146,18 +176,8 @@
             // 
             numSiSo.Location = new Point(178, 236);
             numSiSo.Name = "numSiSo";
-            numSiSo.Size = new Size(150, 30);
+            numSiSo.Size = new Size(102, 30);
             numSiSo.TabIndex = 38;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 10.2F);
-            label6.Location = new Point(12, 238);
-            label6.Name = "label6";
-            label6.Size = new Size(71, 23);
-            label6.TabIndex = 37;
-            label6.Text = "Sĩ số (*):";
             // 
             // label5
             // 
@@ -176,6 +196,7 @@
             cbbKhoaHoc.Name = "cbbKhoaHoc";
             cbbKhoaHoc.Size = new Size(326, 31);
             cbbKhoaHoc.TabIndex = 35;
+            cbbKhoaHoc.SelectedIndexChanged += cbbKhoaHoc_SelectedIndexChanged;
             // 
             // rdoDaDong
             // 
@@ -201,27 +222,21 @@
             // 
             // dtpNgayKetThuc
             // 
+            dtpNgayKetThuc.CustomFormat = "dd/MM/yyyy";
+            dtpNgayKetThuc.Format = DateTimePickerFormat.Custom;
             dtpNgayKetThuc.Location = new Point(178, 141);
             dtpNgayKetThuc.Name = "dtpNgayKetThuc";
-            dtpNgayKetThuc.Size = new Size(326, 30);
+            dtpNgayKetThuc.Size = new Size(177, 30);
             dtpNgayKetThuc.TabIndex = 32;
             // 
             // dtpNgayBatDau
             // 
+            dtpNgayBatDau.CustomFormat = "dd/MM/yyyy";
+            dtpNgayBatDau.Format = DateTimePickerFormat.Custom;
             dtpNgayBatDau.Location = new Point(178, 92);
             dtpNgayBatDau.Name = "dtpNgayBatDau";
-            dtpNgayBatDau.Size = new Size(326, 30);
+            dtpNgayBatDau.Size = new Size(177, 30);
             dtpNgayBatDau.TabIndex = 31;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 10.2F);
-            label4.Location = new Point(12, 194);
-            label4.Name = "label4";
-            label4.Size = new Size(113, 23);
-            label4.TabIndex = 27;
-            label4.Text = "Trạng thái (*):";
             // 
             // pictureBox2
             // 
@@ -251,16 +266,6 @@
             txtTenLopHoc.Name = "txtTenLopHoc";
             txtTenLopHoc.Size = new Size(326, 30);
             txtTenLopHoc.TabIndex = 15;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10.2F);
-            label3.Location = new Point(12, 147);
-            label3.Name = "label3";
-            label3.Size = new Size(143, 23);
-            label3.TabIndex = 14;
-            label3.Text = "Ngày kết thúc (*):";
             // 
             // frmQuanLyLopHoc_ThemLop
             // 
