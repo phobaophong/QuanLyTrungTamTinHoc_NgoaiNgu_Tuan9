@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyKhoaHoc));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             pictureBox1 = new PictureBox();
-            btnXuatExcel = new Button();
-            btnNhapExcel = new Button();
             btnThoat = new Button();
             btnXoa = new Button();
             btnHuyBo = new Button();
@@ -63,8 +62,6 @@
             groupBox1.BackColor = Color.White;
             groupBox1.BackgroundImageLayout = ImageLayout.Zoom;
             groupBox1.Controls.Add(pictureBox1);
-            groupBox1.Controls.Add(btnXuatExcel);
-            groupBox1.Controls.Add(btnNhapExcel);
             groupBox1.Controls.Add(btnThoat);
             groupBox1.Controls.Add(btnXoa);
             groupBox1.Controls.Add(btnHuyBo);
@@ -96,28 +93,6 @@
             pictureBox1.Size = new Size(253, 165);
             pictureBox1.TabIndex = 25;
             pictureBox1.TabStop = false;
-            // 
-            // btnXuatExcel
-            // 
-            btnXuatExcel.BackColor = Color.DodgerBlue;
-            btnXuatExcel.Font = new Font("Segoe UI", 10.2F);
-            btnXuatExcel.Location = new Point(804, 90);
-            btnXuatExcel.Name = "btnXuatExcel";
-            btnXuatExcel.Size = new Size(129, 39);
-            btnXuatExcel.TabIndex = 24;
-            btnXuatExcel.Text = "Xuất Excel...";
-            btnXuatExcel.UseVisualStyleBackColor = false;
-            // 
-            // btnNhapExcel
-            // 
-            btnNhapExcel.BackColor = Color.DodgerBlue;
-            btnNhapExcel.Font = new Font("Segoe UI", 10.2F);
-            btnNhapExcel.Location = new Point(804, 41);
-            btnNhapExcel.Name = "btnNhapExcel";
-            btnNhapExcel.Size = new Size(129, 39);
-            btnNhapExcel.TabIndex = 23;
-            btnNhapExcel.Text = "Nhập Excel...";
-            btnNhapExcel.UseVisualStyleBackColor = false;
             // 
             // btnThoat
             // 
@@ -276,7 +251,6 @@
             dataGridView.RowHeadersWidth = 51;
             dataGridView.Size = new Size(1251, 493);
             dataGridView.TabIndex = 0;
-
             // 
             // colID
             // 
@@ -297,6 +271,11 @@
             // HocPhi
             // 
             HocPhi.DataPropertyName = "HocPhi";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.White;
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(128, 128, 255);
+            dataGridViewCellStyle1.Format = "N0";
+            HocPhi.DefaultCellStyle = dataGridViewCellStyle1;
             HocPhi.HeaderText = "Học phí";
             HocPhi.MinimumWidth = 6;
             HocPhi.Name = "HocPhi";
@@ -353,14 +332,12 @@
         private Label label3;
         private Label label2;
         private Label label1;
-        private Button btnXuatExcel;
-        private Button btnNhapExcel;
         private DataGridView dataGridView;
+        private PictureBox pictureBox1;
         private DataGridViewTextBoxColumn colID;
         private DataGridViewTextBoxColumn TenKhoaHoc;
         private DataGridViewTextBoxColumn HocPhi;
         private DataGridViewTextBoxColumn ThoiLuong;
         private DataGridViewTextBoxColumn SoLopDangMo;
-        private PictureBox pictureBox1;
     }
 }

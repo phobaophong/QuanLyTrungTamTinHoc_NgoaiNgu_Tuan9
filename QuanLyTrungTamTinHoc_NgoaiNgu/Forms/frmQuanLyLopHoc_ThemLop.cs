@@ -8,10 +8,12 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
     public partial class frmQuanLyLopHoc_ThemLop : Form
     {
         QuanLyTrungTamContext context = new QuanLyTrungTamContext();
-
-        public frmQuanLyLopHoc_ThemLop()
+        int id;
+        public frmQuanLyLopHoc_ThemLop(int idLop)
         {
             InitializeComponent();
+            id = idLop;
+            Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
         private void LoadKhoaHoc()
@@ -22,46 +24,76 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             cbbKhoaHoc.DisplayMember = "TenKhoaHoc";
             cbbKhoaHoc.ValueMember = "ID";
         }
-
+        private void TinhNgayKetThuc()
+        {
+            if (cbbKhoaHoc.SelectedValue != null && int.TryParse(cbbKhoaHoc.SelectedValue.ToString(), out int idKH))
+            {
+                var thoiLuong = context.KhoaHoc.Where(k => k.ID == idKH).Select(k => k.ThoiLuong).FirstOrDefault();
+                if (thoiLuong > 0)
+                {
+                    int soTuan = (int)Math.Ceiling((double)thoiLuong / 3.0);
+                    dtpNgayKetThuc.Value = dtpNgayBatDau.Value.AddDays(soTuan * 7);
+                }
+            }
+        }
         private void frmQuanLyLopHoc_ThemLop_Load(object sender, EventArgs e)
         {
             LoadKhoaHoc();
 
-            txtTenLopHoc.Clear();
-            dtpNgayBatDau.Value = DateTime.Now;
-            dtpNgayKetThuc.Value = DateTime.Now;
-            dtpNgayKetThuc.Enabled = false;
+            if (id == 0) // Trạng thái Thêm Mới
+            {
+                this.Text = "Thêm Lớp Học Mới";
+                txtTenLopHoc.Clear();
+                dtpNgayBatDau.Value = DateTime.Now;
+                dtpNgayKetThuc.Enabled = false;
 
-            rdoDangMo.Checked = true;
-            rdoDaDong.Checked = false;
+                rdoDangMo.Checked = true;
+                rdoDaDong.Checked = false;
 
-            numSiSo.Value = 1;
+                numSiSo.Value = 1;
+            }
+            else
+            {
+                this.Text = "Cập Nhật Thông Tin Lớp Học";
 
-            txtTenLopHoc.Focus();
+                var lop = context.LopHoc.Find(id);
+
+                if (lop != null)
+                {
+                    txtTenLopHoc.Text = lop.TenLopHoc;
+                    numSiSo.Value = lop.SiSo;
+
+                    if (lop.TrangThai == true)
+                        rdoDangMo.Checked = true;
+                    else
+                        rdoDaDong.Checked = true;
+
+                    dtpNgayBatDau.Value = lop.NgayBatDau;
+                    dtpNgayKetThuc.Value = lop.NgayKetThuc;
+                    dtpNgayKetThuc.Enabled = true;
+
+                    cbbKhoaHoc.SelectedValue = lop.KhoaHocID;
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy thông tin lớp học trong CSDL!");
+                    this.Close();
+                }
+
+                TinhNgayKetThuc();
+            }
         }
 
         private void cbbKhoaHoc_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbbKhoaHoc.SelectedValue != null &&
-                int.TryParse(cbbKhoaHoc.SelectedValue.ToString(), out int idKH))
-            {
-                var thoiLuong = context.KhoaHoc
-                    .Where(k => k.ID == idKH)
-                    .Select(k => k.ThoiLuong)
-                    .FirstOrDefault();
-
-                if (thoiLuong > 0)
-                {
-                    int soTuan = (int)Math.Ceiling(thoiLuong / 3.0);
-                    dtpNgayKetThuc.Value = dtpNgayBatDau.Value.AddDays(soTuan * 7);
-                }
-            }
+            TinhNgayKetThuc();
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
             try
             {
+                // check data
                 if (string.IsNullOrWhiteSpace(txtTenLopHoc.Text))
                 {
                     MessageBox.Show("Vui lòng nhập tên lớp học!");
@@ -87,9 +119,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     return;
                 }
 
-                bool exists = context.LopHoc
-                    .Any(l => l.TenLopHoc == txtTenLopHoc.Text);
-
+                // Kiểm tra trùng tên (Bỏ qua chính nó nếu đang ở chế độ Sửa)
+                bool exists = context.LopHoc.Any(l => l.TenLopHoc == txtTenLopHoc.Text.Trim() && l.ID != id);
                 if (exists)
                 {
                     MessageBox.Show("Tên lớp đã tồn tại!");
@@ -113,26 +144,44 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     );
                     return;
                 }
-
-                LopHoc lop = new LopHoc
+                if (id == 0) // thêm
                 {
-                    TenLopHoc = txtTenLopHoc.Text.Trim(),
-                    NgayBatDau = dtpNgayBatDau.Value,
-                    NgayKetThuc = dtpNgayKetThuc.Value,
-                    TrangThai = rdoDangMo.Checked,
-                    KhoaHocID = idKhoaHoc,
-                    SiSo = (int)numSiSo.Value
-                };
+                    LopHoc lop = new LopHoc
+                    {
+                        TenLopHoc = txtTenLopHoc.Text.Trim(),
+                        NgayBatDau = dtpNgayBatDau.Value,
+                        NgayKetThuc = dtpNgayKetThuc.Value,
+                        TrangThai = rdoDangMo.Checked,
+                        KhoaHocID = idKhoaHoc,
+                        SiSo = (int)numSiSo.Value
+                    };
 
-                context.LopHoc.Add(lop);
-                context.SaveChanges();
+                    context.LopHoc.Add(lop);
+                    context.SaveChanges();
+                    MessageBox.Show("Thêm lớp học thành công!");
+                }
+                else // sửa
+                {
+                    var lopEdit = context.LopHoc.Find(id);
+                    if (lopEdit != null)
+                    {
+                        lopEdit.TenLopHoc = txtTenLopHoc.Text.Trim();
+                        lopEdit.NgayBatDau = dtpNgayBatDau.Value;
+                        lopEdit.NgayKetThuc = dtpNgayKetThuc.Value;
+                        lopEdit.TrangThai = rdoDangMo.Checked;
+                        lopEdit.KhoaHocID = idKhoaHoc;
+                        lopEdit.SiSo = (int)numSiSo.Value;
 
-                MessageBox.Show("Thêm lớp học thành công!");
+                        context.SaveChanges();
+                        MessageBox.Show("Cập nhật lớp học thành công!");
+                    }
+                }
+
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                MessageBox.Show("Lỗi trong quá trình lưu: " + ex.Message);
             }
         }
 
@@ -144,6 +193,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dtpNgayBatDau_ValueChanged(object sender, EventArgs e)
+        {
+            TinhNgayKetThuc();
         }
     }
 }

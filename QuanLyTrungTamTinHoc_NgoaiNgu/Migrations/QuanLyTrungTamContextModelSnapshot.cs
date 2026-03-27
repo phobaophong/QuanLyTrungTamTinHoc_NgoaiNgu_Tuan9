@@ -175,7 +175,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<float>("DiemThiThu")
+                    b.Property<float?>("DiemThiThat")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("DiemThiThu")
                         .HasColumnType("real");
 
                     b.Property<int>("HocVienID")

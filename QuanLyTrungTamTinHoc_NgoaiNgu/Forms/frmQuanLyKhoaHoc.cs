@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ReaLTaiizor.Drawing.Poison.PoisonPaint.ForeColor;
 
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
@@ -20,6 +21,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public frmQuanLyKhoaHoc()
         {
             InitializeComponent();
+
+            Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
         private void BatTatChucNang(bool giaTri)
         {
@@ -33,8 +36,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             btnThem.Enabled = !giaTri;
             btnSua.Enabled = !giaTri;
             btnXoa.Enabled = !giaTri;
-            btnNhapExcel.Enabled = !giaTri;
-            btnXuatExcel.Enabled = !giaTri;
         }
         private void LoadData()
         {

@@ -20,14 +20,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         string fileNameHinhAnh = "";
         bool temp = true;
         int loaiNhanSu = 2; //1 nhân viên, 2 giảng viên
+
         public frmQuanLyNhanSu()
         {
             InitializeComponent();
+            Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
+
         public void BatTatCaChucNang(bool giaTri)
         {
             txtHoVaTen.Enabled = giaTri;
-            txtMaSo.Enabled = giaTri;
+            txtMaSo.Enabled = false; 
             txtBoPhan.Enabled = giaTri;
             dtpNgaySinh.Enabled = giaTri;
             rdoNam.Enabled = giaTri;
@@ -46,46 +49,71 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnGiangVien_Click(object sender, EventArgs e)
         {
             LoadGiangVien();
+            btnThem.Text = "Thêm Giảng Viên";
+            groupBox1.Text = "Thông tin giảng viên";
         }
+
         private void btnNhanVien_Click(object sender, EventArgs e)
         {
             LoadNhanVien();
+            btnThem.Text = "Thêm Nhân Viên";
+            groupBox1.Text = "Thông tin nhân viên";
         }
+
         private void LoadGiangVien()
         {
+            context = new QuanLyTrungTamContext();
             loaiNhanSu = 2;
             var gv = context.GiangVien.ToList();
 
+            // xóa binding cũ
+            txtHoVaTen.DataBindings.Clear();
+            txtMaSo.DataBindings.Clear();
+            txtSdt.DataBindings.Clear();
+            txtDiaChi.DataBindings.Clear();
+            txtEmail.DataBindings.Clear();
+            txtBoPhan.DataBindings.Clear();
+            dtpNgaySinh.DataBindings.Clear();
+            rdoNam.DataBindings.Clear();
+            rdoNu.DataBindings.Clear();
+
             bindingSource.DataSource = gv;
 
-            txtHoVaTen.DataBindings.Clear();
-            txtHoVaTen.DataBindings.Add("Text", bindingSource, "HoVaTen", false, DataSourceUpdateMode.Never);
+            if (gv.Count > 0)
+            {
+                txtHoVaTen.DataBindings.Add("Text", bindingSource, "HoVaTen", false, DataSourceUpdateMode.Never);
+                txtMaSo.DataBindings.Add("Text", bindingSource, "MaSo", false, DataSourceUpdateMode.Never);
+                txtSdt.DataBindings.Add("Text", bindingSource, "Sdt", false, DataSourceUpdateMode.Never);
+                txtDiaChi.DataBindings.Add("Text", bindingSource, "DiaChi", false, DataSourceUpdateMode.Never);
+                txtEmail.DataBindings.Add("Text", bindingSource, "Email", false, DataSourceUpdateMode.Never);
+                txtBoPhan.DataBindings.Add("Text", bindingSource, "BoPhan", false, DataSourceUpdateMode.Never);
 
-            txtMaSo.DataBindings.Clear();
-            txtMaSo.DataBindings.Add("Text", bindingSource, "MaSo", false, DataSourceUpdateMode.Never);
+                var bindingNgaySinh = new Binding("Value", bindingSource, "NgaySinh", false, DataSourceUpdateMode.Never);
+                dtpNgaySinh.DataBindings.Add(bindingNgaySinh);
 
-            txtSdt.DataBindings.Clear();
-            txtSdt.DataBindings.Add("Text", bindingSource, "Sdt", false, DataSourceUpdateMode.Never);
+                rdoNam.DataBindings.Add("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
 
-            txtDiaChi.DataBindings.Clear();
-            txtDiaChi.DataBindings.Add("Text", bindingSource, "DiaChi", false, DataSourceUpdateMode.Never);
-
-            txtEmail.DataBindings.Clear();
-            txtEmail.DataBindings.Add("Text", bindingSource, "Email", false, DataSourceUpdateMode.Never);
-
-            txtBoPhan.DataBindings.Clear();
-            txtBoPhan.DataBindings.Add("Text", bindingSource, "BoPhan", false, DataSourceUpdateMode.Never);
-
-            dtpNgaySinh.DataBindings.Clear();
-            var bindingNgaySinh = new Binding("Value", bindingSource, "NgaySinh", false, DataSourceUpdateMode.Never);
-            dtpNgaySinh.DataBindings.Add(bindingNgaySinh);
-
-            rdoNam.DataBindings.Clear();
-            rdoNam.DataBindings.Add("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
-            rdoNu.DataBindings.Clear();
-            Binding bdNu = new Binding("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
-            bdNu.Format += (s, args) => args.Value = !(bool)args.Value;
-            rdoNu.DataBindings.Add(bdNu);
+                Binding bdNu = new Binding("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
+                bdNu.Format += (s, args) =>
+                {
+                    if (args.Value != null && args.Value != DBNull.Value)
+                    {
+                        args.Value = !(bool)args.Value;
+                    }
+                };
+                rdoNu.DataBindings.Add(bdNu);
+            }
+            else
+            {
+                txtMaSo.Clear();
+                txtHoVaTen.Clear();
+                txtDiaChi.Clear();
+                txtSdt.Clear();
+                txtEmail.Clear();
+                txtBoPhan.Clear();
+                if (picHinhAnh.Image != null) picHinhAnh.Image.Dispose();
+                picHinhAnh.Image = Properties.Resources.nam_avatar;
+            }
 
             dataGridView.DataSource = bindingSource;
             BatTatCaChucNang(false);
@@ -93,50 +121,74 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void LoadNhanVien()
         {
+            context = new QuanLyTrungTamContext();
             loaiNhanSu = 1;
             var nv = context.NhanVien.ToList();
 
+            // xóa binding cũ
+            txtHoVaTen.DataBindings.Clear();
+            txtMaSo.DataBindings.Clear();
+            txtSdt.DataBindings.Clear();
+            txtDiaChi.DataBindings.Clear();
+            txtEmail.DataBindings.Clear();
+            txtBoPhan.DataBindings.Clear();
+            dtpNgaySinh.DataBindings.Clear();
+            rdoNam.DataBindings.Clear();
+            rdoNu.DataBindings.Clear();
+
             bindingSource.DataSource = nv;
 
-            txtHoVaTen.DataBindings.Clear();
-            txtHoVaTen.DataBindings.Add("Text", bindingSource, "HoVaTen", false, DataSourceUpdateMode.Never);
+            if (nv.Count > 0)
+            {
+                txtHoVaTen.DataBindings.Add("Text", bindingSource, "HoVaTen", false, DataSourceUpdateMode.Never);
+                txtMaSo.DataBindings.Add("Text", bindingSource, "MaSo", false, DataSourceUpdateMode.Never);
+                txtSdt.DataBindings.Add("Text", bindingSource, "Sdt", false, DataSourceUpdateMode.Never);
+                txtDiaChi.DataBindings.Add("Text", bindingSource, "DiaChi", false, DataSourceUpdateMode.Never);
+                txtEmail.DataBindings.Add("Text", bindingSource, "Email", false, DataSourceUpdateMode.Never);
+                txtBoPhan.DataBindings.Add("Text", bindingSource, "BoPhan", false, DataSourceUpdateMode.Never);
 
-            txtMaSo.DataBindings.Clear();
-            txtMaSo.DataBindings.Add("Text", bindingSource, "MaSo", false, DataSourceUpdateMode.Never);
+                var bindingNgaySinh = new Binding("Value", bindingSource, "NgaySinh", false, DataSourceUpdateMode.Never);
+                dtpNgaySinh.DataBindings.Add(bindingNgaySinh);
 
-            txtSdt.DataBindings.Clear();
-            txtSdt.DataBindings.Add("Text", bindingSource, "Sdt", false, DataSourceUpdateMode.Never);
+                rdoNam.DataBindings.Add("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
 
-            txtDiaChi.DataBindings.Clear();
-            txtDiaChi.DataBindings.Add("Text", bindingSource, "DiaChi", false, DataSourceUpdateMode.Never);
-
-            txtEmail.DataBindings.Clear();
-            txtEmail.DataBindings.Add("Text", bindingSource, "Email", false, DataSourceUpdateMode.Never);
-
-            txtBoPhan.DataBindings.Clear();
-            txtBoPhan.DataBindings.Add("Text", bindingSource, "BoPhan", false, DataSourceUpdateMode.Never);
-
-            dtpNgaySinh.DataBindings.Clear();
-            var bindingNgaySinh = new Binding("Value", bindingSource, "NgaySinh", false, DataSourceUpdateMode.Never);
-            dtpNgaySinh.DataBindings.Add(bindingNgaySinh);
-
-            rdoNam.DataBindings.Clear();
-            rdoNam.DataBindings.Add("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
-            rdoNu.DataBindings.Clear();
-            Binding bdNu = new Binding("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
-            bdNu.Format += (s, args) => args.Value = !(bool)args.Value;
-            rdoNu.DataBindings.Add(bdNu);
+                Binding bdNu = new Binding("Checked", bindingSource, "GioiTinh", false, DataSourceUpdateMode.Never);
+                bdNu.Format += (s, args) =>
+                {
+                    if (args.Value != null && args.Value != DBNull.Value)
+                    {
+                        args.Value = !(bool)args.Value;
+                    }
+                };
+                rdoNu.DataBindings.Add(bdNu);
+            }
+            else
+            {
+                txtMaSo.Clear();
+                txtHoVaTen.Clear();
+                txtDiaChi.Clear();
+                txtSdt.Clear();
+                txtEmail.Clear();
+                txtBoPhan.Clear();
+                if (picHinhAnh.Image != null) picHinhAnh.Image.Dispose();
+                picHinhAnh.Image = Properties.Resources.nam_avatar;
+            }
 
             dataGridView.DataSource = bindingSource;
             BatTatCaChucNang(false);
         }
 
-
         private void frmQuanLyNhanSu_Load(object sender, EventArgs e)
         {
             dataGridView.AutoGenerateColumns = false;
-            LoadGiangVien();
+            LoadGiangVien(); // Mặc định vào sẽ load Giảng viên
             bindingSource.CurrentChanged += bindingSource_CurrentChanged;
+
+            // Ẩn giờ 12:00 AM trên DataGridView
+            if (dataGridView.Columns.Contains("NgaySinh"))
+            {
+                dataGridView.Columns["NgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";
+            }
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -144,9 +196,25 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             temp = true;
             BatTatCaChucNang(true);
 
-            txtMaSo.Clear();
+
+            int maxId = 0;
+            string prefix = "";
+
+            if (loaiNhanSu == 2) 
+            {
+                maxId = context.GiangVien.Any() ? context.GiangVien.Max(g => g.ID) : 0;
+                prefix = "gv";
+            }
+            else 
+            {
+                maxId = context.NhanVien.Any() ? context.NhanVien.Max(n => n.ID) : 0;
+                prefix = "nv";
+            }
+
+            txtMaSo.Text = prefix + (maxId + 1).ToString("D2");
+
             txtHoVaTen.Clear();
-            dtpNgaySinh.Value = DateTime.Now;
+            dtpNgaySinh.Value = DateTime.Now.Date; 
             rdoNam.Checked = true;
             txtDiaChi.Clear();
             txtSdt.Clear();
@@ -157,7 +225,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             if (picHinhAnh.Image != null) picHinhAnh.Image.Dispose();
             picHinhAnh.Image = Properties.Resources.nam_avatar;
 
-            txtMaSo.Focus();
+            txtHoVaTen.Focus(); 
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
@@ -166,15 +234,32 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             if (MessageBox.Show($"Xác nhận xóa {txtHoVaTen.Text}?", "Xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                int? idTaiKhoanCanXoa = null;
+
                 if (loaiNhanSu == 2) // Giảng viên
                 {
                     var gv = bindingSource.Current as GiangVien;
-                    if (gv != null) context.GiangVien.Remove(gv);
+                    if (gv != null)
+                    {
+                        idTaiKhoanCanXoa = gv.TaiKhoanID;
+                        context.GiangVien.Remove(gv);
+                    }
                 }
                 else // Nhân viên
                 {
                     var nv = bindingSource.Current as NhanVien;
-                    if (nv != null) context.NhanVien.Remove(nv);
+                    if (nv != null)
+                    {
+                        idTaiKhoanCanXoa = nv.TaiKhoanID;
+                        context.NhanVien.Remove(nv);
+                    }
+                }
+
+                // xóa tài khoản
+                if (idTaiKhoanCanXoa != null)
+                {
+                    var tk = context.TaiKhoan.Find(idTaiKhoanCanXoa);
+                    if (tk != null) context.TaiKhoan.Remove(tk);
                 }
 
                 context.SaveChanges();
@@ -188,7 +273,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             temp = false;
             BatTatCaChucNang(true);
-            txtMaSo.Focus();
+            txtHoVaTen.Focus(); 
         }
 
         private void btnXacNhan_Click(object sender, EventArgs e)
@@ -203,6 +288,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             {
                 if (temp) // THÊM MỚI
                 {
+                    // check trùng mã số 
+                    string maMoi = txtMaSo.Text.Trim();
+                    bool trungTK = context.TaiKhoan.Any(t => t.TenDN == maMoi);
+                    if (trungTK)
+                    {
+                        MessageBox.Show("Mã số này đã tồn tại trên hệ thống! Vui lòng chọn mã khác.", "Trùng dữ liệu");
+                        return;
+                    }
+
                     // 1. Tạo Tài khoản chung
                     TaiKhoan tk = new TaiKhoan();
                     tk.TenDN = txtMaSo.Text.Trim();
@@ -210,22 +304,19 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     tk.TrangThai = true;
                     tk.QuyenHan = loaiNhanSu; // 1: Nhân viên, 2: Giảng viên
 
-                    context.TaiKhoan.Add(tk);
-                    context.SaveChanges();
-
                     if (loaiNhanSu == 2) // Giảng viên
                     {
                         GiangVien gv = new GiangVien();
                         gv.MaSo = txtMaSo.Text.Trim();
                         gv.HoVaTen = txtHoVaTen.Text.Trim();
-                        gv.NgaySinh = dtpNgaySinh.Value;
+                        gv.NgaySinh = dtpNgaySinh.Value.Date;
                         gv.GioiTinh = rdoNam.Checked;
                         gv.DiaChi = txtDiaChi.Text.Trim();
                         gv.Sdt = txtSdt.Text.Trim();
                         gv.Email = txtEmail.Text.Trim();
                         gv.BoPhan = txtBoPhan.Text.Trim();
                         gv.HinhAnh = fileNameHinhAnh;
-                        gv.TaiKhoanID = tk.ID;
+                        gv.TaiKhoan = tk;
 
                         context.GiangVien.Add(gv);
                     }
@@ -234,14 +325,14 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         NhanVien nv = new NhanVien();
                         nv.MaSo = txtMaSo.Text.Trim();
                         nv.HoVaTen = txtHoVaTen.Text.Trim();
-                        nv.NgaySinh = dtpNgaySinh.Value;
+                        nv.NgaySinh = dtpNgaySinh.Value.Date;
                         nv.GioiTinh = rdoNam.Checked;
                         nv.DiaChi = txtDiaChi.Text.Trim();
                         nv.Sdt = txtSdt.Text.Trim();
                         nv.Email = txtEmail.Text.Trim();
                         nv.BoPhan = txtBoPhan.Text.Trim();
                         nv.HinhAnh = fileNameHinhAnh;
-                        nv.TaiKhoanID = tk.ID;
+                        nv.TaiKhoan = tk;
 
                         context.NhanVien.Add(nv);
                     }
@@ -258,7 +349,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         {
                             gv.MaSo = txtMaSo.Text.Trim();
                             gv.HoVaTen = txtHoVaTen.Text.Trim();
-                            gv.NgaySinh = dtpNgaySinh.Value;
+                            gv.NgaySinh = dtpNgaySinh.Value.Date; 
                             gv.GioiTinh = rdoNam.Checked;
                             gv.DiaChi = txtDiaChi.Text.Trim();
                             gv.Sdt = txtSdt.Text.Trim();
@@ -274,7 +365,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         {
                             nv.MaSo = txtMaSo.Text.Trim();
                             nv.HoVaTen = txtHoVaTen.Text.Trim();
-                            nv.NgaySinh = dtpNgaySinh.Value;
+                            nv.NgaySinh = dtpNgaySinh.Value.Date; 
                             nv.GioiTinh = rdoNam.Checked;
                             nv.DiaChi = txtDiaChi.Text.Trim();
                             nv.Sdt = txtSdt.Text.Trim();
@@ -299,7 +390,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnHuyBo_Click(object sender, EventArgs e)
         {
-            frmQuanLyNhanSu_Load(sender, e);
+            if (loaiNhanSu == 2)
+                LoadGiangVien();
+            else
+                LoadNhanVien();
         }
 
         private void btnDoiAnh_Click(object sender, EventArgs e)
@@ -331,26 +425,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         picHinhAnh.Image = Image.FromStream(stream);
                     }
 
-                    if (bindingSource.Current == null) return;
-
-                    if (loaiNhanSu == 2) // Giảng viên
-                    {
-                        var gv = bindingSource.Current as GiangVien;
-                        if (gv != null)
-                        {
-                            gv.HinhAnh = fileName;
-                        }
-                    }
-                    else // Nhân viên
-                    {
-                        var nv = bindingSource.Current as NhanVien;
-                        if (nv != null)
-                        {
-                            nv.HinhAnh = fileName;
-                        }
-                    }
-
-                    context.SaveChanges();
+                    fileNameHinhAnh = fileName;
 
                     MessageBox.Show("Cập nhật ảnh thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -360,6 +435,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 }
             }
         }
+
         private void bindingSource_CurrentChanged(object sender, EventArgs e)
         {
             if (bindingSource.Current == null) return;
@@ -421,6 +497,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            // giới tính
             if (dataGridView.Columns[e.ColumnIndex].Name == "GioiTinh" && e.Value != null)
             {
                 if (e.Value is bool gioiTinh)
@@ -428,6 +505,58 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     e.Value = gioiTinh ? "Nam" : "Nữ";
                     e.FormattingApplied = true;
                 }
+            }
+
+            // hình ảnh
+            if (dataGridView.Columns[e.ColumnIndex].Name == "HinhAnh")
+            {
+                var dataItem = dataGridView.Rows[e.RowIndex].DataBoundItem;
+                if (dataItem == null) return;
+
+                string hinhAnh = "";
+                bool gioiTinh = true;
+
+                if (dataItem is GiangVien gv)
+                {
+                    hinhAnh = gv.HinhAnh;
+                    gioiTinh = gv.GioiTinh;
+                }
+                else if (dataItem is NhanVien nv)
+                {
+                    hinhAnh = nv.HinhAnh;
+                    gioiTinh = nv.GioiTinh;
+                }
+                else
+                {
+                    return;
+                }
+
+                Image img = null;
+                if (!string.IsNullOrEmpty(hinhAnh))
+                {
+                    string fullPath = System.IO.Path.Combine(folderAnh, hinhAnh);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        try
+                        {
+                            using (var stream = new System.IO.FileStream(fullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                            {
+                                img = Image.FromStream(stream);
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+
+                if (img == null)
+                {
+                    img = gioiTinh ? Properties.Resources.nam_avatar : Properties.Resources.nu_avatar;
+                }
+
+                e.Value = img;
+                e.FormattingApplied = true;
             }
         }
     }

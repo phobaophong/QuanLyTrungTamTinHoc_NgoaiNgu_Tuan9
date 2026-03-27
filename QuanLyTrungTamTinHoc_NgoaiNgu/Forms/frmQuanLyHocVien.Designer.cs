@@ -78,9 +78,11 @@
             DiaChi = new DataGridViewTextBoxColumn();
             Email = new DataGridViewTextBoxColumn();
             TrangThai = new DataGridViewTextBoxColumn();
-            HinhAnh = new DataGridViewTextBoxColumn();
+            HinhAnh = new DataGridViewImageColumn();
             XemChiTiet = new DataGridViewLinkColumn();
             grbDataGrid = new GroupBox();
+            btnNhapExcel = new Button();
+            btnXuatExcel = new Button();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -251,6 +253,8 @@
             // groupBox1
             // 
             groupBox1.BackColor = Color.White;
+            groupBox1.Controls.Add(btnXuatExcel);
+            groupBox1.Controls.Add(btnNhapExcel);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(txtEmail);
             groupBox1.Controls.Add(label9);
@@ -586,10 +590,12 @@
             // 
             // HinhAnh
             // 
-            HinhAnh.DataPropertyName = "HinhAnh";
             HinhAnh.HeaderText = "Hình ảnh";
+            HinhAnh.ImageLayout = DataGridViewImageCellLayout.Zoom;
             HinhAnh.MinimumWidth = 6;
             HinhAnh.Name = "HinhAnh";
+            HinhAnh.Resizable = DataGridViewTriState.True;
+            HinhAnh.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
             // XemChiTiet
             // 
@@ -611,6 +617,26 @@
             grbDataGrid.Size = new Size(1475, 588);
             grbDataGrid.TabIndex = 3;
             grbDataGrid.TabStop = false;
+            // 
+            // btnNhapExcel
+            // 
+            btnNhapExcel.Location = new Point(620, 195);
+            btnNhapExcel.Name = "btnNhapExcel";
+            btnNhapExcel.Size = new Size(133, 34);
+            btnNhapExcel.TabIndex = 38;
+            btnNhapExcel.Text = "Nhập Excel";
+            btnNhapExcel.UseVisualStyleBackColor = true;
+            btnNhapExcel.Click += btnNhapExcel_Click;
+            // 
+            // btnXuatExcel
+            // 
+            btnXuatExcel.Location = new Point(769, 195);
+            btnXuatExcel.Name = "btnXuatExcel";
+            btnXuatExcel.Size = new Size(133, 34);
+            btnXuatExcel.TabIndex = 39;
+            btnXuatExcel.Text = "Xuất Excel";
+            btnXuatExcel.UseVisualStyleBackColor = true;
+            btnXuatExcel.Click += btnXuatExcel_Click;
             // 
             // frmQuanLyHocVien
             // 
@@ -694,7 +720,9 @@
         private DataGridViewTextBoxColumn DiaChi;
         private DataGridViewTextBoxColumn Email;
         private DataGridViewTextBoxColumn TrangThai;
-        private DataGridViewTextBoxColumn HinhAnh;
+        private DataGridViewImageColumn HinhAnh;
         private DataGridViewLinkColumn XemChiTiet;
+        private Button btnXuatExcel;
+        private Button btnNhapExcel;
     }
 }

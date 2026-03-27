@@ -18,6 +18,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public frmTraCuuDiemThiThu()
         {
             InitializeComponent();
+
+            Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)

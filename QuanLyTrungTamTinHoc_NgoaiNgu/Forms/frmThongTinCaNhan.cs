@@ -25,6 +25,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             InitializeComponent();
             idDuLieu = idTruyenVao;
             loai = loaiTruyenVao;
+
+            Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
         private void frmThongTinCaNhan_Load(object sender, EventArgs e)

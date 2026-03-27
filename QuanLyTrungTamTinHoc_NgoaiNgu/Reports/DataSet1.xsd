@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="DataSet1" msprop:Generator_DataSetName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="HoaDonHocPhi" msprop:Generator_RowEvHandlerName="HoaDonHocPhiRowChangeEventHandler" msprop:Generator_RowDeletedName="HoaDonHocPhiRowDeleted" msprop:Generator_RowDeletingName="HoaDonHocPhiRowDeleting" msprop:Generator_RowEvArgName="HoaDonHocPhiRowChangeEvent" msprop:Generator_TablePropName="HoaDonHocPhi" msprop:Generator_RowChangedName="HoaDonHocPhiRowChanged" msprop:Generator_RowChangingName="HoaDonHocPhiRowChanging" msprop:Generator_TableClassName="HoaDonHocPhiDataTable" msprop:Generator_RowClassName="HoaDonHocPhiRow" msprop:Generator_TableVarName="tableHoaDonHocPhi" msprop:Generator_UserTableName="HoaDonHocPhi">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="HocVienID" msprop:Generator_ColumnPropNameInRow="HocVienID" msprop:Generator_ColumnPropNameInTable="HocVienIDColumn" msprop:Generator_ColumnVarNameInTable="columnHocVienID" msprop:Generator_UserColumnName="HocVienID" type="xs:int" minOccurs="0" />
+              <xs:element name="HoVaTen" msprop:Generator_ColumnPropNameInRow="HoVaTen" msprop:Generator_ColumnPropNameInTable="HoVaTenColumn" msprop:Generator_ColumnVarNameInTable="columnHoVaTen" msprop:Generator_UserColumnName="HoVaTen" type="xs:string" minOccurs="0" />
+              <xs:element name="LopHocID" msprop:Generator_ColumnPropNameInRow="LopHocID" msprop:Generator_ColumnPropNameInTable="LopHocIDColumn" msprop:Generator_ColumnVarNameInTable="columnLopHocID" msprop:Generator_UserColumnName="LopHocID" type="xs:int" minOccurs="0" />
+              <xs:element name="TenLop" msprop:Generator_ColumnPropNameInRow="TenLop" msprop:Generator_ColumnPropNameInTable="TenLopColumn" msprop:Generator_ColumnVarNameInTable="columnTenLop" msprop:Generator_UserColumnName="TenLop" type="xs:string" minOccurs="0" />
+              <xs:element name="SoTienDaDong" msprop:Generator_ColumnPropNameInRow="SoTienDaDong" msprop:Generator_ColumnPropNameInTable="SoTienDaDongColumn" msprop:Generator_ColumnVarNameInTable="columnSoTienDaDong" msprop:Generator_UserColumnName="SoTienDaDong" type="xs:string" minOccurs="0" />
+              <xs:element name="NgayDong" msprop:Generator_ColumnPropNameInRow="NgayDong" msprop:Generator_ColumnPropNameInTable="NgayDongColumn" msprop:Generator_ColumnVarNameInTable="columnNgayDong" msprop:Generator_UserColumnName="NgayDong" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="HoaDonHocPhiKey1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:HoaDonHocPhi" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

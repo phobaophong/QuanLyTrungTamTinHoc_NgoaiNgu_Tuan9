@@ -20,6 +20,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public frmThoiKhoaBieu()
         {
             InitializeComponent();
+
+            Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
         private void frmThoiKhoaBieu_Load(object sender, EventArgs e)

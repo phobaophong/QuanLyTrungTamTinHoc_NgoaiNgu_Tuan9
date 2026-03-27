@@ -237,6 +237,7 @@
             dtpNgayBatDau.Name = "dtpNgayBatDau";
             dtpNgayBatDau.Size = new Size(177, 30);
             dtpNgayBatDau.TabIndex = 31;
+            dtpNgayBatDau.ValueChanged += dtpNgayBatDau_ValueChanged;
             // 
             // pictureBox2
             // 

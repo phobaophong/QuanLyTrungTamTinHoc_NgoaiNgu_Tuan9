@@ -20,11 +20,13 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public frmQuanLyLopHoc()
         {
             InitializeComponent();
+
+            Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
         private void BatTatChucNang(bool giaTri)
         {
-            btnLuu.Enabled = giaTri;
+
             btnHuyBo.Enabled = giaTri;
             txtTenLopHoc.Enabled = giaTri;
             dtpNgayBatDau.Enabled = giaTri;
@@ -35,12 +37,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             btnThem.Enabled = !giaTri;
             btnSua.Enabled = !giaTri;
             btnXoa.Enabled = !giaTri;
-            btnNhapExcel.Enabled = !giaTri;
-            btnXuatExcel.Enabled = !giaTri;
+
         }
         private void LoadData()
         {
+            context = new QuanLyTrungTamContext();
             var lop = context.LopHoc.ToList();
+
+            txtTenLopHoc.DataBindings.Clear();
+            dtpNgayBatDau.DataBindings.Clear();
+            dtpNgayKetThuc.DataBindings.Clear();
+
             bindingSource.DataSource = lop;
 
             txtTenLopHoc.DataBindings.Clear();
@@ -65,7 +72,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnThem_Click(object sender, EventArgs e)
         {
 
-            using (frmQuanLyLopHoc_ThemLop them = new frmQuanLyLopHoc_ThemLop())
+            using (frmQuanLyLopHoc_ThemLop them = new frmQuanLyLopHoc_ThemLop(id = 0))
             {
                 them.ShowDialog();
             }
@@ -75,9 +82,27 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            temp = true;
-            BatTatChucNang(true);
-            txtTenLopHoc.Focus();
+            if (dataGridView.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn lớp học cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                int idCanSua = Convert.ToInt32(dataGridView.CurrentRow.Cells["colID"].Value);
+
+                using (frmQuanLyLopHoc_ThemLop frmSua = new frmQuanLyLopHoc_ThemLop(idCanSua))
+                {
+                    frmSua.ShowDialog();
+                }
+
+                LoadData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi mở form sửa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnTimKiem_Click(object sender, EventArgs e)
@@ -128,56 +153,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             }
         }
 
-        private void btnLuu_Click(object sender, EventArgs e)
-        {
-            if (temp) // sửa
-            {
-                if (dataGridView.CurrentRow == null)
-                {
-                    MessageBox.Show("Vui lòng chọn lớp cần sửa!");
-                    return;
-                }
-
-                int id = Convert.ToInt32(dataGridView.CurrentRow.Cells["colID"].Value);
-
-                var lop = context.LopHoc.Find(id);
-
-                if (lop == null)
-                {
-                    MessageBox.Show("Không tìm thấy lớp!");
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(txtTenLopHoc.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập tên lớp!");
-                    txtTenLopHoc.Focus();
-                    return;
-                }
-
-                if (dtpNgayKetThuc.Value < dtpNgayBatDau.Value)
-                {
-                    MessageBox.Show("Ngày kết thúc phải >= ngày bắt đầu!");
-                    return;
-                }
-
-                lop.TenLopHoc = txtTenLopHoc.Text;
-                lop.NgayBatDau = dtpNgayBatDau.Value;
-                lop.NgayKetThuc = dtpNgayKetThuc.Value;
-                lop.TrangThai = rdoDangMo.Checked;
-
-                context.SaveChanges();
-
-                MessageBox.Show("Cập nhật thành công");
-
-                BatTatChucNang(false);
-                LoadData();
-            }
-            else
-            {
-
-            }
-        }
+        
 
         private void btnHuyBo_Click(object sender, EventArgs e)
         {
@@ -185,15 +161,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void btnNhapExcel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnXuatExcel_Click(object sender, EventArgs e)
         {
 
         }

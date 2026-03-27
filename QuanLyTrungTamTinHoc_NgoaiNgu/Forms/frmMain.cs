@@ -23,8 +23,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         frmQuanLyNhanSu quanLyNhanSu = null;
         frmThoiKhoaBieu thoiKhoaBieu = null;
         frmDangNhap dangNhap = null;
-        frmHocPhi hocPhi = null;
-        frmDiemSo diemSo = null;
+        frmQuanLyHocPhi hocPhi = null;
+        frmQuanLyDiemSo diemSo = null;
         frmTraCuuDiemThiThu traCuuDiemThiThu = null;
         frmThongTinCaNhan thongTinCaNhan = null;
         string hoVaTen = "";
@@ -153,7 +153,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (hocPhi == null || hocPhi.IsDisposed)
             {
-                hocPhi = new frmHocPhi();
+                hocPhi = new frmQuanLyHocPhi();
                 hocPhi.MdiParent = this;
                 hocPhi.Dock = DockStyle.Fill;
                 hocPhi.Show();
@@ -205,13 +205,13 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (diemSo == null || diemSo.IsDisposed)
             {
-                diemSo = new frmDiemSo();
+                diemSo = new frmQuanLyDiemSo();
                 diemSo.MdiParent = this;
                 diemSo.Dock = DockStyle.Fill;
                 diemSo.Show();
             }
             else
-                quanLyNhanSu.Activate();
+                diemSo.Activate();
         }
 
         private void quảnLýNhânSựToolStripMenuItem_Click(object sender, EventArgs e)
@@ -275,27 +275,25 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDangNhap.Enabled = false;
 
 
-
-
-            // Hiển thị thông tin trên thanh trạng thái 
             lblTrangThai.Text = "Nhân viên: " + hoVaTen;
         }
         public void QuyenGiangVien()
         {
+            mnuDangNhap.Enabled = false;
+
             mnuQuanLyHocPhi.Visible = false;
             mnuQuanLyLopHoc.Visible = false;
             mnuQuanLyKhoaHoc.Visible = false;
             mnuQuanLyHocVien.Visible = false;
             mnuQuanLyNhanSu.Visible = false;
 
-
-
-            // Hiển thị thông tin trên thanh trạng thái 
             lblTrangThai.Text = "Giảng viên: " + hoVaTen;
         }
 
         public void QuyenHocVien()
         {
+            mnuDangNhap.Enabled = false; 
+
             mnuQuanLy.Visible = false;
 
             lblTrangThai.Text = "Học viên: " + hoVaTen;

@@ -32,21 +32,17 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             pictureBox1 = new PictureBox();
-            btnXuatExcel = new Button();
-            btnNhapExcel = new Button();
             btnThoat = new Button();
             btnXoa = new Button();
             btnHuyBo = new Button();
-            btnLuu = new Button();
             btnSua = new Button();
             btnThem = new Button();
             groupBox1 = new GroupBox();
-            button1 = new Button();
+            btnChiTiet = new Button();
             rdoDaDong = new RadioButton();
             rdoDangMo = new RadioButton();
             dtpNgayKetThuc = new DateTimePicker();
             dtpNgayBatDau = new DateTimePicker();
-            btnTimKiem = new Button();
             label4 = new Label();
             txtTenLopHoc = new TextBox();
             label3 = new Label();
@@ -77,30 +73,6 @@
             pictureBox1.Size = new Size(253, 165);
             pictureBox1.TabIndex = 25;
             pictureBox1.TabStop = false;
-            // 
-            // btnXuatExcel
-            // 
-            btnXuatExcel.BackColor = Color.DodgerBlue;
-            btnXuatExcel.Font = new Font("Segoe UI", 10.2F);
-            btnXuatExcel.Location = new Point(804, 90);
-            btnXuatExcel.Name = "btnXuatExcel";
-            btnXuatExcel.Size = new Size(129, 39);
-            btnXuatExcel.TabIndex = 24;
-            btnXuatExcel.Text = "Xuất Excel...";
-            btnXuatExcel.UseVisualStyleBackColor = false;
-            btnXuatExcel.Click += btnXuatExcel_Click;
-            // 
-            // btnNhapExcel
-            // 
-            btnNhapExcel.BackColor = Color.DodgerBlue;
-            btnNhapExcel.Font = new Font("Segoe UI", 10.2F);
-            btnNhapExcel.Location = new Point(804, 41);
-            btnNhapExcel.Name = "btnNhapExcel";
-            btnNhapExcel.Size = new Size(129, 39);
-            btnNhapExcel.TabIndex = 23;
-            btnNhapExcel.Text = "Nhập Excel...";
-            btnNhapExcel.UseVisualStyleBackColor = false;
-            btnNhapExcel.Click += btnNhapExcel_Click;
             // 
             // btnThoat
             // 
@@ -139,19 +111,6 @@
             btnHuyBo.UseVisualStyleBackColor = false;
             btnHuyBo.Click += btnHuyBo_Click;
             // 
-            // btnLuu
-            // 
-            btnLuu.BackColor = Color.FromArgb(0, 192, 0);
-            btnLuu.Font = new Font("Segoe UI", 10.2F);
-            btnLuu.ForeColor = Color.Black;
-            btnLuu.Location = new Point(659, 41);
-            btnLuu.Name = "btnLuu";
-            btnLuu.Size = new Size(129, 39);
-            btnLuu.TabIndex = 20;
-            btnLuu.Text = "Xác nhận";
-            btnLuu.UseVisualStyleBackColor = false;
-            btnLuu.Click += btnLuu_Click;
-            // 
             // btnSua
             // 
             btnSua.BackColor = Color.DodgerBlue;
@@ -181,20 +140,16 @@
             // 
             groupBox1.BackColor = Color.White;
             groupBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(btnChiTiet);
             groupBox1.Controls.Add(rdoDaDong);
             groupBox1.Controls.Add(rdoDangMo);
             groupBox1.Controls.Add(dtpNgayKetThuc);
             groupBox1.Controls.Add(dtpNgayBatDau);
-            groupBox1.Controls.Add(btnTimKiem);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(pictureBox1);
-            groupBox1.Controls.Add(btnXuatExcel);
-            groupBox1.Controls.Add(btnNhapExcel);
             groupBox1.Controls.Add(btnThoat);
             groupBox1.Controls.Add(btnXoa);
             groupBox1.Controls.Add(btnHuyBo);
-            groupBox1.Controls.Add(btnLuu);
             groupBox1.Controls.Add(btnSua);
             groupBox1.Controls.Add(btnThem);
             groupBox1.Controls.Add(txtTenLopHoc);
@@ -210,16 +165,16 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin lớp học";
             // 
-            // button1
+            // btnChiTiet
             // 
-            button1.BackColor = Color.DodgerBlue;
-            button1.Font = new Font("Segoe UI", 10.2F);
-            button1.Location = new Point(659, 188);
-            button1.Name = "button1";
-            button1.Size = new Size(129, 39);
-            button1.TabIndex = 35;
-            button1.Text = "Chi tiết";
-            button1.UseVisualStyleBackColor = false;
+            btnChiTiet.BackColor = Color.DodgerBlue;
+            btnChiTiet.Font = new Font("Segoe UI", 10.2F);
+            btnChiTiet.Location = new Point(659, 41);
+            btnChiTiet.Name = "btnChiTiet";
+            btnChiTiet.Size = new Size(129, 39);
+            btnChiTiet.TabIndex = 35;
+            btnChiTiet.Text = "Chi tiết";
+            btnChiTiet.UseVisualStyleBackColor = false;
             // 
             // rdoDaDong
             // 
@@ -260,18 +215,6 @@
             dtpNgayBatDau.Name = "dtpNgayBatDau";
             dtpNgayBatDau.Size = new Size(303, 30);
             dtpNgayBatDau.TabIndex = 31;
-            // 
-            // btnTimKiem
-            // 
-            btnTimKiem.BackColor = Color.DodgerBlue;
-            btnTimKiem.Font = new Font("Segoe UI", 10.2F);
-            btnTimKiem.Location = new Point(804, 139);
-            btnTimKiem.Name = "btnTimKiem";
-            btnTimKiem.Size = new Size(129, 39);
-            btnTimKiem.TabIndex = 30;
-            btnTimKiem.Text = "Tìm kiếm ";
-            btnTimKiem.UseVisualStyleBackColor = false;
-            btnTimKiem.Click += btnTimKiem_Click;
             // 
             // label4
             // 
@@ -430,12 +373,9 @@
         #endregion
 
         private PictureBox pictureBox1;
-        private Button btnXuatExcel;
-        private Button btnNhapExcel;
         private Button btnThoat;
         private Button btnXoa;
         private Button btnHuyBo;
-        private Button btnLuu;
         private Button btnSua;
         private Button btnThem;
         private GroupBox groupBox1;
@@ -446,7 +386,6 @@
         private Label label4;
         private GroupBox groupBox2;
         private DataGridView dataGridView;
-        private Button btnTimKiem;
         private DateTimePicker dtpNgayKetThuc;
         private DateTimePicker dtpNgayBatDau;
         private RadioButton rdoDangMo;
@@ -458,6 +397,6 @@
         private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewTextBoxColumn SiSo;
         private DataGridViewTextBoxColumn KhoaHocID;
-        private Button button1;
+        private Button btnChiTiet;
     }
 }
