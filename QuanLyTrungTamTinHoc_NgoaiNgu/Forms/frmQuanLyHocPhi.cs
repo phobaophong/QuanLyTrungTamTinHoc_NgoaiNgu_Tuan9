@@ -172,7 +172,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         MessageBox.Show("Số tiền không hợp lệ!");
                         return;
                     }
-                    hocPhiCuaHocVien.NgayDong = dtpNgayDong.Value;
+                    hocPhiCuaHocVien.NgayDong = dtpNgayDong.Value.Date;
                     hocPhiCuaHocVien.TrangThai = chkTrangThai.Checked;
 
                     try

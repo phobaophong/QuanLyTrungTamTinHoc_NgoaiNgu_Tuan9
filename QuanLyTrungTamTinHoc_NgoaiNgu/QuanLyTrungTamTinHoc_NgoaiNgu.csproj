@@ -50,6 +50,9 @@
     <None Update="Reports\rptInBienLaiHocPhi.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Reports\rptThongKeDoanhThu.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -41,6 +41,7 @@
             mnuQuanLyNhanSu = new ToolStripMenuItem();
             mnuQuanLyHocPhi = new ToolStripMenuItem();
             mnuQuanLyDiemSo = new ToolStripMenuItem();
+            mnuQuanLyDoanhThu = new ToolStripMenuItem();
             mnuXemTKB = new ToolStripMenuItem();
             lịchHọcToolStripMenuItem = new ToolStripMenuItem();
             mnuHocPhi = new ToolStripMenuItem();
@@ -79,14 +80,15 @@
             // 
             mnuDangNhap.Font = new Font("Segoe UI", 10.2F);
             mnuDangNhap.Name = "mnuDangNhap";
-            mnuDangNhap.Size = new Size(198, 28);
+            mnuDangNhap.Size = new Size(224, 28);
             mnuDangNhap.Text = "Đăng nhập";
+            mnuDangNhap.Click += mnuDangNhap_Click;
             // 
             // mnuDangXuat
             // 
             mnuDangXuat.Font = new Font("Segoe UI", 10.2F);
             mnuDangXuat.Name = "mnuDangXuat";
-            mnuDangXuat.Size = new Size(198, 28);
+            mnuDangXuat.Size = new Size(224, 28);
             mnuDangXuat.Text = "Đăng xuất";
             mnuDangXuat.Click += mnuDangXuat_Click;
             // 
@@ -94,7 +96,7 @@
             // 
             mnuDoiMatKhau.Font = new Font("Segoe UI", 10.2F);
             mnuDoiMatKhau.Name = "mnuDoiMatKhau";
-            mnuDoiMatKhau.Size = new Size(198, 28);
+            mnuDoiMatKhau.Size = new Size(224, 28);
             mnuDoiMatKhau.Text = "Đổi mật khẩu";
             // 
             // mnuThoat
@@ -102,12 +104,12 @@
             mnuThoat.Font = new Font("Segoe UI", 10.2F);
             mnuThoat.Name = "mnuThoat";
             mnuThoat.ShortcutKeys = Keys.Alt | Keys.F4;
-            mnuThoat.Size = new Size(198, 28);
+            mnuThoat.Size = new Size(224, 28);
             mnuThoat.Text = "Thoát";
             // 
             // mnuQuanLy
             // 
-            mnuQuanLy.DropDownItems.AddRange(new ToolStripItem[] { mnuQuanLyKhoaHoc, mnuQuanLyLopHoc, mnuQuanLyHocVien, mnuQuanLyNhanSu, mnuQuanLyHocPhi, mnuQuanLyDiemSo });
+            mnuQuanLy.DropDownItems.AddRange(new ToolStripItem[] { mnuQuanLyKhoaHoc, mnuQuanLyLopHoc, mnuQuanLyHocVien, mnuQuanLyNhanSu, mnuQuanLyHocPhi, mnuQuanLyDiemSo, mnuQuanLyDoanhThu });
             mnuQuanLy.Font = new Font("Segoe UI", 10.2F);
             mnuQuanLy.Name = "mnuQuanLy";
             mnuQuanLy.Size = new Size(83, 27);
@@ -117,7 +119,7 @@
             // 
             mnuQuanLyKhoaHoc.Font = new Font("Segoe UI", 10.2F);
             mnuQuanLyKhoaHoc.Name = "mnuQuanLyKhoaHoc";
-            mnuQuanLyKhoaHoc.Size = new Size(228, 28);
+            mnuQuanLyKhoaHoc.Size = new Size(238, 28);
             mnuQuanLyKhoaHoc.Text = "Quản lý khóa học";
             mnuQuanLyKhoaHoc.Click += mnuQuanLyKhoaHoc_Click;
             // 
@@ -125,37 +127,44 @@
             // 
             mnuQuanLyLopHoc.Font = new Font("Segoe UI", 10.2F);
             mnuQuanLyLopHoc.Name = "mnuQuanLyLopHoc";
-            mnuQuanLyLopHoc.Size = new Size(228, 28);
+            mnuQuanLyLopHoc.Size = new Size(238, 28);
             mnuQuanLyLopHoc.Text = "Quản lý lớp học";
             mnuQuanLyLopHoc.Click += mnuQuanLyLopHoc_Click;
             // 
             // mnuQuanLyHocVien
             // 
             mnuQuanLyHocVien.Name = "mnuQuanLyHocVien";
-            mnuQuanLyHocVien.Size = new Size(228, 28);
+            mnuQuanLyHocVien.Size = new Size(238, 28);
             mnuQuanLyHocVien.Text = "Quản lý học viên";
             mnuQuanLyHocVien.Click += mnuQuanLySinhVien_Click;
             // 
             // mnuQuanLyNhanSu
             // 
             mnuQuanLyNhanSu.Name = "mnuQuanLyNhanSu";
-            mnuQuanLyNhanSu.Size = new Size(228, 28);
+            mnuQuanLyNhanSu.Size = new Size(238, 28);
             mnuQuanLyNhanSu.Text = "Quản lý nhân sự";
             mnuQuanLyNhanSu.Click += quảnLýNhânSựToolStripMenuItem_Click;
             // 
             // mnuQuanLyHocPhi
             // 
             mnuQuanLyHocPhi.Name = "mnuQuanLyHocPhi";
-            mnuQuanLyHocPhi.Size = new Size(228, 28);
+            mnuQuanLyHocPhi.Size = new Size(238, 28);
             mnuQuanLyHocPhi.Text = "Quan lý học phí";
             mnuQuanLyHocPhi.Click += mnuQuanLyHocPhi_Click;
             // 
             // mnuQuanLyDiemSo
             // 
             mnuQuanLyDiemSo.Name = "mnuQuanLyDiemSo";
-            mnuQuanLyDiemSo.Size = new Size(228, 28);
+            mnuQuanLyDiemSo.Size = new Size(238, 28);
             mnuQuanLyDiemSo.Text = "Quản lý điểm số";
             mnuQuanLyDiemSo.Click += mnuQuanLyDiemSo_Click;
+            // 
+            // mnuQuanLyDoanhThu
+            // 
+            mnuQuanLyDoanhThu.Name = "mnuQuanLyDoanhThu";
+            mnuQuanLyDoanhThu.Size = new Size(238, 28);
+            mnuQuanLyDoanhThu.Text = "Quản lý doanh thu";
+            mnuQuanLyDoanhThu.Click += mnuQuanLyDoanhThu_Click;
             // 
             // mnuXemTKB
             // 
@@ -271,5 +280,6 @@
         private ToolStripMenuItem mnuQuanLyDiemSo;
         private ToolStripMenuItem mnuTraCuuDiemThiThu;
         private ToolStripMenuItem mnuTraCuuTTCN;
+        private ToolStripMenuItem mnuQuanLyDoanhThu;
     }
 }

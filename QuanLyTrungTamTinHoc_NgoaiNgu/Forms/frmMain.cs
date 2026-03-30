@@ -27,6 +27,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         frmQuanLyDiemSo diemSo = null;
         frmTraCuuDiemThiThu traCuuDiemThiThu = null;
         frmThongTinCaNhan thongTinCaNhan = null;
+        frmThongKeDoanhThu thongKeDoanhThu = null;
         string hoVaTen = "";
         int idDangNhap;
         int idQuyenHan;
@@ -239,6 +240,18 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             else
                 thoiKhoaBieu.Activate();
         }
+        private void mnuQuanLyDoanhThu_Click(object sender, EventArgs e)
+        {
+            if (thongKeDoanhThu == null || thongKeDoanhThu.IsDisposed)
+            {
+                thongKeDoanhThu = new frmThongKeDoanhThu();
+                thongKeDoanhThu.MdiParent = this;
+                thongKeDoanhThu.Dock = DockStyle.Fill;
+                thongKeDoanhThu.Show();
+            }
+            else
+                thongKeDoanhThu.Activate();
+        }
 
 
         private void lblLienKet_Click(object sender, EventArgs e)
@@ -265,6 +278,9 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDangXuat.Enabled = false;
             mnuDoiMatKhau.Enabled = false;
 
+            mnuQuanLy.Visible = false;
+
+
             // Hiển thị thông tin trên thanh trạng thái 
             lblTrangThai.Text = "Chưa đăng nhập.";
         }
@@ -274,35 +290,41 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             mnuDangNhap.Enabled = false;
 
-
+            mnuQuanLy.Visible = true;
             lblTrangThai.Text = "Nhân viên: " + hoVaTen;
         }
         public void QuyenGiangVien()
         {
             mnuDangNhap.Enabled = false;
 
+            mnuQuanLy.Visible = true;
             mnuQuanLyHocPhi.Visible = false;
             mnuQuanLyLopHoc.Visible = false;
             mnuQuanLyKhoaHoc.Visible = false;
             mnuQuanLyHocVien.Visible = false;
             mnuQuanLyNhanSu.Visible = false;
+            mnuQuanLyDoanhThu.Visible = false;
 
             lblTrangThai.Text = "Giảng viên: " + hoVaTen;
         }
 
         public void QuyenHocVien()
         {
-            mnuDangNhap.Enabled = false; 
+            mnuDangNhap.Enabled = false;
 
             mnuQuanLy.Visible = false;
 
             lblTrangThai.Text = "Học viên: " + hoVaTen;
         }
-
         private void frmMain_Load(object sender, EventArgs e)
         {
             ChuaDangNhap();
             DangNhap();
+
+        }
+
+        private void mnuDangNhap_Click(object sender, EventArgs e)
+        {
 
         }
     }

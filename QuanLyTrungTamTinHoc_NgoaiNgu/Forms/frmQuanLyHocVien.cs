@@ -30,6 +30,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
         private void frmQuanLySinhVien_Load(object sender, EventArgs e)
         {
+            context = new QuanLyTrungTamContext();
             dataGridView.AutoGenerateColumns = false;
             ThemCotXemChiTiet();
             BatTatCaChucNang(false);
@@ -114,6 +115,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
         public void LoadCbbKhoaHoc()
         {
+            context = new QuanLyTrungTamContext();
             var kh = context.KhoaHoc.ToList();
 
             cbbKhoaHoc.DataSource = kh;
@@ -122,6 +124,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
         public void LoadCbbLopHoc(int id)
         {
+            context = new QuanLyTrungTamContext();
             var lop = context.LopHoc.Where(x => x.KhoaHocID == id).ToList();
 
             cbbLopHoc.DataSource = lop;
@@ -131,6 +134,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void cbbKhoaHoc_SelectedIndexChanged(object sender, EventArgs e)
         {
+            context = new QuanLyTrungTamContext();
             if (cbbKhoaHoc.SelectedValue != null && cbbKhoaHoc.SelectedValue is int)
             {
                 id = (int)cbbKhoaHoc.SelectedValue;
@@ -139,6 +143,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
         public void LoadDataTheoLop(int idLop)
         {
+            context = new QuanLyTrungTamContext();
             var hv = context.HocPhi
                     .Where(x => x.LopHocID == idLop)
                     .Select(x => x.HocVien)
@@ -151,6 +156,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
         public void LoadDataTheoMaSo()
         {
+            context = new QuanLyTrungTamContext();
             string maSo = txtMaSoTimKiem.Text.Trim();
 
             var listHv = context.HocVien
@@ -572,6 +578,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         // hiển thị danh sách sinh vien bảo luu, đã tốt nghiệp và đang học
         private void LoadDataNhanh(int s)
         {
+            context = new QuanLyTrungTamContext();
             // 1 đang học, 2 đã tốt nghiệp, 3 bảo lưu
             var listHv = context.HocVien
                                 .Where(x => x.TrangThai == s)
@@ -593,7 +600,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
 
         private void btnDaTotNghiep_Click(object sender, EventArgs e)
-        {
+        {     
             LoadDataNhanh(3);
             grbDataGrid.Text = "Danh sách sinh viên - ĐÃ TỐT NGHIỆP";
 

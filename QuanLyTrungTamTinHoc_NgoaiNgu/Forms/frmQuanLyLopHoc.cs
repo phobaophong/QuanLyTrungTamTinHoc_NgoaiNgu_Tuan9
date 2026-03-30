@@ -112,49 +112,75 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            try
+            if (bindingSource.Current == null)
             {
-                if (dataGridView.CurrentRow == null)
+                MessageBox.Show("Vui lòng chọn một lớp học để xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var lopHienTai = bindingSource.Current as LopHoc;
+            if (lopHienTai == null) return;
+
+            string canhBao = $"CẢNH BÁO: Bạn đang yêu cầu xóa lớp học '{lopHienTai.TenLopHoc}'.\n\n" +
+                             $"Hành động này sẽ XÓA VĨNH VIỄN:\n" +
+                             $"- Toàn bộ Lịch Học của lớp này.\n" +
+                             $"- TOÀN BỘ HỌC VIÊN đang học trong lớp (Bao gồm xóa Tài Khoản, Điểm Số, và Lịch sử Học Phí của họ).\n\n" +
+                             $"Bạn có CHẮC CHẮN muốn xóa tận gốc lớp học này?";
+
+            if (MessageBox.Show(canhBao, "Xác nhận Xóa Tận Gốc", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            {
+                try
                 {
-                    MessageBox.Show("Vui lòng chọn lớp cần xóa!");
-                    return;
-                }
-
-                int id = Convert.ToInt32(dataGridView.CurrentRow.Cells["colID"].Value);
-
-                DialogResult result = MessageBox.Show(
-                    "Bạn có chắc muốn xóa lớp này không?",
-                    "Xác nhận",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
-
-                if (result == DialogResult.Yes)
-                {
-                    var lop = context.LopHoc.Find(id);
-
-                    if (lop != null)
+                    var lopHoc = context.LopHoc.Find(lopHienTai.ID);
+                    if (lopHoc != null)
                     {
-                        context.LopHoc.Remove(lop);
+                        var listIdHocVien = context.HocPhi
+                                                .Where(hp => hp.LopHocID == lopHoc.ID)
+                                                .Select(hp => hp.HocVienID)
+                                                .Distinct()
+                                                .ToList();
+
+                        foreach (var hvID in listIdHocVien)
+                        {
+                            var hv = context.HocVien.Find(hvID);
+                            if (hv != null)
+                            {
+                                var ketQua = context.KetQua.Where(kq => kq.HocVienID == hv.ID).ToList();
+                                if (ketQua.Any()) context.KetQua.RemoveRange(ketQua);
+
+                                var hocPhi = context.HocPhi.Where(hp => hp.HocVienID == hv.ID).ToList();
+                                if (hocPhi.Any()) context.HocPhi.RemoveRange(hocPhi);
+
+                                int? idTaiKhoan = hv.TaiKhoanID;
+
+                                context.HocVien.Remove(hv);
+
+                                if (idTaiKhoan != null)
+                                {
+                                    var tk = context.TaiKhoan.Find(idTaiKhoan);
+                                    if (tk != null) context.TaiKhoan.Remove(tk);
+                                }
+                            }
+                        }
+
+                        var lichHoc = context.LichHoc.Where(l => l.LopHocID == lopHoc.ID).ToList();
+                        if (lichHoc.Any()) context.LichHoc.RemoveRange(lichHoc);
+
+                        context.LopHoc.Remove(lopHoc);
                         context.SaveChanges();
 
-                        MessageBox.Show("Xóa thành công");
+                        MessageBox.Show("Đã tiêu hủy sạch sẽ Lớp học và toàn bộ Học viên trực thuộc!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không tìm thấy lớp!");
+                        frmQuanLyLopHoc_Load(sender, e);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                catch (Exception ex)
+                {
+                    string inner = ex.InnerException != null ? "\nChi tiết gốc: " + ex.InnerException.Message : "";
+                    MessageBox.Show("Không thể xóa. Lỗi: " + ex.Message + inner, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
-
-        
-
         private void btnHuyBo_Click(object sender, EventArgs e)
         {
             frmQuanLyLopHoc_Load(sender, e);
@@ -162,7 +188,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnThoat_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void dataGridView_SelectionChanged(object sender, EventArgs e)

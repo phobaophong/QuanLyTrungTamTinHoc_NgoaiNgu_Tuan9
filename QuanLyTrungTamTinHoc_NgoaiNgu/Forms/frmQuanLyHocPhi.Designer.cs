@@ -210,9 +210,9 @@
             // 
             // btnInHoaDon
             // 
-            btnInHoaDon.Location = new Point(613, 159);
+            btnInHoaDon.Location = new Point(268, 149);
             btnInHoaDon.Name = "btnInHoaDon";
-            btnInHoaDon.Size = new Size(110, 29);
+            btnInHoaDon.Size = new Size(122, 29);
             btnInHoaDon.TabIndex = 30;
             btnInHoaDon.Text = "In biên lai";
             btnInHoaDon.UseVisualStyleBackColor = true;
@@ -220,9 +220,9 @@
             // 
             // btnXacNhan
             // 
-            btnXacNhan.Location = new Point(504, 159);
+            btnXacNhan.Location = new Point(140, 149);
             btnXacNhan.Name = "btnXacNhan";
-            btnXacNhan.Size = new Size(94, 29);
+            btnXacNhan.Size = new Size(122, 29);
             btnXacNhan.TabIndex = 29;
             btnXacNhan.Text = "Xác nhận";
             btnXacNhan.UseVisualStyleBackColor = true;
@@ -230,9 +230,9 @@
             // 
             // btnSua
             // 
-            btnSua.Location = new Point(394, 159);
+            btnSua.Location = new Point(15, 149);
             btnSua.Name = "btnSua";
-            btnSua.Size = new Size(94, 29);
+            btnSua.Size = new Size(122, 29);
             btnSua.TabIndex = 28;
             btnSua.Text = "Sửa";
             btnSua.UseVisualStyleBackColor = true;

@@ -37,14 +37,14 @@
             reportViewer1.Location = new Point(0, 0);
             reportViewer1.Name = "reportViewer1";
             reportViewer1.ServerReport.BearerToken = null;
-            reportViewer1.Size = new Size(800, 450);
+            reportViewer1.Size = new Size(1080, 630);
             reportViewer1.TabIndex = 0;
             // 
             // frmInBienLaiHocPhi
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1080, 630);
             Controls.Add(reportViewer1);
             Name = "frmInBienLaiHocPhi";
             Text = "In biên lai học phí";

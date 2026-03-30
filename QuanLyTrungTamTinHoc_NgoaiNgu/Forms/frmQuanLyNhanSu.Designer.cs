@@ -55,9 +55,6 @@
             txtMaSo = new TextBox();
             grbDataGrid = new GroupBox();
             dataGridView = new DataGridView();
-            groupBox2 = new GroupBox();
-            btnNhanVien = new Button();
-            btnGiangVien = new Button();
             colID = new DataGridViewTextBoxColumn();
             MaSo = new DataGridViewTextBoxColumn();
             HoVaTen = new DataGridViewTextBoxColumn();
@@ -68,6 +65,9 @@
             Email = new DataGridViewTextBoxColumn();
             BoPhan = new DataGridViewTextBoxColumn();
             HinhAnh = new DataGridViewImageColumn();
+            groupBox2 = new GroupBox();
+            btnNhanVien = new Button();
+            btnGiangVien = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picHinhAnh).BeginInit();
             groupBox6.SuspendLayout();
@@ -130,7 +130,7 @@
             // btnHuyBo
             // 
             btnHuyBo.Anchor = AnchorStyles.None;
-            btnHuyBo.Location = new Point(903, 230);
+            btnHuyBo.Location = new Point(912, 230);
             btnHuyBo.Name = "btnHuyBo";
             btnHuyBo.Size = new Size(101, 34);
             btnHuyBo.TabIndex = 51;
@@ -141,7 +141,7 @@
             // btnXacNhan
             // 
             btnXacNhan.Anchor = AnchorStyles.None;
-            btnXacNhan.Location = new Point(717, 230);
+            btnXacNhan.Location = new Point(736, 230);
             btnXacNhan.Name = "btnXacNhan";
             btnXacNhan.Size = new Size(101, 34);
             btnXacNhan.TabIndex = 50;
@@ -152,7 +152,7 @@
             // btnXoa
             // 
             btnXoa.Anchor = AnchorStyles.None;
-            btnXoa.Location = new Point(345, 230);
+            btnXoa.Location = new Point(384, 230);
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(101, 34);
             btnXoa.TabIndex = 49;
@@ -163,7 +163,7 @@
             // btnSua
             // 
             btnSua.Anchor = AnchorStyles.None;
-            btnSua.Location = new Point(531, 230);
+            btnSua.Location = new Point(560, 230);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(101, 34);
             btnSua.TabIndex = 48;
@@ -176,7 +176,7 @@
             btnThem.Anchor = AnchorStyles.None;
             btnThem.Location = new Point(104, 230);
             btnThem.Name = "btnThem";
-            btnThem.Size = new Size(156, 34);
+            btnThem.Size = new Size(205, 34);
             btnThem.TabIndex = 47;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = true;
@@ -185,7 +185,7 @@
             // btnDoiAnh
             // 
             btnDoiAnh.Anchor = AnchorStyles.None;
-            btnDoiAnh.Location = new Point(1089, 230);
+            btnDoiAnh.Location = new Point(1088, 230);
             btnDoiAnh.Name = "btnDoiAnh";
             btnDoiAnh.Size = new Size(101, 34);
             btnDoiAnh.TabIndex = 46;
@@ -378,41 +378,6 @@
             dataGridView.TabIndex = 0;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
             // 
-            // groupBox2
-            // 
-            groupBox2.BackColor = Color.White;
-            groupBox2.Controls.Add(btnNhanVien);
-            groupBox2.Controls.Add(btnGiangVien);
-            groupBox2.Dock = DockStyle.Bottom;
-            groupBox2.Location = new Point(0, 712);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(1327, 94);
-            groupBox2.TabIndex = 5;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Hiển thị danh sách";
-            // 
-            // btnNhanVien
-            // 
-            btnNhanVien.Anchor = AnchorStyles.None;
-            btnNhanVien.Location = new Point(709, 17);
-            btnNhanVien.Name = "btnNhanVien";
-            btnNhanVien.Size = new Size(200, 53);
-            btnNhanVien.TabIndex = 1;
-            btnNhanVien.Text = "Nhân viên";
-            btnNhanVien.UseVisualStyleBackColor = true;
-            btnNhanVien.Click += btnNhanVien_Click;
-            // 
-            // btnGiangVien
-            // 
-            btnGiangVien.Anchor = AnchorStyles.None;
-            btnGiangVien.Location = new Point(418, 17);
-            btnGiangVien.Name = "btnGiangVien";
-            btnGiangVien.Size = new Size(200, 53);
-            btnGiangVien.TabIndex = 0;
-            btnGiangVien.Text = "Giảng viên";
-            btnGiangVien.UseVisualStyleBackColor = true;
-            btnGiangVien.Click += btnGiangVien_Click;
-            // 
             // colID
             // 
             colID.DataPropertyName = "ID";
@@ -487,6 +452,41 @@
             HinhAnh.Name = "HinhAnh";
             HinhAnh.Resizable = DataGridViewTriState.True;
             HinhAnh.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // groupBox2
+            // 
+            groupBox2.BackColor = Color.White;
+            groupBox2.Controls.Add(btnNhanVien);
+            groupBox2.Controls.Add(btnGiangVien);
+            groupBox2.Dock = DockStyle.Bottom;
+            groupBox2.Location = new Point(0, 712);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(1327, 94);
+            groupBox2.TabIndex = 5;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Hiển thị danh sách";
+            // 
+            // btnNhanVien
+            // 
+            btnNhanVien.Anchor = AnchorStyles.None;
+            btnNhanVien.Location = new Point(709, 17);
+            btnNhanVien.Name = "btnNhanVien";
+            btnNhanVien.Size = new Size(200, 53);
+            btnNhanVien.TabIndex = 1;
+            btnNhanVien.Text = "Nhân viên";
+            btnNhanVien.UseVisualStyleBackColor = true;
+            btnNhanVien.Click += btnNhanVien_Click;
+            // 
+            // btnGiangVien
+            // 
+            btnGiangVien.Anchor = AnchorStyles.None;
+            btnGiangVien.Location = new Point(418, 17);
+            btnGiangVien.Name = "btnGiangVien";
+            btnGiangVien.Size = new Size(200, 53);
+            btnGiangVien.TabIndex = 0;
+            btnGiangVien.Text = "Giảng viên";
+            btnGiangVien.UseVisualStyleBackColor = true;
+            btnGiangVien.Click += btnGiangVien_Click;
             // 
             // frmQuanLyNhanSu
             // 
