@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             cbbKhoaHoc = new ComboBox();
             label2 = new Label();
             cbbLopHoc = new ComboBox();
@@ -58,6 +58,7 @@
             colThu6 = new DataGridViewTextBoxColumn();
             colThu7 = new DataGridViewTextBoxColumn();
             colChuNhat = new DataGridViewTextBoxColumn();
+            btnThoat = new Button();
             groupBox4.SuspendLayout();
             grbTaoTKB.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -112,6 +113,7 @@
             // groupBox4
             // 
             groupBox4.BackColor = Color.White;
+            groupBox4.Controls.Add(btnThoat);
             groupBox4.Controls.Add(btnHuyBo);
             groupBox4.Controls.Add(btnXacNhan);
             groupBox4.Controls.Add(btnTaoTKB);
@@ -124,7 +126,7 @@
             groupBox4.Dock = DockStyle.Top;
             groupBox4.Location = new Point(0, 0);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(1167, 177);
+            groupBox4.Size = new Size(1167, 225);
             groupBox4.TabIndex = 6;
             groupBox4.TabStop = false;
             groupBox4.Text = "Bộ lọc";
@@ -252,9 +254,9 @@
             groupBox1.BackColor = Color.White;
             groupBox1.Controls.Add(dataGridView);
             groupBox1.Dock = DockStyle.Fill;
-            groupBox1.Location = new Point(0, 177);
+            groupBox1.Location = new Point(0, 225);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1167, 561);
+            groupBox1.Size = new Size(1167, 513);
             groupBox1.TabIndex = 7;
             groupBox1.TabStop = false;
             // 
@@ -266,31 +268,31 @@
             dataGridView.AllowUserToResizeColumns = false;
             dataGridView.AllowUserToResizeRows = false;
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.Columns.AddRange(new DataGridViewColumn[] { colCa, colThu2, colThu3, colThu4, colThu5, colThu6, colThu7, colChuNhat });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.Location = new Point(3, 23);
             dataGridView.Name = "dataGridView";
             dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidth = 51;
             dataGridView.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dataGridView.Size = new Size(1161, 535);
+            dataGridView.Size = new Size(1161, 487);
             dataGridView.TabIndex = 0;
             // 
             // colCa
@@ -340,6 +342,16 @@
             colChuNhat.HeaderText = "Chủ nhật";
             colChuNhat.MinimumWidth = 6;
             colChuNhat.Name = "colChuNhat";
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(351, 168);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(125, 37);
+            btnThoat.TabIndex = 12;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // frmThoiKhoaBieu
             // 
@@ -392,5 +404,6 @@
         private Button btnHuyBo;
         private CheckBox chk357;
         private CheckBox chk246;
+        private Button btnThoat;
     }
 }

@@ -65,9 +65,11 @@
             Email = new DataGridViewTextBoxColumn();
             BoPhan = new DataGridViewTextBoxColumn();
             HinhAnh = new DataGridViewImageColumn();
+            XemChiTiet = new DataGridViewLinkColumn();
             groupBox2 = new GroupBox();
             btnNhanVien = new Button();
             btnGiangVien = new Button();
+            btnThoat = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picHinhAnh).BeginInit();
             groupBox6.SuspendLayout();
@@ -79,6 +81,7 @@
             // groupBox1
             // 
             groupBox1.BackColor = Color.White;
+            groupBox1.Controls.Add(btnThoat);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(txtBoPhan);
             groupBox1.Controls.Add(btnHuyBo);
@@ -130,7 +133,7 @@
             // btnHuyBo
             // 
             btnHuyBo.Anchor = AnchorStyles.None;
-            btnHuyBo.Location = new Point(912, 230);
+            btnHuyBo.Location = new Point(792, 230);
             btnHuyBo.Name = "btnHuyBo";
             btnHuyBo.Size = new Size(101, 34);
             btnHuyBo.TabIndex = 51;
@@ -141,7 +144,7 @@
             // btnXacNhan
             // 
             btnXacNhan.Anchor = AnchorStyles.None;
-            btnXacNhan.Location = new Point(736, 230);
+            btnXacNhan.Location = new Point(646, 230);
             btnXacNhan.Name = "btnXacNhan";
             btnXacNhan.Size = new Size(101, 34);
             btnXacNhan.TabIndex = 50;
@@ -152,7 +155,7 @@
             // btnXoa
             // 
             btnXoa.Anchor = AnchorStyles.None;
-            btnXoa.Location = new Point(384, 230);
+            btnXoa.Location = new Point(354, 230);
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(101, 34);
             btnXoa.TabIndex = 49;
@@ -163,7 +166,7 @@
             // btnSua
             // 
             btnSua.Anchor = AnchorStyles.None;
-            btnSua.Location = new Point(560, 230);
+            btnSua.Location = new Point(500, 230);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(101, 34);
             btnSua.TabIndex = 48;
@@ -185,7 +188,7 @@
             // btnDoiAnh
             // 
             btnDoiAnh.Anchor = AnchorStyles.None;
-            btnDoiAnh.Location = new Point(1088, 230);
+            btnDoiAnh.Location = new Point(1084, 230);
             btnDoiAnh.Name = "btnDoiAnh";
             btnDoiAnh.Size = new Size(101, 34);
             btnDoiAnh.TabIndex = 46;
@@ -287,6 +290,7 @@
             // 
             txtSdt.Anchor = AnchorStyles.None;
             txtSdt.Location = new Point(699, 32);
+            txtSdt.MaxLength = 10;
             txtSdt.Name = "txtSdt";
             txtSdt.Size = new Size(334, 27);
             txtSdt.TabIndex = 38;
@@ -368,7 +372,7 @@
             dataGridView.AllowUserToResizeRows = false;
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.Columns.AddRange(new DataGridViewColumn[] { colID, MaSo, HoVaTen, NgaySinh, GioiTinh, Sdt, DiaChi, Email, BoPhan, HinhAnh });
+            dataGridView.Columns.AddRange(new DataGridViewColumn[] { colID, MaSo, HoVaTen, NgaySinh, GioiTinh, Sdt, DiaChi, Email, BoPhan, HinhAnh, XemChiTiet });
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.Location = new Point(3, 23);
             dataGridView.Name = "dataGridView";
@@ -376,6 +380,7 @@
             dataGridView.RowHeadersWidth = 51;
             dataGridView.Size = new Size(1321, 496);
             dataGridView.TabIndex = 0;
+            dataGridView.CellContentClick += dataGridView_CellContentClick;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
             // 
             // colID
@@ -453,6 +458,14 @@
             HinhAnh.Resizable = DataGridViewTriState.True;
             HinhAnh.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
+            // XemChiTiet
+            // 
+            XemChiTiet.HeaderText = "Xem chi tiết";
+            XemChiTiet.MinimumWidth = 6;
+            XemChiTiet.Name = "XemChiTiet";
+            XemChiTiet.Resizable = DataGridViewTriState.True;
+            XemChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
             // groupBox2
             // 
             groupBox2.BackColor = Color.White;
@@ -487,6 +500,17 @@
             btnGiangVien.Text = "Giảng viên";
             btnGiangVien.UseVisualStyleBackColor = true;
             btnGiangVien.Click += btnGiangVien_Click;
+            // 
+            // btnThoat
+            // 
+            btnThoat.Anchor = AnchorStyles.None;
+            btnThoat.Location = new Point(938, 230);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(101, 34);
+            btnThoat.TabIndex = 54;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // frmQuanLyNhanSu
             // 
@@ -553,5 +577,7 @@
         private DataGridViewTextBoxColumn Email;
         private DataGridViewTextBoxColumn BoPhan;
         private DataGridViewImageColumn HinhAnh;
+        private DataGridViewLinkColumn XemChiTiet;
+        private Button btnThoat;
     }
 }

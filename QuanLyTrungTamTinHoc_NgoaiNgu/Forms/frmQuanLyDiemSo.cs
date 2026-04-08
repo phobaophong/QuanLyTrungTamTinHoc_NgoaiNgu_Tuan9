@@ -104,15 +104,16 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             var lopHoc = context.LopHoc.Find(idLop);
             string tenLop = lopHoc != null ? lopHoc.TenLopHoc : "";
 
-            var danhSachHienThi = dsHocVien.Select(hv => {
+            var danhSachHienThi = dsHocVien.Select(hv =>
+            {
                 var kq = dsKetQua.FirstOrDefault(k => k.HocVienID == hv.ID);
                 return new DanhSachDiemSo_ChiTiet
                 {
-                    ID = kq != null ? kq.ID : 0, 
-                    HocVienID = hv.ID,          
+                    ID = kq != null ? kq.ID : 0,
+                    HocVienID = hv.ID,
                     MaSo = hv.MaSo,
                     HoVaTen = hv.HoVaTen,
-                    LopHocID = idLop,            
+                    LopHocID = idLop,
                     TenLop = tenLop,
                     DiemThiThu = kq?.DiemThiThu,
                     DiemThiThat = kq?.DiemThiThat
@@ -163,7 +164,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             var row = dataGridView.CurrentRow.DataBoundItem as DanhSachDiemSo_ChiTiet;
             if (row != null)
             {
-                isUpdating = true; 
+                isUpdating = true;
                 txtMaSo.Text = row.MaSo;
                 txtHoVaTen.Text = row.HoVaTen;
                 txtTenLop.Text = row.TenLop;
@@ -232,7 +233,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         });
                     }
                 }
-                else 
+                else
                 {
                     kq.DiemThiThu = diemThiThu;
                     kq.DiemThiThat = diemThiThat;
@@ -261,9 +262,14 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnHuyBo_Click(object sender, EventArgs e)
         {
             if (idLopHocDangChon != 0)
-                LoadData(idLopHocDangChon, null); 
+                LoadData(idLopHocDangChon, null);
 
             btnLuu.Enabled = false;
+        }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

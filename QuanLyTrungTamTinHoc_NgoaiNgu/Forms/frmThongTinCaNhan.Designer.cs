@@ -87,7 +87,7 @@
             btnThoat.Name = "btnThoat";
             btnThoat.Size = new Size(117, 40);
             btnThoat.TabIndex = 40;
-            btnThoat.Text = "Đóng";
+            btnThoat.Text = "Thoát";
             btnThoat.UseVisualStyleBackColor = true;
             btnThoat.Click += btnThoat_Click;
             // 

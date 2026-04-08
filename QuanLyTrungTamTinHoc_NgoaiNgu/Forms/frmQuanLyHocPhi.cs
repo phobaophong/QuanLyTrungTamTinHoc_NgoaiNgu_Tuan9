@@ -209,17 +209,22 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnInHoaDon_Click(object sender, EventArgs e)
         {
-            if (idPhieuThu != -1) 
+            if (idPhieuThu != -1)
             {
                 using (frmInBienLaiHocPhi frmIn = new frmInBienLaiHocPhi(idPhieuThu))
                 {
-                    frmIn.ShowDialog(); 
+                    frmIn.ShowDialog();
                 }
             }
             else
             {
                 MessageBox.Show("Vui lòng chọn một học viên trên danh sách để in biên lai!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

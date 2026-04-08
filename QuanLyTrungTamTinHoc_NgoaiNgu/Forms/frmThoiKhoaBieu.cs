@@ -33,7 +33,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             {
                 int rowIndex = dataGridView.Rows.Add();
                 dataGridView.Rows[rowIndex].Cells["colCa"].Value = "Ca " + i;
-                dataGridView.Rows[rowIndex].Height = 90; 
+                dataGridView.Rows[rowIndex].Height = 90;
             }
 
             LoadCbbKhoaHoc();
@@ -317,6 +317,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             {
                 LoadData(tuan.TuNgay, tuan.DenNgay, idLop);
             }
+        }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

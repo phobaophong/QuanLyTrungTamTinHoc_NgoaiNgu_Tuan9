@@ -61,6 +61,7 @@
             TenLop = new DataGridViewTextBoxColumn();
             DiemThiThu = new DataGridViewTextBoxColumn();
             DiemThiThat = new DataGridViewTextBoxColumn();
+            btnThoat = new Button();
             groupBox1.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -138,6 +139,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(btnThoat);
             groupBox4.Controls.Add(btnHuyBo);
             groupBox4.Controls.Add(btnLuu);
             groupBox4.Controls.Add(btnSua);
@@ -393,6 +395,16 @@
             DiemThiThat.MinimumWidth = 6;
             DiemThiThat.Name = "DiemThiThat";
             // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(401, 105);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(106, 29);
+            btnThoat.TabIndex = 15;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
+            // 
             // frmQuanLyDiemSo
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -453,5 +465,6 @@
         private DataGridViewTextBoxColumn TenLop;
         private DataGridViewTextBoxColumn DiemThiThu;
         private DataGridViewTextBoxColumn DiemThiThat;
+        private Button btnThoat;
     }
 }

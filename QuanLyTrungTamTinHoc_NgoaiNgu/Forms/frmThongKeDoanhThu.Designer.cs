@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            btnThoat = new Button();
             label2 = new Label();
             label1 = new Label();
             btnTatCa = new Button();
@@ -36,7 +37,6 @@
             dtpDenNgay = new DateTimePicker();
             dtpTuNgay = new DateTimePicker();
             reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
-            btnThoat = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,6 +55,16 @@
             groupBox1.Size = new Size(1124, 89);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(713, 26);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(94, 29);
+            btnThoat.TabIndex = 6;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // label2
             // 
@@ -120,15 +130,6 @@
             reportViewer1.ServerReport.BearerToken = null;
             reportViewer1.Size = new Size(1124, 572);
             reportViewer1.TabIndex = 1;
-            // 
-            // btnThoat
-            // 
-            btnThoat.Location = new Point(713, 26);
-            btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(94, 29);
-            btnThoat.TabIndex = 6;
-            btnThoat.Text = "Thoát";
-            btnThoat.UseVisualStyleBackColor = true;
             // 
             // frmThongKeDoanhThu
             // 

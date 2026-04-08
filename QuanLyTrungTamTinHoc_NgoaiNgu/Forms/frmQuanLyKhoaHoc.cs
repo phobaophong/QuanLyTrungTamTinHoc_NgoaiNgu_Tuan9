@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ReaLTaiizor.Drawing.Poison.PoisonPaint.ForeColor;
+using Microsoft.EntityFrameworkCore;
 
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
@@ -18,10 +19,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         BindingSource bindingSource = new BindingSource();
         bool temp;
         int id;
-        public frmQuanLyKhoaHoc()
+        int quyenHanDangNhap;
+        public frmQuanLyKhoaHoc(int quyenHan)
         {
             InitializeComponent();
-
+            quyenHanDangNhap = quyenHan;
             Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
         private void BatTatChucNang(bool giaTri)
@@ -36,11 +38,20 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             btnThem.Enabled = !giaTri;
             btnSua.Enabled = !giaTri;
             btnXoa.Enabled = !giaTri;
+
+            if (!giaTri && quyenHanDangNhap == 4)
+            {
+                btnXoa.Visible = true;
+            }
+            else
+            {
+                btnXoa.Visible = false;
+            }
         }
         private void LoadData()
         {
             context = new QuanLyTrungTamContext();
-            var kh = context.KhoaHoc.ToList();
+            var kh = context.KhoaHoc.Include(k => k.LopHoc).ToList();
 
             bindingSource.DataSource = kh;
 
@@ -61,6 +72,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             dataGridView.AutoGenerateColumns = false;
             LoadData();
             BatTatChucNang(false);
+
+
         }
 
         private void btnThem_Click(object sender, EventArgs e)

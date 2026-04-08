@@ -33,8 +33,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             }
 
             var hocVien = context.HocVien
-                .Include(hv => hv.KetQua) 
-                .ThenInclude(kq => kq.LopHoc) 
+                .Include(hv => hv.KetQua)
+                .ThenInclude(kq => kq.LopHoc)
                 .FirstOrDefault(hv => hv.MaSo == maSoTimKiem);
 
             if (hocVien != null)
@@ -56,6 +56,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 lblHienThi.Text = "Không tìm thấy học viên có mã số này!";
                 lblHienThi.ForeColor = Color.Red;
             }
+        }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

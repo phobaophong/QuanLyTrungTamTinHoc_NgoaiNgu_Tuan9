@@ -19,7 +19,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         int loai;
         string folderAnh = @"D:\Project\ĐỒ ÁN - Lập trình quản lý\HinhNen\";
 
-
         public frmThongTinCaNhan(int idTruyenVao, int loaiTruyenVao)
         {
             InitializeComponent();
@@ -47,9 +46,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         txtEmail.Text = nv.Email;
                         if (nv.GioiTinh == true) rdoNam.Checked = true; else rdoNu.Checked = true;
 
-
                         LoadHinhAnh(nv.HinhAnh, nv.GioiTinh);
-
+                        lblSetup.Text = "Chức vụ: Nhân Viên";
                     }
                     break;
 
@@ -67,7 +65,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         if (gv.GioiTinh == true) rdoNam.Checked = true; else rdoNu.Checked = true;
 
                         LoadHinhAnh(gv.HinhAnh, gv.GioiTinh);
-
+                        lblSetup.Text = "Chức vụ: Giảng Viên";
                     }
                     break;
 
@@ -91,6 +89,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                             .Include(x => x.LopHoc)
                                 .ThenInclude(l => l.KhoaHoc)
                             .FirstOrDefault(x => x.HocVienID == idDuLieu);
+
                     if (chiTietGhiDanh != null && chiTietGhiDanh.LopHoc != null)
                     {
                         string tenLop = chiTietGhiDanh.LopHoc.TenLopHoc;
@@ -119,8 +118,27 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         lblSetup.Text = "Học viên này chưa được xếp vào lớp học nào.";
                     }
                     break;
+
+                case 4: // ADMIN (Quản trị viên) - Lưu trong bảng Học Viên
+                    var admin = context.HocVien.Find(idDuLieu);
+                    if (admin != null)
+                    {
+                        this.Text = "Thông tin cá nhân - QUẢN TRỊ VIÊN (ADMIN)";
+                        txtMaSo.Text = admin.MaSo;
+                        txtHoVaTen.Text = admin.HoVaTen;
+                        dtpNgaySinh.Value = admin.NgaySinh;
+                        txtSdt.Text = admin.Sdt;
+                        txtDiaChi.Text = admin.DiaChi;
+                        txtEmail.Text = admin.Email;
+                        if (admin.GioiTinh == true) rdoNam.Checked = true; else rdoNu.Checked = true;
+
+                        LoadHinhAnh(admin.HinhAnh, admin.GioiTinh);
+                        lblSetup.Text = "Quyền hạn: QUẢN TRỊ VIÊN HỆ THỐNG (ADMIN)";
+                    }
+                    break;
             }
         }
+
         private void LoadHinhAnh(string tenFileAnh, bool gioiTinh)
         {
             if (picHinhAnh.Image != null)
@@ -138,7 +156,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     {
                         using (var stream = new System.IO.FileStream(fullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                         {
-                            picHinhAnh.Image = Image.FromStream(stream);
+                            // 🔥 Đã sửa lỗi GDI+ (Không dùng Image.FromStream nữa)
+                            picHinhAnh.Image = new Bitmap(stream);
                         }
                         return;
                     }
@@ -155,6 +174,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 picHinhAnh.Image = Properties.Resources.nu_avatar;
             }
         }
+
         private void KhoaGiaoDien()
         {
             txtMaSo.ReadOnly = true;

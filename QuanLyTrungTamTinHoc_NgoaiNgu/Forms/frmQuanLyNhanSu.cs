@@ -20,17 +20,19 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         string fileNameHinhAnh = "";
         bool temp = true;
         int loaiNhanSu = 2; //1 nhân viên, 2 giảng viên
+        int quyenHanDangNhap;
 
-        public frmQuanLyNhanSu()
+        public frmQuanLyNhanSu(int quyenHan)
         {
             InitializeComponent();
+            quyenHanDangNhap = quyenHan;
             Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
         public void BatTatCaChucNang(bool giaTri)
         {
             txtHoVaTen.Enabled = giaTri;
-            txtMaSo.Enabled = false; 
+            txtMaSo.Enabled = false;
             txtBoPhan.Enabled = giaTri;
             dtpNgaySinh.Enabled = giaTri;
             rdoNam.Enabled = giaTri;
@@ -42,8 +44,22 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             txtEmail.Enabled = giaTri;
 
             btnThem.Enabled = !giaTri;
-            btnXoa.Enabled = !giaTri;
             btnSua.Enabled = !giaTri;
+            btnDoiAnh.Enabled = giaTri;
+
+            // Khóa lưới DataGrid khi đang chỉnh sửa
+            dataGridView.Enabled = !giaTri;
+
+            if (!giaTri && quyenHanDangNhap == 4)
+            {
+                btnXoa.Visible = true;
+                btnXoa.Enabled = true;
+            }
+            else
+            {
+                btnXoa.Visible = false;
+                btnXoa.Enabled = false;
+            }
         }
 
         private void btnGiangVien_Click(object sender, EventArgs e)
@@ -60,13 +76,24 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             groupBox1.Text = "Thông tin nhân viên";
         }
 
+        private void ThemCotXemChiTiet()
+        {
+            if (dataGridView.Columns["XemChiTiet"] is DataGridViewLinkColumn linkCol)
+            {
+                linkCol.Text = "Xem chi tiết";
+                linkCol.UseColumnTextForLinkValue = true;
+                linkCol.LinkColor = Color.Blue;
+                linkCol.ActiveLinkColor = Color.Red;
+                linkCol.VisitedLinkColor = Color.Blue;
+                linkCol.LinkBehavior = LinkBehavior.HoverUnderline;
+            }
+        }
         private void LoadGiangVien()
         {
             context = new QuanLyTrungTamContext();
             loaiNhanSu = 2;
             var gv = context.GiangVien.ToList();
 
-            // xóa binding cũ
             txtHoVaTen.DataBindings.Clear();
             txtMaSo.DataBindings.Clear();
             txtSdt.DataBindings.Clear();
@@ -125,7 +152,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             loaiNhanSu = 1;
             var nv = context.NhanVien.ToList();
 
-            // xóa binding cũ
             txtHoVaTen.DataBindings.Clear();
             txtMaSo.DataBindings.Clear();
             txtSdt.DataBindings.Clear();
@@ -181,10 +207,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void frmQuanLyNhanSu_Load(object sender, EventArgs e)
         {
             dataGridView.AutoGenerateColumns = false;
+            ThemCotXemChiTiet();
+            dataGridView.AutoGenerateColumns = false;
             LoadGiangVien(); // Mặc định vào sẽ load Giảng viên
             bindingSource.CurrentChanged += bindingSource_CurrentChanged;
 
-            // Ẩn giờ 12:00 AM trên DataGridView
             if (dataGridView.Columns.Contains("NgaySinh"))
             {
                 dataGridView.Columns["NgaySinh"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -196,25 +223,31 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             temp = true;
             BatTatCaChucNang(true);
 
-
             int maxId = 0;
             string prefix = "";
 
-            if (loaiNhanSu == 2) 
+            if (loaiNhanSu == 2)
             {
                 maxId = context.GiangVien.Any() ? context.GiangVien.Max(g => g.ID) : 0;
                 prefix = "gv";
             }
-            else 
+            else
             {
                 maxId = context.NhanVien.Any() ? context.NhanVien.Max(n => n.ID) : 0;
                 prefix = "nv";
             }
 
-            txtMaSo.Text = prefix + (maxId + 1).ToString("D2");
+            string maMoi = prefix + (maxId + 1).ToString("D2");
+            while (context.TaiKhoan.Any(t => t.TenDN == maMoi))
+            {
+                maxId++;
+                maMoi = prefix + (maxId + 1).ToString("D2");
+            }
+
+            txtMaSo.Text = maMoi;
 
             txtHoVaTen.Clear();
-            dtpNgaySinh.Value = DateTime.Now.Date; 
+            dtpNgaySinh.Value = DateTime.Now.Date;
             rdoNam.Checked = true;
             txtDiaChi.Clear();
             txtSdt.Clear();
@@ -225,7 +258,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             if (picHinhAnh.Image != null) picHinhAnh.Image.Dispose();
             picHinhAnh.Image = Properties.Resources.nam_avatar;
 
-            txtHoVaTen.Focus(); 
+            txtHoVaTen.Focus();
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
@@ -255,7 +288,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     }
                 }
 
-                // xóa tài khoản
                 if (idTaiKhoanCanXoa != null)
                 {
                     var tk = context.TaiKhoan.Find(idTaiKhoanCanXoa);
@@ -273,7 +305,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             temp = false;
             BatTatCaChucNang(true);
-            txtHoVaTen.Focus(); 
+            txtHoVaTen.Focus();
         }
 
         private void btnXacNhan_Click(object sender, EventArgs e)
@@ -283,12 +315,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 MessageBox.Show("Vui lòng nhập mã số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (string.IsNullOrWhiteSpace(txtHoVaTen.Text))
+            {
+                MessageBox.Show("Vui lòng nhập họ và tên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtHoVaTen.Focus();
+                return;
+            }
 
             try
             {
                 if (temp) // THÊM MỚI
                 {
-                    // check trùng mã số 
                     string maMoi = txtMaSo.Text.Trim();
                     bool trungTK = context.TaiKhoan.Any(t => t.TenDN == maMoi);
                     if (trungTK)
@@ -297,17 +334,18 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         return;
                     }
 
-                    // 1. Tạo Tài khoản chung
                     TaiKhoan tk = new TaiKhoan();
-                    tk.TenDN = txtMaSo.Text.Trim();
+                    tk.TenDN = maMoi;
                     tk.MatKhau = BC.HashPassword("1");
                     tk.TrangThai = true;
-                    tk.QuyenHan = loaiNhanSu; // 1: Nhân viên, 2: Giảng viên
+                    tk.QuyenHan = loaiNhanSu;
 
-                    if (loaiNhanSu == 2) // Giảng viên
+                    context.TaiKhoan.Add(tk);
+
+                    if (loaiNhanSu == 2)
                     {
                         GiangVien gv = new GiangVien();
-                        gv.MaSo = txtMaSo.Text.Trim();
+                        gv.MaSo = maMoi;
                         gv.HoVaTen = txtHoVaTen.Text.Trim();
                         gv.NgaySinh = dtpNgaySinh.Value.Date;
                         gv.GioiTinh = rdoNam.Checked;
@@ -320,10 +358,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
                         context.GiangVien.Add(gv);
                     }
-                    else // Nhân viên
+                    else
                     {
                         NhanVien nv = new NhanVien();
-                        nv.MaSo = txtMaSo.Text.Trim();
+                        nv.MaSo = maMoi;
                         nv.HoVaTen = txtHoVaTen.Text.Trim();
                         nv.NgaySinh = dtpNgaySinh.Value.Date;
                         nv.GioiTinh = rdoNam.Checked;
@@ -349,12 +387,14 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         {
                             gv.MaSo = txtMaSo.Text.Trim();
                             gv.HoVaTen = txtHoVaTen.Text.Trim();
-                            gv.NgaySinh = dtpNgaySinh.Value.Date; 
+                            gv.NgaySinh = dtpNgaySinh.Value.Date;
                             gv.GioiTinh = rdoNam.Checked;
                             gv.DiaChi = txtDiaChi.Text.Trim();
                             gv.Sdt = txtSdt.Text.Trim();
                             gv.Email = txtEmail.Text.Trim();
                             gv.BoPhan = txtBoPhan.Text.Trim();
+
+                            // Có đổi ảnh mới thì cập nhật, không thì giữ nguyên ảnh cũ
                             if (!string.IsNullOrEmpty(fileNameHinhAnh)) gv.HinhAnh = fileNameHinhAnh;
                         }
                     }
@@ -365,12 +405,13 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         {
                             nv.MaSo = txtMaSo.Text.Trim();
                             nv.HoVaTen = txtHoVaTen.Text.Trim();
-                            nv.NgaySinh = dtpNgaySinh.Value.Date; 
+                            nv.NgaySinh = dtpNgaySinh.Value.Date;
                             nv.GioiTinh = rdoNam.Checked;
                             nv.DiaChi = txtDiaChi.Text.Trim();
                             nv.Sdt = txtSdt.Text.Trim();
                             nv.Email = txtEmail.Text.Trim();
                             nv.BoPhan = txtBoPhan.Text.Trim();
+
                             if (!string.IsNullOrEmpty(fileNameHinhAnh)) nv.HinhAnh = fileNameHinhAnh;
                         }
                     }
@@ -379,7 +420,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                fileNameHinhAnh = "";
+                fileNameHinhAnh = ""; // Reset sau khi lưu
                 if (loaiNhanSu == 2) LoadGiangVien(); else LoadNhanVien();
             }
             catch (Exception ex)
@@ -390,10 +431,9 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnHuyBo_Click(object sender, EventArgs e)
         {
-            if (loaiNhanSu == 2)
-                LoadGiangVien();
-            else
-                LoadNhanVien();
+            fileNameHinhAnh = ""; // Hủy đổi ảnh
+            if (loaiNhanSu == 2) LoadGiangVien();
+            else LoadNhanVien();
         }
 
         private void btnDoiAnh_Click(object sender, EventArgs e)
@@ -404,30 +444,31 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
                 if (open.ShowDialog() != DialogResult.OK) return;
 
-                string fileName = open.SafeFileName;
+                string extension = System.IO.Path.GetExtension(open.SafeFileName);
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string fileName = "NhanSu_" + timestamp + extension;
                 string destPath = System.IO.Path.Combine(folderAnh, fileName);
 
                 try
                 {
+                    System.IO.File.Copy(open.FileName, destPath, true);
+
                     if (picHinhAnh.Image != null)
                     {
                         picHinhAnh.Image.Dispose();
                         picHinhAnh.Image = null;
                     }
 
-                    if (!System.IO.File.Exists(destPath))
-                    {
-                        System.IO.File.Copy(open.FileName, destPath);
-                    }
-
+                    // 🔥 SỬA LỖI ĐỘT TỬ GDI+ WINFORMS: Ép kiểu sang Bitmap
                     using (var stream = new System.IO.FileStream(destPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                     {
-                        picHinhAnh.Image = Image.FromStream(stream);
+                        picHinhAnh.Image = new Bitmap(stream);
                     }
 
+                    // Chỉ gán tên file, ĐỢI BẤM NÚT XÁC NHẬN MỚI LƯU DB
                     fileNameHinhAnh = fileName;
 
-                    MessageBox.Show("Cập nhật ảnh thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã tải ảnh lên! Vui lòng bấm nút Xác Nhận để lưu thay đổi.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -443,7 +484,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             string hinhAnh = "";
             bool gioiTinh = true;
 
-            if (loaiNhanSu == 2) // Giảng viên
+            if (loaiNhanSu == 2)
             {
                 var gv = bindingSource.Current as GiangVien;
                 if (gv == null) return;
@@ -451,7 +492,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 hinhAnh = gv.HinhAnh;
                 gioiTinh = gv.GioiTinh;
             }
-            else // Nhân viên
+            else
             {
                 var nv = bindingSource.Current as NhanVien;
                 if (nv == null) return;
@@ -476,28 +517,20 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     {
                         using (var stream = new System.IO.FileStream(fullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                         {
-                            picHinhAnh.Image = Image.FromStream(stream);
+                            picHinhAnh.Image = new Bitmap(stream); // 🔥 SỬA LỖI GDI+
                         }
                         return;
                     }
-                    catch
-                    {
-                    }
+                    catch { }
                 }
             }
-            if (gioiTinh)
-            {
-                picHinhAnh.Image = Properties.Resources.nam_avatar;
-            }
-            else
-            {
-                picHinhAnh.Image = Properties.Resources.nu_avatar;
-            }
+
+            if (gioiTinh) picHinhAnh.Image = Properties.Resources.nam_avatar;
+            else picHinhAnh.Image = Properties.Resources.nu_avatar;
         }
 
         private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // giới tính
             if (dataGridView.Columns[e.ColumnIndex].Name == "GioiTinh" && e.Value != null)
             {
                 if (e.Value is bool gioiTinh)
@@ -507,7 +540,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 }
             }
 
-            // hình ảnh
             if (dataGridView.Columns[e.ColumnIndex].Name == "HinhAnh")
             {
                 var dataItem = dataGridView.Rows[e.RowIndex].DataBoundItem;
@@ -526,10 +558,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     hinhAnh = nv.HinhAnh;
                     gioiTinh = nv.GioiTinh;
                 }
-                else
-                {
-                    return;
-                }
+                else return;
 
                 Image img = null;
                 if (!string.IsNullOrEmpty(hinhAnh))
@@ -541,23 +570,48 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         {
                             using (var stream = new System.IO.FileStream(fullPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                             {
-                                img = Image.FromStream(stream);
+                                img = new Bitmap(stream); // 🔥 SỬA LỖI GDI+
                             }
                         }
-                        catch
-                        {
-                        }
+                        catch { }
                     }
                 }
 
-                if (img == null)
-                {
-                    img = gioiTinh ? Properties.Resources.nam_avatar : Properties.Resources.nu_avatar;
-                }
+                if (img == null) img = gioiTinh ? Properties.Resources.nam_avatar : Properties.Resources.nu_avatar;
 
                 e.Value = img;
                 e.FormattingApplied = true;
             }
+        }
+
+        private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dataGridView.Columns[e.ColumnIndex].Name == "XemChiTiet")
+            {
+                if (loaiNhanSu == 2) // Nếu đang ở tab Giảng viên
+                {
+                    var gv = bindingSource.Current as GiangVien;
+                    if (gv != null)
+                    {
+                        frmThongTinCaNhan frm = new frmThongTinCaNhan(gv.ID, 2);
+                        frm.ShowDialog();
+                    }
+                }
+                else // Nếu đang ở tab Nhân viên
+                {
+                    var nv = bindingSource.Current as NhanVien;
+                    if (nv != null)
+                    {
+                        frmThongTinCaNhan frm = new frmThongTinCaNhan(nv.ID, 1);
+                        frm.ShowDialog();
+                    }
+                }
+            }
+        }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

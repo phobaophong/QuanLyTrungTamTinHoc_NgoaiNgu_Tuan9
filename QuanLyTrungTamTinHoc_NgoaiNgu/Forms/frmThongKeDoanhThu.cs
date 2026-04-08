@@ -112,5 +112,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             LoadBaoCao(dtpTuNgay.Value, dtpDenNgay.Value);
         }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

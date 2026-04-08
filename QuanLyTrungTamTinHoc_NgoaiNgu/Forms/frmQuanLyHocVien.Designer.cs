@@ -44,6 +44,8 @@
             label2 = new Label();
             cbbKhoaHoc = new ComboBox();
             groupBox1 = new GroupBox();
+            btnXuatExcel = new Button();
+            btnNhapExcel = new Button();
             label8 = new Label();
             txtEmail = new TextBox();
             label9 = new Label();
@@ -81,8 +83,7 @@
             HinhAnh = new DataGridViewImageColumn();
             XemChiTiet = new DataGridViewLinkColumn();
             grbDataGrid = new GroupBox();
-            btnNhapExcel = new Button();
-            btnXuatExcel = new Button();
+            btnThoat = new Button();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -253,6 +254,7 @@
             // groupBox1
             // 
             groupBox1.BackColor = Color.White;
+            groupBox1.Controls.Add(btnThoat);
             groupBox1.Controls.Add(btnXuatExcel);
             groupBox1.Controls.Add(btnNhapExcel);
             groupBox1.Controls.Add(label8);
@@ -284,6 +286,26 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin học viên";
+            // 
+            // btnXuatExcel
+            // 
+            btnXuatExcel.Location = new Point(885, 195);
+            btnXuatExcel.Name = "btnXuatExcel";
+            btnXuatExcel.Size = new Size(133, 34);
+            btnXuatExcel.TabIndex = 39;
+            btnXuatExcel.Text = "Xuất Excel";
+            btnXuatExcel.UseVisualStyleBackColor = true;
+            btnXuatExcel.Click += btnXuatExcel_Click;
+            // 
+            // btnNhapExcel
+            // 
+            btnNhapExcel.Location = new Point(733, 195);
+            btnNhapExcel.Name = "btnNhapExcel";
+            btnNhapExcel.Size = new Size(133, 34);
+            btnNhapExcel.TabIndex = 38;
+            btnNhapExcel.Text = "Nhập Excel";
+            btnNhapExcel.UseVisualStyleBackColor = true;
+            btnNhapExcel.Click += btnNhapExcel_Click;
             // 
             // label8
             // 
@@ -329,6 +351,7 @@
             // txtSdt
             // 
             txtSdt.Location = new Point(647, 40);
+            txtSdt.MaxLength = 10;
             txtSdt.Name = "txtSdt";
             txtSdt.Size = new Size(334, 30);
             txtSdt.TabIndex = 32;
@@ -618,25 +641,15 @@
             grbDataGrid.TabIndex = 3;
             grbDataGrid.TabStop = false;
             // 
-            // btnNhapExcel
+            // btnThoat
             // 
-            btnNhapExcel.Location = new Point(620, 195);
-            btnNhapExcel.Name = "btnNhapExcel";
-            btnNhapExcel.Size = new Size(133, 34);
-            btnNhapExcel.TabIndex = 38;
-            btnNhapExcel.Text = "Nhập Excel";
-            btnNhapExcel.UseVisualStyleBackColor = true;
-            btnNhapExcel.Click += btnNhapExcel_Click;
-            // 
-            // btnXuatExcel
-            // 
-            btnXuatExcel.Location = new Point(769, 195);
-            btnXuatExcel.Name = "btnXuatExcel";
-            btnXuatExcel.Size = new Size(133, 34);
-            btnXuatExcel.TabIndex = 39;
-            btnXuatExcel.Text = "Xuất Excel";
-            btnXuatExcel.UseVisualStyleBackColor = true;
-            btnXuatExcel.Click += btnXuatExcel_Click;
+            btnThoat.Location = new Point(614, 195);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(101, 34);
+            btnThoat.TabIndex = 40;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // frmQuanLyHocVien
             // 
@@ -724,5 +737,6 @@
         private DataGridViewLinkColumn XemChiTiet;
         private Button btnXuatExcel;
         private Button btnNhapExcel;
+        private Button btnThoat;
     }
 }

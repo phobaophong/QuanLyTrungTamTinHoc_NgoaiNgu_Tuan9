@@ -46,7 +46,6 @@
             lịchHọcToolStripMenuItem = new ToolStripMenuItem();
             mnuHocPhi = new ToolStripMenuItem();
             mnuTraCuuDiemThiThu = new ToolStripMenuItem();
-            mnuTraCuuTTCN = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
             lblTrangThai = new ToolStripStatusLabel();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
@@ -98,6 +97,7 @@
             mnuDoiMatKhau.Name = "mnuDoiMatKhau";
             mnuDoiMatKhau.Size = new Size(224, 28);
             mnuDoiMatKhau.Text = "Đổi mật khẩu";
+            mnuDoiMatKhau.Click += mnuDoiMatKhau_Click;
             // 
             // mnuThoat
             // 
@@ -106,6 +106,7 @@
             mnuThoat.ShortcutKeys = Keys.Alt | Keys.F4;
             mnuThoat.Size = new Size(224, 28);
             mnuThoat.Text = "Thoát";
+            mnuThoat.Click += mnuThoat_Click;
             // 
             // mnuQuanLy
             // 
@@ -182,7 +183,7 @@
             // 
             // mnuHocPhi
             // 
-            mnuHocPhi.DropDownItems.AddRange(new ToolStripItem[] { mnuTraCuuDiemThiThu, mnuTraCuuTTCN });
+            mnuHocPhi.DropDownItems.AddRange(new ToolStripItem[] { mnuTraCuuDiemThiThu });
             mnuHocPhi.Name = "mnuHocPhi";
             mnuHocPhi.Size = new Size(80, 27);
             mnuHocPhi.Text = "Tra cứu";
@@ -190,16 +191,9 @@
             // mnuTraCuuDiemThiThu
             // 
             mnuTraCuuDiemThiThu.Name = "mnuTraCuuDiemThiThu";
-            mnuTraCuuDiemThiThu.Size = new Size(234, 28);
+            mnuTraCuuDiemThiThu.Size = new Size(190, 28);
             mnuTraCuuDiemThiThu.Text = "Điểm thi thử";
             mnuTraCuuDiemThiThu.Click += mnuTraCuuDiemThiThu_Click;
-            // 
-            // mnuTraCuuTTCN
-            // 
-            mnuTraCuuTTCN.Name = "mnuTraCuuTTCN";
-            mnuTraCuuTTCN.Size = new Size(234, 28);
-            mnuTraCuuTTCN.Text = "Thông tin cá nhân";
-            mnuTraCuuTTCN.Click += mnuTraCuuTTCN_Click;
             // 
             // statusStrip1
             // 
@@ -279,7 +273,6 @@
         private ToolStripMenuItem mnuQuanLyHocPhi;
         private ToolStripMenuItem mnuQuanLyDiemSo;
         private ToolStripMenuItem mnuTraCuuDiemThiThu;
-        private ToolStripMenuItem mnuTraCuuTTCN;
         private ToolStripMenuItem mnuQuanLyDoanhThu;
     }
 }

@@ -17,10 +17,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         BindingSource bindingSource = new BindingSource();
         int id;
         bool temp;
-        public frmQuanLyLopHoc()
+        int quyenHanDangNhap;
+        public frmQuanLyLopHoc(int quyenHan)
         {
             InitializeComponent();
-
+            quyenHanDangNhap = quyenHan;
             Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
@@ -38,6 +39,14 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             btnSua.Enabled = !giaTri;
             btnXoa.Enabled = !giaTri;
 
+            if (!giaTri && quyenHanDangNhap == 4)
+            {
+                btnXoa.Visible = true;
+            }
+            else
+            {
+                btnXoa.Visible = false;
+            }
         }
         private void LoadData()
         {

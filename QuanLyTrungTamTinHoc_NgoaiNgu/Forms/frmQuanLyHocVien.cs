@@ -140,6 +140,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 id = (int)cbbKhoaHoc.SelectedValue;
                 LoadCbbLopHoc(id);
             }
+
+            btnThem.Enabled = true;
         }
         public void LoadDataTheoLop(int idLop)
         {
@@ -181,6 +183,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 LoadDataTheoLop(idLop);
             }
             txtMaSoTimKiem.Clear();
+            btnThem.Enabled = true;
         }
 
         private void btnXacNhanTimKiem_Click(object sender, EventArgs e)
@@ -600,7 +603,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         }
 
         private void btnDaTotNghiep_Click(object sender, EventArgs e)
-        {     
+        {
             LoadDataNhanh(3);
             grbDataGrid.Text = "Danh sách sinh viên - ĐÃ TỐT NGHIỆP";
 
@@ -667,29 +670,45 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     int demThanhCong = 0;
                     int demBoQua = 0;
 
+                    // 🔥 THUẬT TOÁN SINH MÃ TỰ ĐỘNG KHI NHẬP EXCEL
+                    // Lấy ID lớn nhất hiện tại 1 lần duy nhất trước khi chạy vòng lặp
+                    int maxId = context.HocVien.Any() ? context.HocVien.Max(h => h.ID) : 0;
+
                     foreach (DataRow dRow in dtData.Rows)
                     {
-                        string txtMa = dRow[0].ToString().Trim();
+                        // Giả định form mẫu Excel: Cột 0 là Mã số (bỏ qua), Cột 1 là Họ Tên
+                        string hoTen = dRow[1].ToString().Trim();
 
-                        if (string.IsNullOrEmpty(txtMa)) continue;
-                        if (context.TaiKhoan.Any(t => t.TenDN == txtMa))
+                        // Nếu dòng đó không có Tên thì bỏ qua (Người dùng để trống dòng)
+                        if (string.IsNullOrEmpty(hoTen))
                         {
                             demBoQua++;
                             continue;
                         }
 
-                        // 1. Tạo Tài khoản
+                        // Tăng maxId lên 1 và tự động sinh mã mới cho mỗi học viên
+                        maxId++;
+                        string maSoMoi = "hv" + maxId.ToString("D2");
+
+                        // 1. Tạo Tài khoản với mã tự sinh
                         TaiKhoan taiKhoanMoi = new TaiKhoan();
-                        taiKhoanMoi.TenDN = txtMa;
+                        taiKhoanMoi.TenDN = maSoMoi;
                         taiKhoanMoi.MatKhau = BC.HashPassword("1");
                         taiKhoanMoi.TrangThai = true;
                         taiKhoanMoi.QuyenHan = 3;
 
                         // 2. Tạo Học Viên
                         HocVien hocVienMoi = new HocVien();
-                        hocVienMoi.MaSo = txtMa;
-                        hocVienMoi.HoVaTen = dRow[1].ToString();
-                        hocVienMoi.NgaySinh = string.IsNullOrEmpty(dRow[2].ToString()) ? DateTime.Now.Date : DateTime.Parse(dRow[2].ToString()).Date;
+                        hocVienMoi.MaSo = maSoMoi;
+                        hocVienMoi.HoVaTen = hoTen;
+
+                        // Xử lý an toàn cho ngày sinh nếu Excel trống
+                        DateTime ngaySinh;
+                        if (DateTime.TryParse(dRow[2].ToString(), out ngaySinh))
+                            hocVienMoi.NgaySinh = ngaySinh.Date;
+                        else
+                            hocVienMoi.NgaySinh = DateTime.Now.Date;
+
                         hocVienMoi.GioiTinh = (dRow[3].ToString().Trim().ToLower() == "nam");
                         hocVienMoi.Sdt = dRow[4].ToString();
                         hocVienMoi.DiaChi = dRow[5].ToString();
@@ -710,9 +729,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         demThanhCong++;
                     }
 
+                    // Lưu toàn bộ data 1 lần xuống Database
                     context.SaveChanges();
 
-                    MessageBox.Show($"Nhập thành công {demThanhCong} học viên vào lớp.\nBỏ qua {demBoQua} học viên do trùng mã số/đã có tài khoản.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Nhập thành công {demThanhCong} học viên vào lớp.\nBỏ qua {demBoQua} dòng trống hoặc không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Tải lại lưới dựa trên lớp vừa nhập
                     LoadDataTheoLop(idLopDuocChon);
@@ -784,6 +804,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     MessageBox.Show("Lỗi khi xuất: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

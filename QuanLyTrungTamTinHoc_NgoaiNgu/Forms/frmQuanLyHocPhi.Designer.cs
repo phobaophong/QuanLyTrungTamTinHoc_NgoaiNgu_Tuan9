@@ -59,6 +59,7 @@
             SoTienDaDong = new DataGridViewTextBoxColumn();
             NgayDong = new DataGridViewTextBoxColumn();
             GhiChu = new DataGridViewTextBoxColumn();
+            btnThoat = new Button();
             groupBox1.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -140,6 +141,7 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(btnThoat);
             groupBox3.Controls.Add(txtSoTien);
             groupBox3.Controls.Add(label8);
             groupBox3.Controls.Add(chkTrangThai);
@@ -367,6 +369,16 @@
             GhiChu.MinimumWidth = 6;
             GhiChu.Name = "GhiChu";
             // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(396, 149);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(122, 29);
+            btnThoat.TabIndex = 37;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
+            // 
             // frmQuanLyHocPhi
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -421,5 +433,6 @@
         private TextBox txtSoTien;
         private Label lblHocPhi;
         private GroupBox groupBox4;
+        private Button btnThoat;
     }
 }

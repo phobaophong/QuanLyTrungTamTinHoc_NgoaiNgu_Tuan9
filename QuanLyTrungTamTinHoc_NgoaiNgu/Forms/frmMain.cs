@@ -113,6 +113,19 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                                 QuyenHocVien();
 
                             }
+                            else if (tk.QuyenHan == 4) // quyền admin
+                            {
+                                var nv = context.NhanVien.Where(x => x.TaiKhoanID == tk.ID).Select(x => new { x.ID, x.HoVaTen }).FirstOrDefault();
+
+                                if (nv != null)
+                                {
+                                    idDangNhap = nv.ID;
+                                    hoVaTen = nv.HoVaTen;
+                                }
+
+                                QuyenAdmin();
+
+                            }
                             else
                                 ChuaDangNhap();
                         }
@@ -125,18 +138,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     }
                 }
             }
-        }
-        private void mnuTraCuuTTCN_Click(object sender, EventArgs e)
-        {
-            if (thongTinCaNhan == null || thongTinCaNhan.IsDisposed)
-            {
-                thongTinCaNhan = new frmThongTinCaNhan(idDangNhap, idQuyenHan);
-                thongTinCaNhan.MdiParent = this;
-                thongTinCaNhan.Dock = DockStyle.Fill;
-                thongTinCaNhan.Show();
-            }
-            else
-                hocPhi.Activate();
         }
         private void mnuTraCuuDiemThiThu_Click(object sender, EventArgs e)
         {
@@ -166,7 +167,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (quanLyKhoaHoc == null || quanLyKhoaHoc.IsDisposed)
             {
-                quanLyKhoaHoc = new frmQuanLyKhoaHoc();
+                quanLyKhoaHoc = new frmQuanLyKhoaHoc(idQuyenHan);
                 quanLyKhoaHoc.MdiParent = this;
                 quanLyKhoaHoc.Dock = DockStyle.Fill;
                 quanLyKhoaHoc.Show();
@@ -179,7 +180,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (quanLyLopHoc == null || quanLyLopHoc.IsDisposed)
             {
-                quanLyLopHoc = new frmQuanLyLopHoc();
+                quanLyLopHoc = new frmQuanLyLopHoc(idQuyenHan);
                 quanLyLopHoc.MdiParent = this;
                 quanLyLopHoc.Dock = DockStyle.Fill;
                 quanLyLopHoc.Show();
@@ -219,7 +220,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (quanLyNhanSu == null || quanLyNhanSu.IsDisposed)
             {
-                quanLyNhanSu = new frmQuanLyNhanSu();
+                quanLyNhanSu = new frmQuanLyNhanSu(idQuyenHan);
                 quanLyNhanSu.MdiParent = this;
                 quanLyNhanSu.Dock = DockStyle.Fill;
                 quanLyNhanSu.Show();
@@ -285,10 +286,21 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             lblTrangThai.Text = "Chưa đăng nhập.";
         }
 
+        public void QuyenAdmin()
+        {
+            mnuDangNhap.Enabled = false;
+            mnuDoiMatKhau.Enabled = true;
+            mnuDangXuat.Enabled = true;
+
+            mnuQuanLy.Visible = true;
+            lblTrangThai.Text = "Quản trị viên: " + hoVaTen;
+        }
 
         public void QuyenNhanVien()
         {
             mnuDangNhap.Enabled = false;
+            mnuDoiMatKhau.Enabled = true;
+            mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = true;
             lblTrangThai.Text = "Nhân viên: " + hoVaTen;
@@ -296,6 +308,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public void QuyenGiangVien()
         {
             mnuDangNhap.Enabled = false;
+            mnuDoiMatKhau.Enabled = true;
+            mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = true;
             mnuQuanLyHocPhi.Visible = false;
@@ -311,6 +325,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public void QuyenHocVien()
         {
             mnuDangNhap.Enabled = false;
+            mnuDoiMatKhau.Enabled = true;
+            mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = false;
 
@@ -325,7 +341,20 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void mnuDangNhap_Click(object sender, EventArgs e)
         {
+            DangNhap();
+        }
 
+        private void mnuDoiMatKhau_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuThoat_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Bạn có chắc chắn muốn thoát phần mềm?", "Xác nhận thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Application.Exit(); 
+            }
         }
     }
 }
