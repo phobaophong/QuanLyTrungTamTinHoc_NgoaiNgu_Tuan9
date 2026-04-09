@@ -1,4 +1,5 @@
-﻿using QuanLyTrungTamTinHoc_NgoaiNgu.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using QuanLyTrungTamTinHoc_NgoaiNgu.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,22 +52,19 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void LoadData()
         {
             context = new QuanLyTrungTamContext();
-            var lop = context.LopHoc.ToList();
 
-            txtTenLopHoc.DataBindings.Clear();
-            dtpNgayBatDau.DataBindings.Clear();
-            dtpNgayKetThuc.DataBindings.Clear();
+            var lop = context.LopHoc.Include(l => l.HocPhi).ToList();
 
             bindingSource.DataSource = lop;
 
             txtTenLopHoc.DataBindings.Clear();
-            txtTenLopHoc.DataBindings.Add("Text", bindingSource, "TenLopHoc", false, DataSourceUpdateMode.Never);
+            txtTenLopHoc.DataBindings.Add("Text", bindingSource, "TenLopHoc", true, DataSourceUpdateMode.Never);
 
             dtpNgayBatDau.DataBindings.Clear();
-            dtpNgayBatDau.DataBindings.Add("Value", bindingSource, "NgayBatDau", false, DataSourceUpdateMode.Never);
+            dtpNgayBatDau.DataBindings.Add("Value", bindingSource, "NgayBatDau", true, DataSourceUpdateMode.Never);
 
             dtpNgayKetThuc.DataBindings.Clear();
-            dtpNgayKetThuc.DataBindings.Add("Value", bindingSource, "NgayKetThuc", false, DataSourceUpdateMode.Never);
+            dtpNgayKetThuc.DataBindings.Add("Value", bindingSource, "NgayKetThuc", true, DataSourceUpdateMode.Never);
 
             var current = (LopHoc)bindingSource.Current;
 
@@ -244,6 +242,22 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     {
                         e.Value = khoaHoc.TenKhoaHoc;
                     }
+                }
+            }
+
+            if (dataGridView.Columns[e.ColumnIndex].Name == "SiSo" || dataGridView.Columns[e.ColumnIndex].Name == "SiSoThucTe")
+            {
+                var lop = dataGridView.Rows[e.RowIndex].DataBoundItem as LopHoc;
+                if (lop != null)
+                {
+                    e.Value = $"{lop.SiSoThucTe} / {lop.SiSo}";
+
+                    if (lop.SiSoThucTe >= lop.SiSo)
+                    {
+                        e.CellStyle.ForeColor = Color.Red;
+                        e.CellStyle.Font = new Font(dataGridView.Font, FontStyle.Bold);
+                    }
+                    e.FormattingApplied = true;
                 }
             }
         }

@@ -19,5 +19,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Data
         public virtual ObservableCollectionListSource<LichHoc> LichHoc { get; } = new();
         public virtual ObservableCollectionListSource<KetQua> KetQua { get; } = new();
         public virtual ObservableCollectionListSource<HocPhi> HocPhi { get; } = new();
+
+        public int SiSoThucTe
+        {
+            get
+            {
+                if (HocPhi != null)
+                {
+                    return HocPhi.Count;
+                }
+                return 0;
+            }
+        }
     }
 }

@@ -46,6 +46,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void frmLogin_Load(object sender, EventArgs e)
         {
             this.AcceptButton = btnLogin;
+            txtMatKhau.Clear();
+            txtTenDangNhap.Clear();
+
+            txtTenDangNhap.Focus();
         }
 
         private void frmLogin_Shown(object sender, EventArgs e)

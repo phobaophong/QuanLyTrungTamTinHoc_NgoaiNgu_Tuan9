@@ -28,18 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             cbbKhoaHoc = new ComboBox();
             label2 = new Label();
             cbbLopHoc = new ComboBox();
             label3 = new Label();
             cbbTuan = new ComboBox();
             groupBox4 = new GroupBox();
+            btnThoat = new Button();
             btnHuyBo = new Button();
             btnXacNhan = new Button();
             btnTaoTKB = new Button();
             grbTaoTKB = new GroupBox();
+            rdoLocTiengAnh = new RadioButton();
+            rdoLocTinHoc = new RadioButton();
             chk357 = new CheckBox();
             chk246 = new CheckBox();
             label5 = new Label();
@@ -58,7 +61,6 @@
             colThu6 = new DataGridViewTextBoxColumn();
             colThu7 = new DataGridViewTextBoxColumn();
             colChuNhat = new DataGridViewTextBoxColumn();
-            btnThoat = new Button();
             groupBox4.SuspendLayout();
             grbTaoTKB.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -70,7 +72,7 @@
             cbbKhoaHoc.FormattingEnabled = true;
             cbbKhoaHoc.Location = new Point(114, 36);
             cbbKhoaHoc.Name = "cbbKhoaHoc";
-            cbbKhoaHoc.Size = new Size(214, 28);
+            cbbKhoaHoc.Size = new Size(231, 28);
             cbbKhoaHoc.TabIndex = 0;
             cbbKhoaHoc.SelectedIndexChanged += cbbKhoaHoc_SelectedIndexChanged;
             // 
@@ -88,7 +90,7 @@
             cbbLopHoc.FormattingEnabled = true;
             cbbLopHoc.Location = new Point(114, 84);
             cbbLopHoc.Name = "cbbLopHoc";
-            cbbLopHoc.Size = new Size(214, 28);
+            cbbLopHoc.Size = new Size(231, 28);
             cbbLopHoc.TabIndex = 4;
             cbbLopHoc.SelectedIndexChanged += cbbLopHoc_SelectedIndexChanged;
             // 
@@ -106,7 +108,7 @@
             cbbTuan.FormattingEnabled = true;
             cbbTuan.Location = new Point(17, 135);
             cbbTuan.Name = "cbbTuan";
-            cbbTuan.Size = new Size(311, 28);
+            cbbTuan.Size = new Size(328, 28);
             cbbTuan.TabIndex = 6;
             cbbTuan.SelectedIndexChanged += cbbTuan_SelectedIndexChanged_1;
             // 
@@ -129,7 +131,17 @@
             groupBox4.Size = new Size(1167, 225);
             groupBox4.TabIndex = 6;
             groupBox4.TabStop = false;
-            groupBox4.Text = "Bộ lọc";
+            groupBox4.Text = "Thời khóa biểu";
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(351, 168);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(125, 37);
+            btnThoat.TabIndex = 12;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // btnHuyBo
             // 
@@ -163,6 +175,8 @@
             // 
             // grbTaoTKB
             // 
+            grbTaoTKB.Controls.Add(rdoLocTiengAnh);
+            grbTaoTKB.Controls.Add(rdoLocTinHoc);
             grbTaoTKB.Controls.Add(chk357);
             grbTaoTKB.Controls.Add(chk246);
             grbTaoTKB.Controls.Add(label5);
@@ -173,15 +187,39 @@
             grbTaoTKB.Controls.Add(cbbPhongHoc);
             grbTaoTKB.Location = new Point(499, 26);
             grbTaoTKB.Name = "grbTaoTKB";
-            grbTaoTKB.Size = new Size(641, 151);
+            grbTaoTKB.Size = new Size(641, 179);
             grbTaoTKB.TabIndex = 8;
             grbTaoTKB.TabStop = false;
             grbTaoTKB.Text = "Tạo thời khóa biểu";
             // 
+            // rdoLocTiengAnh
+            // 
+            rdoLocTiengAnh.AutoSize = true;
+            rdoLocTiengAnh.Location = new Point(511, 27);
+            rdoLocTiengAnh.Name = "rdoLocTiengAnh";
+            rdoLocTiengAnh.Size = new Size(97, 24);
+            rdoLocTiengAnh.TabIndex = 13;
+            rdoLocTiengAnh.TabStop = true;
+            rdoLocTiengAnh.Text = "Tiếng Anh";
+            rdoLocTiengAnh.UseVisualStyleBackColor = true;
+            rdoLocTiengAnh.CheckedChanged += rdoLocTiengAnh_CheckedChanged;
+            // 
+            // rdoLocTinHoc
+            // 
+            rdoLocTinHoc.AutoSize = true;
+            rdoLocTinHoc.Location = new Point(427, 27);
+            rdoLocTinHoc.Name = "rdoLocTinHoc";
+            rdoLocTinHoc.Size = new Size(78, 24);
+            rdoLocTinHoc.TabIndex = 12;
+            rdoLocTinHoc.TabStop = true;
+            rdoLocTinHoc.Text = "Tin học";
+            rdoLocTinHoc.UseVisualStyleBackColor = true;
+            rdoLocTinHoc.CheckedChanged += rdoLocTinHoc_CheckedChanged;
+            // 
             // chk357
             // 
             chk357.AutoSize = true;
-            chk357.Location = new Point(362, 58);
+            chk357.Location = new Point(13, 136);
             chk357.Name = "chk357";
             chk357.Size = new Size(112, 24);
             chk357.TabIndex = 11;
@@ -191,7 +229,7 @@
             // chk246
             // 
             chk246.AutoSize = true;
-            chk246.Location = new Point(362, 28);
+            chk246.Location = new Point(13, 106);
             chk246.Name = "chk246";
             chk246.Size = new Size(112, 24);
             chk246.TabIndex = 10;
@@ -201,7 +239,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(13, 117);
+            label5.Location = new Point(330, 29);
             label5.Name = "label5";
             label5.Size = new Size(82, 20);
             label5.TabIndex = 9;
@@ -210,9 +248,9 @@
             // cbbGiangVien
             // 
             cbbGiangVien.FormattingEnabled = true;
-            cbbGiangVien.Location = new Point(110, 112);
+            cbbGiangVien.Location = new Point(330, 65);
             cbbGiangVien.Name = "cbbGiangVien";
-            cbbGiangVien.Size = new Size(214, 28);
+            cbbGiangVien.Size = new Size(278, 28);
             cbbGiangVien.TabIndex = 8;
             // 
             // label4
@@ -268,24 +306,24 @@
             dataGridView.AllowUserToResizeColumns = false;
             dataGridView.AllowUserToResizeRows = false;
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView.Columns.AddRange(new DataGridViewColumn[] { colCa, colThu2, colThu3, colThu4, colThu5, colThu6, colThu7, colChuNhat });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView.Dock = DockStyle.Fill;
             dataGridView.Location = new Point(3, 23);
             dataGridView.Name = "dataGridView";
@@ -343,16 +381,6 @@
             colChuNhat.MinimumWidth = 6;
             colChuNhat.Name = "colChuNhat";
             // 
-            // btnThoat
-            // 
-            btnThoat.Location = new Point(351, 168);
-            btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(125, 37);
-            btnThoat.TabIndex = 12;
-            btnThoat.Text = "Thoát";
-            btnThoat.UseVisualStyleBackColor = true;
-            btnThoat.Click += btnThoat_Click;
-            // 
             // frmThoiKhoaBieu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -405,5 +433,7 @@
         private CheckBox chk357;
         private CheckBox chk246;
         private Button btnThoat;
+        private RadioButton rdoLocTiengAnh;
+        private RadioButton rdoLocTinHoc;
     }
 }

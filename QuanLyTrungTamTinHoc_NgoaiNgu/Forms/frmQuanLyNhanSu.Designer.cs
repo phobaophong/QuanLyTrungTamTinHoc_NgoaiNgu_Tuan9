@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
+            cbbBoPhan = new ComboBox();
+            btnThoat = new Button();
             label1 = new Label();
-            txtBoPhan = new TextBox();
             btnHuyBo = new Button();
             btnXacNhan = new Button();
             btnXoa = new Button();
@@ -55,6 +57,9 @@
             txtMaSo = new TextBox();
             grbDataGrid = new GroupBox();
             dataGridView = new DataGridView();
+            groupBox2 = new GroupBox();
+            btnNhanVien = new Button();
+            btnGiangVien = new Button();
             colID = new DataGridViewTextBoxColumn();
             MaSo = new DataGridViewTextBoxColumn();
             HoVaTen = new DataGridViewTextBoxColumn();
@@ -66,10 +71,6 @@
             BoPhan = new DataGridViewTextBoxColumn();
             HinhAnh = new DataGridViewImageColumn();
             XemChiTiet = new DataGridViewLinkColumn();
-            groupBox2 = new GroupBox();
-            btnNhanVien = new Button();
-            btnGiangVien = new Button();
-            btnThoat = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picHinhAnh).BeginInit();
             groupBox6.SuspendLayout();
@@ -81,9 +82,9 @@
             // groupBox1
             // 
             groupBox1.BackColor = Color.White;
+            groupBox1.Controls.Add(cbbBoPhan);
             groupBox1.Controls.Add(btnThoat);
             groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(txtBoPhan);
             groupBox1.Controls.Add(btnHuyBo);
             groupBox1.Controls.Add(btnXacNhan);
             groupBox1.Controls.Add(btnXoa);
@@ -112,6 +113,26 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin ";
             // 
+            // cbbBoPhan
+            // 
+            cbbBoPhan.Anchor = AnchorStyles.None;
+            cbbBoPhan.FormattingEnabled = true;
+            cbbBoPhan.Location = new Point(201, 177);
+            cbbBoPhan.Name = "cbbBoPhan";
+            cbbBoPhan.Size = new Size(132, 28);
+            cbbBoPhan.TabIndex = 55;
+            // 
+            // btnThoat
+            // 
+            btnThoat.Anchor = AnchorStyles.None;
+            btnThoat.Location = new Point(938, 230);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(101, 34);
+            btnThoat.TabIndex = 54;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
+            // 
             // label1
             // 
             label1.Anchor = AnchorStyles.None;
@@ -121,14 +142,6 @@
             label1.Size = new Size(67, 20);
             label1.TabIndex = 53;
             label1.Text = "Bộ phận:";
-            // 
-            // txtBoPhan
-            // 
-            txtBoPhan.Anchor = AnchorStyles.None;
-            txtBoPhan.Location = new Point(201, 177);
-            txtBoPhan.Name = "txtBoPhan";
-            txtBoPhan.Size = new Size(132, 27);
-            txtBoPhan.TabIndex = 52;
             // 
             // btnHuyBo
             // 
@@ -383,6 +396,41 @@
             dataGridView.CellContentClick += dataGridView_CellContentClick;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
             // 
+            // groupBox2
+            // 
+            groupBox2.BackColor = Color.White;
+            groupBox2.Controls.Add(btnNhanVien);
+            groupBox2.Controls.Add(btnGiangVien);
+            groupBox2.Dock = DockStyle.Bottom;
+            groupBox2.Location = new Point(0, 712);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(1327, 94);
+            groupBox2.TabIndex = 5;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Hiển thị danh sách";
+            // 
+            // btnNhanVien
+            // 
+            btnNhanVien.Anchor = AnchorStyles.None;
+            btnNhanVien.Location = new Point(709, 17);
+            btnNhanVien.Name = "btnNhanVien";
+            btnNhanVien.Size = new Size(200, 53);
+            btnNhanVien.TabIndex = 1;
+            btnNhanVien.Text = "Nhân viên";
+            btnNhanVien.UseVisualStyleBackColor = true;
+            btnNhanVien.Click += btnNhanVien_Click;
+            // 
+            // btnGiangVien
+            // 
+            btnGiangVien.Anchor = AnchorStyles.None;
+            btnGiangVien.Location = new Point(418, 17);
+            btnGiangVien.Name = "btnGiangVien";
+            btnGiangVien.Size = new Size(200, 53);
+            btnGiangVien.TabIndex = 0;
+            btnGiangVien.Text = "Giảng viên";
+            btnGiangVien.UseVisualStyleBackColor = true;
+            btnGiangVien.Click += btnGiangVien_Click;
+            // 
             // colID
             // 
             colID.DataPropertyName = "ID";
@@ -409,6 +457,8 @@
             // NgaySinh
             // 
             NgaySinh.DataPropertyName = "NgaySinh";
+            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
+            NgaySinh.DefaultCellStyle = dataGridViewCellStyle1;
             NgaySinh.HeaderText = "Ngày sinh";
             NgaySinh.MinimumWidth = 6;
             NgaySinh.Name = "NgaySinh";
@@ -466,52 +516,6 @@
             XemChiTiet.Resizable = DataGridViewTriState.True;
             XemChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
             // 
-            // groupBox2
-            // 
-            groupBox2.BackColor = Color.White;
-            groupBox2.Controls.Add(btnNhanVien);
-            groupBox2.Controls.Add(btnGiangVien);
-            groupBox2.Dock = DockStyle.Bottom;
-            groupBox2.Location = new Point(0, 712);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(1327, 94);
-            groupBox2.TabIndex = 5;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Hiển thị danh sách";
-            // 
-            // btnNhanVien
-            // 
-            btnNhanVien.Anchor = AnchorStyles.None;
-            btnNhanVien.Location = new Point(709, 17);
-            btnNhanVien.Name = "btnNhanVien";
-            btnNhanVien.Size = new Size(200, 53);
-            btnNhanVien.TabIndex = 1;
-            btnNhanVien.Text = "Nhân viên";
-            btnNhanVien.UseVisualStyleBackColor = true;
-            btnNhanVien.Click += btnNhanVien_Click;
-            // 
-            // btnGiangVien
-            // 
-            btnGiangVien.Anchor = AnchorStyles.None;
-            btnGiangVien.Location = new Point(418, 17);
-            btnGiangVien.Name = "btnGiangVien";
-            btnGiangVien.Size = new Size(200, 53);
-            btnGiangVien.TabIndex = 0;
-            btnGiangVien.Text = "Giảng viên";
-            btnGiangVien.UseVisualStyleBackColor = true;
-            btnGiangVien.Click += btnGiangVien_Click;
-            // 
-            // btnThoat
-            // 
-            btnThoat.Anchor = AnchorStyles.None;
-            btnThoat.Location = new Point(938, 230);
-            btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(101, 34);
-            btnThoat.TabIndex = 54;
-            btnThoat.Text = "Thoát";
-            btnThoat.UseVisualStyleBackColor = true;
-            btnThoat.Click += btnThoat_Click;
-            // 
             // frmQuanLyNhanSu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -566,7 +570,8 @@
         private Button btnNhanVien;
         private Button btnGiangVien;
         private Label label1;
-        private TextBox txtBoPhan;
+        private Button btnThoat;
+        private ComboBox cbbBoPhan;
         private DataGridViewTextBoxColumn colID;
         private DataGridViewTextBoxColumn MaSo;
         private DataGridViewTextBoxColumn HoVaTen;
@@ -578,6 +583,5 @@
         private DataGridViewTextBoxColumn BoPhan;
         private DataGridViewImageColumn HinhAnh;
         private DataGridViewLinkColumn XemChiTiet;
-        private Button btnThoat;
     }
 }

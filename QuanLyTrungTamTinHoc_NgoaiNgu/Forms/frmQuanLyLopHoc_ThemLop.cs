@@ -9,10 +9,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
     {
         QuanLyTrungTamContext context = new QuanLyTrungTamContext();
         int id;
-        public frmQuanLyLopHoc_ThemLop(int idLop)
+        List<int> danhSachAutoImport = new List<int>();
+        public frmQuanLyLopHoc_ThemLop(int idLop, List<int> dsImport = null)
         {
             InitializeComponent();
+
             id = idLop;
+
+            danhSachAutoImport = dsImport;
+
             Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
 
@@ -144,6 +149,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     );
                     return;
                 }
+
                 if (id == 0) // thêm
                 {
                     LopHoc lop = new LopHoc
@@ -157,8 +163,28 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     };
 
                     context.LopHoc.Add(lop);
-                    context.SaveChanges();
-                    MessageBox.Show("Thêm lớp học thành công!");
+                    context.SaveChanges(); // Lưu để lấy ID lớp mới tạo ra
+
+                    if (danhSachAutoImport != null && danhSachAutoImport.Count > 0)
+                    {
+                        foreach (int idHV in danhSachAutoImport)
+                        {
+                            context.HocPhi.Add(new HocPhi
+                            {
+                                LopHocID = lop.ID,   // Mã lớp vừa tạo xong ở trên
+                                HocVienID = idHV,    // Mã học viên bị rớt truyền qua từ Form Điểm Số
+                                NgayDong = DateTime.Now
+                            });
+                        }
+
+                        context.SaveChanges(); // Lưu danh sách học viên vào Database
+
+                        MessageBox.Show($"Thêm lớp học thành công và đã tự động ghi danh {danhSachAutoImport.Count} học viên vào lớp này!", "Hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Thêm lớp học thành công!");
+                    }
                 }
                 else // sửa
                 {

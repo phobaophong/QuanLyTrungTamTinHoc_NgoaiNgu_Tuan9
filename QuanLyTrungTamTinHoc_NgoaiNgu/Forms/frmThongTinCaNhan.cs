@@ -47,7 +47,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         if (nv.GioiTinh == true) rdoNam.Checked = true; else rdoNu.Checked = true;
 
                         LoadHinhAnh(nv.HinhAnh, nv.GioiTinh);
-                        lblSetup.Text = "Chức vụ: Nhân Viên";
+                        lblSetup.Text = $"Chức vụ: {nv.BoPhan}";
                     }
                     break;
 
@@ -65,7 +65,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         if (gv.GioiTinh == true) rdoNam.Checked = true; else rdoNu.Checked = true;
 
                         LoadHinhAnh(gv.HinhAnh, gv.GioiTinh);
-                        lblSetup.Text = "Chức vụ: Giảng Viên";
+                        lblSetup.Text = $"Chức vụ: Giảng viên {gv.BoPhan}";
                     }
                     break;
 
@@ -83,44 +83,45 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         if (hv.GioiTinh == true) rdoNam.Checked = true; else rdoNu.Checked = true;
 
                         LoadHinhAnh(hv.HinhAnh, hv.GioiTinh);
-                    }
 
-                    var chiTietGhiDanh = context.HocPhi
-                            .Include(x => x.LopHoc)
-                                .ThenInclude(l => l.KhoaHoc)
-                            .FirstOrDefault(x => x.HocVienID == idDuLieu);
+                        // Lấy thông tin lớp học và học phí
+                        var chiTietGhiDanh = context.HocPhi
+                                .Include(x => x.LopHoc)
+                                    .ThenInclude(l => l.KhoaHoc)
+                                .FirstOrDefault(x => x.HocVienID == idDuLieu);
 
-                    if (chiTietGhiDanh != null && chiTietGhiDanh.LopHoc != null)
-                    {
-                        string tenLop = chiTietGhiDanh.LopHoc.TenLopHoc;
+                        if (chiTietGhiDanh != null && chiTietGhiDanh.LopHoc != null)
+                        {
+                            string tenLop = chiTietGhiDanh.LopHoc.TenLopHoc;
 
-                        string tenKhoa = chiTietGhiDanh.LopHoc.KhoaHoc != null
-                                         ? chiTietGhiDanh.LopHoc.KhoaHoc.TenKhoaHoc
-                                         : "Chưa cập nhật";
+                            string tenKhoa = chiTietGhiDanh.LopHoc.KhoaHoc != null
+                                             ? chiTietGhiDanh.LopHoc.KhoaHoc.TenKhoaHoc
+                                             : "Chưa cập nhật";
 
-                        // lấy học phí
-                        int tongHocPhi = chiTietGhiDanh.LopHoc.KhoaHoc != null ? chiTietGhiDanh.LopHoc.KhoaHoc.HocPhi : 0;
+                            // lấy học phí
+                            int tongHocPhi = chiTietGhiDanh.LopHoc.KhoaHoc != null ? chiTietGhiDanh.LopHoc.KhoaHoc.HocPhi : 0;
 
-                        // số tiền đã đóng
-                        decimal daDong = chiTietGhiDanh.SoTienDaDong;
+                            // số tiền đã đóng
+                            decimal daDong = chiTietGhiDanh.SoTienDaDong;
 
-                        // trạng thái học phí
-                        string trangThai = chiTietGhiDanh.TrangThai
-                                           ? "Đã hoàn thành"
-                                           : $"Còn nợ: {(tongHocPhi - daDong).ToString("N0")} VNĐ";
+                            // trạng thái học phí
+                            string trangThai = chiTietGhiDanh.TrangThai
+                                               ? "Đã hoàn thành"
+                                               : $"Còn nợ: {(tongHocPhi - daDong).ToString("N0")} VNĐ";
 
-                        lblSetup.Text = $"Khóa: {tenKhoa}  |  Lớp: {tenLop}  \n" +
-                                        $"Học phí: {tongHocPhi.ToString("N0")} VNĐ  \n" +
-                                        $"Đã nộp: {daDong.ToString("N0")} ({trangThai})";
-                    }
-                    else
-                    {
-                        lblSetup.Text = "Học viên này chưa được xếp vào lớp học nào.";
+                            lblSetup.Text = $"Khóa: {tenKhoa}  |  Lớp: {tenLop}  \n" +
+                                            $"Học phí: {tongHocPhi.ToString("N0")} VNĐ  \n" +
+                                            $"Đã nộp: {daDong.ToString("N0")} ({trangThai})";
+                        }
+                        else
+                        {
+                            lblSetup.Text = "Học viên này chưa được xếp vào lớp học nào.";
+                        }
                     }
                     break;
 
                 case 4: // ADMIN (Quản trị viên) - Lưu trong bảng Học Viên
-                    var admin = context.HocVien.Find(idDuLieu);
+                    var admin = context.NhanVien.Find(idDuLieu);
                     if (admin != null)
                     {
                         this.Text = "Thông tin cá nhân - QUẢN TRỊ VIÊN (ADMIN)";

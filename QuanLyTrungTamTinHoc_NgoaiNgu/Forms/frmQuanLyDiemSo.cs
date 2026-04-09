@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
 
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
@@ -18,9 +19,12 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         BindingSource bsDiem = new BindingSource();
         int idLopHocDangChon = 0;
         bool isUpdating = false;
-        public frmQuanLyDiemSo()
+        int quyenHanDangNhap;
+        public frmQuanLyDiemSo(int quyenHan)
         {
             InitializeComponent();
+
+            quyenHanDangNhap = quyenHan;
 
             Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
@@ -139,7 +143,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     col.ReadOnly = true;
             }
 
-            btnTaoLopOnThi.Visible = (locDiemThat != null && locDiemThat < 5.0f);
+            btnTaoLopOnThi.Visible = (locDiemThat != null && locDiemThat < 5.0f && (quyenHanDangNhap == 1 || quyenHanDangNhap == 4));
+        
         }
 
         private void numDiemThiThu_ValueChanged(object sender, EventArgs e)
@@ -190,11 +195,23 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnTaoLopOnThi_Click(object sender, EventArgs e)
         {
-            using (frmQuanLyLopHoc_ThemLop frmThemLop = new frmQuanLyLopHoc_ThemLop(0))
+            List<int> dsIdHocVienRot = new List<int>();
+            var dsHienThi = bsDiem.DataSource as BindingList<DanhSachDiemSo_ChiTiet>;
+
+            if (dsHienThi != null)
+            {
+                foreach (var item in dsHienThi)
+                {
+                    dsIdHocVienRot.Add(item.HocVienID);
+                }
+            }
+
+            using (frmQuanLyLopHoc_ThemLop frmThemLop = new frmQuanLyLopHoc_ThemLop(0, dsIdHocVienRot))
             {
                 frmThemLop.Text = "Tạo Lớp Ôn Tập Thi Lại";
                 frmThemLop.ShowDialog();
             }
+
             lblHoiYKien.Visible = false;
         }
 
@@ -210,6 +227,16 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             var dsHienThi = bsDiem.DataSource as BindingList<DanhSachDiemSo_ChiTiet>;
             if (dsHienThi == null || idLopHocDangChon == 0) return;
+
+            foreach (var item in dsHienThi)
+            {
+                if ((item.DiemThiThu.HasValue && (item.DiemThiThu < 0 || item.DiemThiThu > 10)) ||
+                    (item.DiemThiThat.HasValue && (item.DiemThiThat < 0 || item.DiemThiThat > 10)))
+                {
+                    MessageBox.Show($"Điểm của học viên [{item.MaSo} - {item.HoVaTen}] không hợp lệ!\n\nĐiểm số phải nằm trong khoảng từ 0 đến 10. Vui lòng kiểm tra lại.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             foreach (var item in dsHienThi)
             {
@@ -270,6 +297,157 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnNhapExcel_Click(object sender, EventArgs e)
+        {
+            if (idLopHocDangChon == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một lớp học bên bảng Bộ lọc trước khi nhập điểm từ Excel!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Title = "Nhập bảng điểm từ Excel";
+            openDialog.Filter = "Tập tin Excel *.xlsx|*.xlsx";
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    int demThanhCong = 0;
+
+                    using (XLWorkbook wb = new XLWorkbook(openDialog.FileName))
+                    {
+                        IXLWorksheet ws = wb.Worksheet(1);
+                        bool isHeader = true;
+
+                        foreach (IXLRow dong in ws.RowsUsed())
+                        {
+                            if (isHeader)
+                            {
+                                isHeader = false; 
+                                continue;
+                            }
+
+
+                            string maSo = dong.Cell(1).Value.ToString().Trim();
+                            string strDiemThu = dong.Cell(4).Value.ToString().Trim();
+                            string strDiemThat = dong.Cell(5).Value.ToString().Trim();
+
+                            if (string.IsNullOrEmpty(maSo)) continue;
+
+                            var hocVien = context.HocVien.FirstOrDefault(hv => hv.MaSo == maSo);
+                            if (hocVien == null) continue; 
+
+                            float? diemThu = null;
+                            float? diemThat = null;
+                            if (float.TryParse(strDiemThu, out float dt)) diemThu = dt;
+                            if (float.TryParse(strDiemThat, out float dth)) diemThat = dth;
+
+                            if (diemThu == null && diemThat == null) continue;
+
+                            if ((diemThu < 0 || diemThu > 10) || (diemThat < 0 || diemThat > 10))
+                            {
+                                MessageBox.Show($"Phát hiện điểm không hợp lệ (ngoài khoảng 0-10) tại học viên mã {maSo} trong file Excel.\n\nQuá trình nhập dữ liệu đã bị dừng lại để đảm bảo an toàn.", "Lỗi dữ liệu Excel", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return; 
+                            }
+
+                            var kq = context.KetQua.FirstOrDefault(k => k.LopHocID == idLopHocDangChon && k.HocVienID == hocVien.ID);
+
+                            if (kq == null)
+                            {
+                                context.KetQua.Add(new KetQua
+                                {
+                                    LopHocID = idLopHocDangChon,
+                                    HocVienID = hocVien.ID,
+                                    DiemThiThu = diemThu,
+                                    DiemThiThat = diemThat
+                                });
+                            }
+                            else
+                            {
+                                kq.DiemThiThu = diemThu;
+                                kq.DiemThiThat = diemThat;
+                            }
+
+                            demThanhCong++;
+                        }
+                    }
+
+                    context.SaveChanges();
+
+                    MessageBox.Show($"Đã cập nhật/thêm mới thành công điểm cho {demThanhCong} học viên!", "Hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    LoadData(idLopHocDangChon, null);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Có lỗi khi đọc/ghi file Excel: " + ex.Message, "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnXuatExcel_Click(object sender, EventArgs e)
+        {
+            if (idLopHocDangChon == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một lớp học để xuất danh sách điểm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string tenLop = cboLopHoc.Text.Trim();
+            // Lọc ký tự đặc biệt để làm tên file
+            foreach (char c in System.IO.Path.GetInvalidFileNameChars())
+            {
+                tenLop = tenLop.Replace(c.ToString(), "_");
+            }
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Xuất bảng điểm ra Excel";
+            saveDialog.Filter = "Tập tin Excel *.xlsx|*.xlsx";
+            saveDialog.FileName = $"BangDiem_{tenLop}_{DateTime.Now.ToString("dd_MM_yyyy")}.xlsx";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    DataTable dtDiem = new DataTable();
+                    dtDiem.Columns.Add("Mã số", typeof(string));
+                    dtDiem.Columns.Add("Họ và tên", typeof(string));
+                    dtDiem.Columns.Add("Tên lớp", typeof(string));
+                    dtDiem.Columns.Add("Điểm thi thử", typeof(string));
+                    dtDiem.Columns.Add("Điểm thi thật", typeof(string));
+
+                    var dsHienThi = bsDiem.DataSource as BindingList<DanhSachDiemSo_ChiTiet>;
+                    if (dsHienThi != null)
+                    {
+                        foreach (var item in dsHienThi)
+                        {
+                            dtDiem.Rows.Add(
+                                item.MaSo,
+                                item.HoVaTen,
+                                item.TenLop,
+                                item.DiemThiThu.HasValue ? item.DiemThiThu.ToString() : "",
+                                item.DiemThiThat.HasValue ? item.DiemThiThat.ToString() : ""
+                            );
+                        }
+                    }
+
+                    using (XLWorkbook excelWorkbook = new XLWorkbook())
+                    {
+                        var excelSheet = excelWorkbook.Worksheets.Add(dtDiem, "BangDiem");
+                        excelSheet.Columns().AdjustToContents();
+                        excelWorkbook.SaveAs(saveDialog.FileName);
+
+                        MessageBox.Show($"Đã xuất bảng điểm lớp {tenLop} ra file Excel thành công.\nBạn có thể dùng file này để nhập điểm và Import ngược lại vào phần mềm.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xuất file: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

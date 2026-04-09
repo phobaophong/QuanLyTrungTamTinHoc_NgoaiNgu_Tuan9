@@ -1,15 +1,15 @@
-﻿    using Microsoft.EntityFrameworkCore;
-    using QuanLyTrungTamTinHoc_NgoaiNgu.Data;
-    using QuanLyTrungTamTinHoc_NgoaiNgu.Models;
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Drawing;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Forms;
+﻿using Microsoft.EntityFrameworkCore;
+using QuanLyTrungTamTinHoc_NgoaiNgu.Data;
+using QuanLyTrungTamTinHoc_NgoaiNgu.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 {
@@ -17,9 +17,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
     {
         QuanLyTrungTamContext context = new QuanLyTrungTamContext();
 
-        public frmThoiKhoaBieu()
+        int quyenHanDangNhap;
+        int idNguoiDung;
+
+        public frmThoiKhoaBieu(int quyenHan, int idDangNhap)
         {
             InitializeComponent();
+
+            quyenHanDangNhap = quyenHan;
+            idNguoiDung = idDangNhap;
 
             Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
@@ -38,10 +44,29 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             LoadCbbKhoaHoc();
 
+            btnTaoTKB.Visible = false;
             grbTaoTKB.Visible = false;
             btnXacNhan.Enabled = false;
 
+            if (quyenHanDangNhap == 2 || quyenHanDangNhap == 3)
+            {
+                btnTaoTKB.Visible = false;
+                btnXacNhan.Visible = false;
+                btnHuyBo.Visible = false;
+            }
+
+            if (quyenHanDangNhap == 3)
+            {
+                cbbKhoaHoc.Enabled = false;
+                cbbLopHoc.Enabled = false;
+
+                if (cbbLopHoc.SelectedValue is int idLop && cbbTuan.SelectedItem is ItemTuan tuan)
+                {
+                    LoadData(tuan.TuNgay, tuan.DenNgay, idLop);
+                }
+            }
         }
+
         public void LoadData(DateTime tuNgay, DateTime denNgay, int idLop)
         {
             for (int i = 0; i < 4; i++)
@@ -58,12 +83,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             var dsLichHoc = context.LichHoc
                 .Include(l => l.PhongHoc)
-                .Include(l => l.GiangVien) // Nếu muốn hiện tên GV
+                .Include(l => l.GiangVien)
                 .Where(l => l.LopHocID == idLop
                          && l.NgayHoc >= start
                          && l.NgayHoc <= end)
                 .ToList();
-
 
             foreach (var lich in dsLichHoc)
             {
@@ -79,19 +103,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     case DayOfWeek.Sunday: tenCot = "colChuNhat"; break;
                 }
 
-
-
                 int indexDong = lich.CaHocID - 1;
 
                 if (indexDong >= 0 && indexDong < 4 && !string.IsNullOrEmpty(tenCot))
                 {
-
                     if (dataGridView.Columns.Contains(tenCot))
                     {
                         var cell = dataGridView.Rows[indexDong].Cells[tenCot];
 
                         cell.Value = $"Phòng: {lich.PhongHoc?.TenPhong}{Environment.NewLine}GV: {lich.GiangVien?.HoVaTen}";
-
                         cell.Style.BackColor = Color.FromArgb(0, 120, 215);
                         cell.Style.ForeColor = Color.White;
                         cell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -111,47 +131,87 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             DateTime ngayChay = lop.NgayBatDau;
 
             while (ngayChay.DayOfWeek != DayOfWeek.Monday)
-            {
                 ngayChay = ngayChay.AddDays(-1);
-            }
 
-            int countTuan = 1;
+            int count = 1;
+
             while (ngayChay <= lop.NgayKetThuc)
             {
                 dsTuan.Add(new ItemTuan
                 {
-                    SoTuan = countTuan++,
+                    SoTuan = count++,
                     TuNgay = ngayChay,
                     DenNgay = ngayChay.AddDays(6)
                 });
+
                 ngayChay = ngayChay.AddDays(7);
             }
 
-            cbbTuan.DataSource = dsTuan;
+            // Đảo ngược thứ tự DataSource xuống dưới cùng để tránh lỗi mất hiển thị
             cbbTuan.DisplayMember = "TenHienThi";
+            cbbTuan.DataSource = dsTuan;
+
+            if (dsTuan.Count > 0)
+                cbbTuan.SelectedIndex = 0;
         }
 
         private void LoadCbbKhoaHoc()
         {
-            var kh = context.KhoaHoc.ToList();
-            cbbKhoaHoc.DataSource = kh;
+            context = new QuanLyTrungTamContext();
+            var khQuery = context.KhoaHoc.AsQueryable();
+
+            if (quyenHanDangNhap == 3) // Kiểm tra xem học viên học khóa nào
+            {
+                var dsKhoaHocCuaHocVien = context.HocPhi
+                    .Where(hp => hp.HocVienID == idNguoiDung && hp.LopHoc.TrangThai == true)
+                    .Select(hp => hp.LopHoc.KhoaHocID)
+                    .Distinct()
+                    .ToList();
+
+                khQuery = khQuery.Where(k => dsKhoaHocCuaHocVien.Contains(k.ID));
+            }
+
+            var list = khQuery.ToList();
+
+            // Đảo ngược thứ tự DataSource xuống dưới cùng
             cbbKhoaHoc.DisplayMember = "TenKhoaHoc";
             cbbKhoaHoc.ValueMember = "ID";
+            cbbKhoaHoc.DataSource = list;
+
+            if (list.Count > 0)
+                cbbKhoaHoc.SelectedIndex = 0;
         }
 
         private void LoadCbbLopHoc(int idKhoa)
         {
-            var lop = context.LopHoc.Where(x => x.KhoaHocID == idKhoa).ToList();
-            cbbLopHoc.DataSource = lop;
+            var lopQuery = context.LopHoc.Where(x => x.KhoaHocID == idKhoa).AsQueryable();
+
+            if (quyenHanDangNhap == 3) // Lọc lớp của học viên
+            {
+                var dsLop = context.HocPhi
+                    .Where(hp => hp.HocVienID == idNguoiDung)
+                    .Select(hp => hp.LopHocID)
+                    .ToList();
+
+                lopQuery = lopQuery.Where(l => dsLop.Contains(l.ID) && l.TrangThai == true);
+            }
+
+            var list = lopQuery.ToList();
+
+            // Đảo ngược thứ tự DataSource xuống dưới cùng
             cbbLopHoc.DisplayMember = "TenLopHoc";
             cbbLopHoc.ValueMember = "ID";
+            cbbLopHoc.DataSource = list;
+
+            if (list.Count > 0)
+                cbbLopHoc.SelectedIndex = 0;
         }
 
         private void LoadCbbPhongHoc()
         {
-            cbbPhongHoc.DataSource = context.PhongHoc.ToList();
             cbbPhongHoc.DisplayMember = "TenPhong";
             cbbPhongHoc.ValueMember = "ID";
+            cbbPhongHoc.DataSource = context.PhongHoc.ToList();
         }
 
         private void LoadCbbCaHoc()
@@ -163,19 +223,24 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     HienThi = $"{c.GioBatDau:hh\\:mm} - {c.GioKetThuc:hh\\:mm}"
                 }).ToList();
 
-            cbbCaHoc.DataSource = dsCaHoc;
             cbbCaHoc.DisplayMember = "HienThi";
             cbbCaHoc.ValueMember = "ID";
+            cbbCaHoc.DataSource = dsCaHoc;
         }
 
-        private void LoadCbbGiangVien()
+        private void LoadCbbGiangVien(string boPhan)
         {
-            cbbGiangVien.DataSource = context.GiangVien.ToList();
+            context = new QuanLyTrungTamContext();
+
+            var listGV = context.GiangVien
+                                .Where(g => g.BoPhan == boPhan)
+                                .ToList();
+
             cbbGiangVien.DisplayMember = "HoVaTen";
             cbbGiangVien.ValueMember = "ID";
+            cbbGiangVien.DataSource = listGV;
+            cbbGiangVien.SelectedIndex = -1;
         }
-
-
 
         private void cbbKhoaHoc_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -189,6 +254,14 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (cbbLopHoc.SelectedValue is int idLop)
             {
+                context = new QuanLyTrungTamContext();
+                bool daCoLich = context.LichHoc.Any(l => l.LopHocID == idLop);
+
+                // Khóa bảo vệ kép: Chỉ Admin/Nhân viên mới thấy nút Tạo, và Lớp đó chưa có lịch
+                btnTaoTKB.Visible = (quyenHanDangNhap == 1 || quyenHanDangNhap == 4) && !daCoLich;
+
+                grbTaoTKB.Visible = false;
+
                 LoadTuan(idLop);
 
                 if (cbbTuan.SelectedItem is ItemTuan tuan)
@@ -196,7 +269,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     LoadData(tuan.TuNgay, tuan.DenNgay, idLop);
                 }
             }
-
         }
 
         private void btnTaoTKB_Click(object sender, EventArgs e)
@@ -204,7 +276,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             grbTaoTKB.Visible = true;
             btnXacNhan.Enabled = true;
             LoadCbbCaHoc();
-            LoadCbbGiangVien();
+
+            // Auto check RadioButton
+            if (rdoLocTiengAnh.Checked)
+            {
+                LoadCbbGiangVien("Tiếng Anh");
+            }
+            else
+            {
+                rdoLocTinHoc.Checked = true;
+                LoadCbbGiangVien("Tin học");
+            }
             LoadCbbPhongHoc();
         }
 
@@ -212,7 +294,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             frmThoiKhoaBieu_Load(sender, e);
         }
-
 
         public void TaoLich(List<DayOfWeek> dsThuChon)
         {
@@ -265,16 +346,22 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     if (ngayChay > lop.NgayBatDau.AddYears(1)) break; // Tránh lặp vô hạn
                 }
 
-                if (soBuoiDaXep > 0) context.SaveChanges(); // Lưu vào DB
+                if (soBuoiDaXep > 0)
+                {
+                    context.SaveChanges(); // Lưu Data
 
-                // Thông báo kết quả
+                    btnTaoTKB.Visible = false;
+                    grbTaoTKB.Visible = false;
+                }
+
+                // Thông báo tạo thành công hoặc thất bại
                 string msg = $"Đã tạo xong {soBuoiDaXep}/{tongSoBuoi} buổi học!";
                 if (thongBaoLoi.Count > 0)
                     MessageBox.Show(msg + "\n\nKhông thể xếp lịch các ngày sau:\n" + string.Join("\n", thongBaoLoi), "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 else
                     MessageBox.Show(msg, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Load lại Grid
+                // Load lại Data lên Grid
                 if (cbbTuan.SelectedItem is ItemTuan tuan)
                     LoadData(tuan.TuNgay, tuan.DenNgay, idLop);
             }
@@ -322,6 +409,22 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void rdoLocTinHoc_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdoLocTinHoc.Checked)
+            {
+                LoadCbbGiangVien("Tin học");
+            }
+        }
+
+        private void rdoLocTiengAnh_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdoLocTiengAnh.Checked)
+            {
+                LoadCbbGiangVien("Tiếng Anh");
+            }
         }
     }
 }

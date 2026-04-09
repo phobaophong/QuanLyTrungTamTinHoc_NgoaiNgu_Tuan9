@@ -64,7 +64,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Models.Utils
 
                 else if (name.Contains("luu")  || name.Contains("xacnhan") || name.Contains("loc") || 
                          name.Contains("tatca") || name.Contains("nghiep") || name.Contains("danghoc") ||
-                         name.Contains("giangvien") || name.Contains("nhanvien") || name.Contains("timkiem"))
+                         name.Contains("giangvien") || name.Contains("nhanvien") || name.Contains("timkiem")||
+                         name.Contains("5diem") || name.Contains("taoloponthi"))
                     SetButtonStyle(btn, MauLuu);
 
                 else if (name.Contains("huybo"))

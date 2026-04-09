@@ -62,6 +62,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 }
                 else
                 {
+                    context = new QuanLyTrungTamContext();
+
                     var tk = context.TaiKhoan.Where(r => r.TenDN == tenDangNhap).SingleOrDefault();
 
                     if (tk == null)
@@ -126,6 +128,20 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                                 QuyenAdmin();
 
                             }
+                            else if (tk.QuyenHan == 5) // quyền thu ngân
+                            {
+                                var nv = context.NhanVien.Where(x => x.TaiKhoanID == tk.ID).Select(x => new { x.ID, x.HoVaTen }).FirstOrDefault();
+
+                                if (nv != null)
+                                {
+                                    idDangNhap = nv.ID;
+                                    hoVaTen = nv.HoVaTen;
+                                }
+
+                                QuyenThuNgan();
+
+                            }
+
                             else
                                 ChuaDangNhap();
                         }
@@ -207,7 +223,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (diemSo == null || diemSo.IsDisposed)
             {
-                diemSo = new frmQuanLyDiemSo();
+                diemSo = new frmQuanLyDiemSo(idQuyenHan);
                 diemSo.MdiParent = this;
                 diemSo.Dock = DockStyle.Fill;
                 diemSo.Show();
@@ -233,7 +249,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (thoiKhoaBieu == null || thoiKhoaBieu.IsDisposed)
             {
-                thoiKhoaBieu = new frmThoiKhoaBieu();
+                thoiKhoaBieu = new frmThoiKhoaBieu(idQuyenHan, idDangNhap);
                 thoiKhoaBieu.MdiParent = this;
                 thoiKhoaBieu.Dock = DockStyle.Fill;
                 thoiKhoaBieu.Show();
@@ -303,7 +319,26 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = true;
+            mnuQuanLyDoanhThu.Visible = false;
             lblTrangThai.Text = "Nhân viên: " + hoVaTen;
+        }
+        public void QuyenThuNgan()
+        {
+            mnuDangNhap.Enabled = false;
+            mnuDoiMatKhau.Enabled = true;
+            mnuDangXuat.Enabled = true;
+
+            mnuQuanLy.Visible = true;
+            mnuQuanLyHocPhi.Visible = true;
+            mnuQuanLyDoanhThu.Visible = true;
+
+            mnuQuanLyLopHoc.Visible = false;
+            mnuQuanLyKhoaHoc.Visible = false;
+            mnuQuanLyHocVien.Visible = false;
+            mnuQuanLyNhanSu.Visible = false;
+            mnuQuanLyDiemSo.Visible = false;
+
+            lblTrangThai.Text = "Nhân viên thu ngân: " + hoVaTen;
         }
         public void QuyenGiangVien()
         {
@@ -346,7 +381,22 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void mnuDoiMatKhau_Click(object sender, EventArgs e)
         {
+            int? idTK = null;
+            if (idQuyenHan == 1 || idQuyenHan == 4 || idQuyenHan == 5)
+                idTK = context.NhanVien.Find(idDangNhap)?.TaiKhoanID;
+            else if (idQuyenHan == 2)
+                idTK = context.GiangVien.Find(idDangNhap)?.TaiKhoanID;
+            else if (idQuyenHan == 3)
+                idTK = context.HocVien.Find(idDangNhap)?.TaiKhoanID;
 
+            if (idTK == null)
+            {
+                MessageBox.Show("Không tìm thấy thông tin tài khoản!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            frmDoiMatKhau frm = new frmDoiMatKhau(idTK.Value);
+            frm.ShowDialog();
         }
 
         private void mnuThoat_Click(object sender, EventArgs e)

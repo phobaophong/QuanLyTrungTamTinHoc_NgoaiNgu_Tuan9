@@ -35,6 +35,8 @@
             btnDsDuoi5Diem = new Button();
             btnDsTren5Diem = new Button();
             groupBox4 = new GroupBox();
+            btnXuatExcel = new Button();
+            btnNhapExcel = new Button();
             btnHuyBo = new Button();
             btnLuu = new Button();
             btnSua = new Button();
@@ -49,6 +51,7 @@
             label4 = new Label();
             label3 = new Label();
             groupBox2 = new GroupBox();
+            btnThoat = new Button();
             label2 = new Label();
             label1 = new Label();
             cboLopHoc = new ComboBox();
@@ -61,7 +64,6 @@
             TenLop = new DataGridViewTextBoxColumn();
             DiemThiThu = new DataGridViewTextBoxColumn();
             DiemThiThat = new DataGridViewTextBoxColumn();
-            btnThoat = new Button();
             groupBox1.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -80,7 +82,7 @@
             groupBox1.Dock = DockStyle.Top;
             groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1407, 186);
+            groupBox1.Size = new Size(1407, 195);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             // 
@@ -91,16 +93,16 @@
             groupBox5.Controls.Add(btnDsDuoi5Diem);
             groupBox5.Controls.Add(btnDsTren5Diem);
             groupBox5.Dock = DockStyle.Fill;
-            groupBox5.Location = new Point(1046, 23);
+            groupBox5.Location = new Point(1128, 23);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(358, 160);
+            groupBox5.Size = new Size(276, 169);
             groupBox5.TabIndex = 6;
             groupBox5.TabStop = false;
-            groupBox5.Text = "Hiển thị danh sách sinh viên";
+            groupBox5.Text = "Lựa chọn tạo lớp ôn thi theo điểm thi thật ";
             // 
             // btnTaoLopOnThi
             // 
-            btnTaoLopOnThi.Location = new Point(149, 26);
+            btnTaoLopOnThi.Location = new Point(23, 105);
             btnTaoLopOnThi.Name = "btnTaoLopOnThi";
             btnTaoLopOnThi.Size = new Size(111, 29);
             btnTaoLopOnThi.TabIndex = 16;
@@ -111,7 +113,7 @@
             // lblHoiYKien
             // 
             lblHoiYKien.AutoSize = true;
-            lblHoiYKien.Location = new Point(149, 66);
+            lblHoiYKien.Location = new Point(140, 109);
             lblHoiYKien.Name = "lblHoiYKien";
             lblHoiYKien.Size = new Size(174, 40);
             lblHoiYKien.TabIndex = 15;
@@ -139,7 +141,8 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(btnThoat);
+            groupBox4.Controls.Add(btnXuatExcel);
+            groupBox4.Controls.Add(btnNhapExcel);
             groupBox4.Controls.Add(btnHuyBo);
             groupBox4.Controls.Add(btnLuu);
             groupBox4.Controls.Add(btnSua);
@@ -154,18 +157,38 @@
             groupBox4.Controls.Add(label4);
             groupBox4.Controls.Add(label3);
             groupBox4.Dock = DockStyle.Left;
-            groupBox4.Location = new Point(334, 23);
+            groupBox4.Location = new Point(391, 23);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(712, 160);
+            groupBox4.Size = new Size(737, 169);
             groupBox4.TabIndex = 5;
             groupBox4.TabStop = false;
-            groupBox4.Text = "Thông tin học viên";
+            groupBox4.Text = "Thông tin học viên và điểm số";
+            // 
+            // btnXuatExcel
+            // 
+            btnXuatExcel.Location = new Point(591, 64);
+            btnXuatExcel.Name = "btnXuatExcel";
+            btnXuatExcel.Size = new Size(140, 29);
+            btnXuatExcel.TabIndex = 16;
+            btnXuatExcel.Text = "Xuất Excel...";
+            btnXuatExcel.UseVisualStyleBackColor = true;
+            btnXuatExcel.Click += btnXuatExcel_Click;
+            // 
+            // btnNhapExcel
+            // 
+            btnNhapExcel.Location = new Point(591, 24);
+            btnNhapExcel.Name = "btnNhapExcel";
+            btnNhapExcel.Size = new Size(140, 29);
+            btnNhapExcel.TabIndex = 15;
+            btnNhapExcel.Text = "Nhập Excel...";
+            btnNhapExcel.UseVisualStyleBackColor = true;
+            btnNhapExcel.Click += btnNhapExcel_Click;
             // 
             // btnHuyBo
             // 
-            btnHuyBo.Location = new Point(583, 103);
+            btnHuyBo.Location = new Point(591, 105);
             btnHuyBo.Name = "btnHuyBo";
-            btnHuyBo.Size = new Size(106, 29);
+            btnHuyBo.Size = new Size(140, 29);
             btnHuyBo.TabIndex = 14;
             btnHuyBo.Text = "Hủy bỏ";
             btnHuyBo.UseVisualStyleBackColor = true;
@@ -173,7 +196,7 @@
             // 
             // btnLuu
             // 
-            btnLuu.Location = new Point(583, 62);
+            btnLuu.Location = new Point(470, 105);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(106, 29);
             btnLuu.TabIndex = 13;
@@ -183,7 +206,7 @@
             // 
             // btnSua
             // 
-            btnSua.Location = new Point(583, 25);
+            btnSua.Location = new Point(349, 105);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(106, 29);
             btnSua.TabIndex = 12;
@@ -193,17 +216,19 @@
             // 
             // numDiemThiThat
             // 
-            numDiemThiThat.Location = new Point(467, 66);
+            numDiemThiThat.Location = new Point(470, 68);
+            numDiemThiThat.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             numDiemThiThat.Name = "numDiemThiThat";
-            numDiemThiThat.Size = new Size(94, 27);
+            numDiemThiThat.Size = new Size(106, 27);
             numDiemThiThat.TabIndex = 11;
             numDiemThiThat.ValueChanged += numDiemThiThat_ValueChanged;
             // 
             // numDiemThiThu
             // 
-            numDiemThiThu.Location = new Point(467, 26);
+            numDiemThiThu.Location = new Point(470, 26);
+            numDiemThiThu.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             numDiemThiThu.Name = "numDiemThiThu";
-            numDiemThiThu.Size = new Size(94, 27);
+            numDiemThiThu.Size = new Size(106, 27);
             numDiemThiThu.TabIndex = 10;
             numDiemThiThu.ValueChanged += numDiemThiThu_ValueChanged;
             // 
@@ -275,6 +300,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(btnThoat);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(cboLopHoc);
@@ -282,10 +308,20 @@
             groupBox2.Dock = DockStyle.Left;
             groupBox2.Location = new Point(3, 23);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(331, 160);
+            groupBox2.Size = new Size(388, 169);
             groupBox2.TabIndex = 1;
             groupBox2.TabStop = false;
             groupBox2.Text = "Bộ lọc";
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(6, 120);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(106, 29);
+            btnThoat.TabIndex = 15;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // label2
             // 
@@ -310,7 +346,7 @@
             cboLopHoc.FormattingEnabled = true;
             cboLopHoc.Location = new Point(89, 63);
             cboLopHoc.Name = "cboLopHoc";
-            cboLopHoc.Size = new Size(211, 28);
+            cboLopHoc.Size = new Size(255, 28);
             cboLopHoc.TabIndex = 2;
             cboLopHoc.SelectedIndexChanged += cboLopHoc_SelectedIndexChanged;
             // 
@@ -319,7 +355,7 @@
             cboKhoaHoc.FormattingEnabled = true;
             cboKhoaHoc.Location = new Point(89, 26);
             cboKhoaHoc.Name = "cboKhoaHoc";
-            cboKhoaHoc.Size = new Size(211, 28);
+            cboKhoaHoc.Size = new Size(255, 28);
             cboKhoaHoc.TabIndex = 0;
             cboKhoaHoc.SelectedIndexChanged += cboKhoaHoc_SelectedIndexChanged;
             // 
@@ -327,9 +363,9 @@
             // 
             groupBox3.Controls.Add(dataGridView);
             groupBox3.Dock = DockStyle.Fill;
-            groupBox3.Location = new Point(0, 186);
+            groupBox3.Location = new Point(0, 195);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(1407, 528);
+            groupBox3.Size = new Size(1407, 519);
             groupBox3.TabIndex = 1;
             groupBox3.TabStop = false;
             groupBox3.Text = "Danh sách học viên";
@@ -349,7 +385,7 @@
             dataGridView.Name = "dataGridView";
             dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidth = 51;
-            dataGridView.Size = new Size(1401, 502);
+            dataGridView.Size = new Size(1401, 493);
             dataGridView.TabIndex = 0;
             dataGridView.SelectionChanged += dataGridView_SelectionChanged;
             // 
@@ -394,16 +430,6 @@
             DiemThiThat.HeaderText = "Điểm thi thật";
             DiemThiThat.MinimumWidth = 6;
             DiemThiThat.Name = "DiemThiThat";
-            // 
-            // btnThoat
-            // 
-            btnThoat.Location = new Point(401, 105);
-            btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(106, 29);
-            btnThoat.TabIndex = 15;
-            btnThoat.Text = "Thoát";
-            btnThoat.UseVisualStyleBackColor = true;
-            btnThoat.Click += btnThoat_Click;
             // 
             // frmQuanLyDiemSo
             // 
@@ -457,7 +483,6 @@
         private Button btnDsDuoi5Diem;
         private Button btnDsTren5Diem;
         private Button btnTaoLopOnThi;
-        private Label lblHoiYKien;
         private Button btnHuyBo;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn MaSo;
@@ -466,5 +491,8 @@
         private DataGridViewTextBoxColumn DiemThiThu;
         private DataGridViewTextBoxColumn DiemThiThat;
         private Button btnThoat;
+        private Label lblHoiYKien;
+        private Button btnXuatExcel;
+        private Button btnNhapExcel;
     }
 }
