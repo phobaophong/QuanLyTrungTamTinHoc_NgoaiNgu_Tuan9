@@ -391,7 +391,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmThoiKhoaBieu";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "frmThoiKhoaBieu";
+            Text = "Thời khóa biểu";
             Load += frmThoiKhoaBieu_Load;
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();

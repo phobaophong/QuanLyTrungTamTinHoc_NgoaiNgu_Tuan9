@@ -30,13 +30,43 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void frmThongKeDoanhThu_Load(object sender, EventArgs e)
         {
-            LoadBaoCao(null, null);
+            LoadCbbKhoaHoc();
+
+            LoadBaoCao(null, null, 0);
         }
-        private void LoadBaoCao(DateTime? tuNgay, DateTime? denNgay)
+        private void LoadCbbKhoaHoc()
+        {
+            var kh = context.KhoaHoc.Where(k => k.HocPhi > 0).ToList();
+
+            // Thêm một dòng "Tất cả" lên đầu danh sách để cho phép xem tổng doanh thu
+            kh.Insert(0, new KhoaHoc { ID = 0, TenKhoaHoc = "-- Tất cả Khóa học --" });
+
+            cboKhoaHoc.DataSource = kh;
+            cboKhoaHoc.DisplayMember = "TenKhoaHoc";
+            cboKhoaHoc.ValueMember = "ID";
+        }
+        private void LoadCbbLopHoc(int idKhoa)
+        {
+            if (idKhoa == 0)
+            {
+                // Nếu chọn Tất cả khóa học -> Chỉ hiển thị Tất cả lớp học
+                cboLopHoc.DataSource = new List<LopHoc> { new LopHoc { ID = 0, TenLopHoc = "-- Tất cả Lớp học --" } };
+            }
+            else
+            {
+                var lop = context.LopHoc.Where(x => x.KhoaHocID == idKhoa).ToList();
+                lop.Insert(0, new LopHoc { ID = 0, TenLopHoc = "-- Tất cả Lớp học --" });
+                cboLopHoc.DataSource = lop;
+            }
+
+            cboLopHoc.DisplayMember = "TenLopHoc";
+            cboLopHoc.ValueMember = "ID";
+        }
+        private void LoadBaoCao(DateTime? tuNgay, DateTime? denNgay, int idLop)
         {
             try
             {
-                // 1. Kéo dữ liệu từ SQL (Bảng Học Phí join với Học Viên và Lớp Học)
+                // 1. Kéo dữ liệu từ SQL
                 var query = context.HocPhi
                     .Include(hp => hp.HocVien)
                     .Include(hp => hp.LopHoc)
@@ -44,16 +74,27 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
                 string moTaThoiGian = "(Tất cả thời gian)";
 
-                // Nếu có truyền ngày vào thì tiến hành lọc
+                // Lọc theo thời gian
                 if (tuNgay.HasValue && denNgay.HasValue)
                 {
                     query = query.Where(hp => hp.NgayDong.Date >= tuNgay.Value.Date && hp.NgayDong.Date <= denNgay.Value.Date);
                     moTaThoiGian = $"Từ ngày {tuNgay.Value:dd/MM/yyyy} đến ngày {denNgay.Value:dd/MM/yyyy}";
                 }
 
+                // 🔥 Lọc theo Lớp Học (Nếu có chọn lớp cụ thể, idLop > 0)
+                if (idLop > 0)
+                {
+                    query = query.Where(hp => hp.LopHocID == idLop);
+                    var lopDangChon = context.LopHoc.Find(idLop);
+                    if (lopDangChon != null)
+                    {
+                        moTaThoiGian += $" - Thuộc lớp: {lopDangChon.TenLopHoc}";
+                    }
+                }
+
                 var danhSachPhieuThu = query.ToList();
 
-                // 2. Cài đặt Report Viewer (Gọi thẳng vào thư mục Reports)
+                // 2. Cài đặt Report Viewer
                 reportViewer1.LocalReport.ReportPath = @"Reports\rptThongKeDoanhThu.rdlc";
 
                 // 3. Đổ dữ liệu cho biến [@ThoiGianLoc]
@@ -67,17 +108,28 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 dtDoanhThu.Clear();
                 foreach (var item in danhSachPhieuThu)
                 {
-                    // Đổ đúng 4 cột như thiết kế trong DataSet1 của bạn
+                    // 🔥 XỬ LÝ LOGIC NGÀY ĐÓNG LÀ 0 THÌ HIỂN THỊ "CHƯA ĐÓNG"
+                    // (Yêu cầu cột NgayDong trong DataSet1.xsd phải là kiểu String)
+                    string ngayDongHienThi = "";
+
+                    if (item.SoTienDaDong == 0)
+                    {
+                        ngayDongHienThi = "Chưa đóng";
+                    }
+                    else
+                    {
+                        ngayDongHienThi = item.NgayDong.ToString("dd/MM/yyyy");
+                    }
+
                     dtDoanhThu.Rows.Add(
                         item.HocVien.HoVaTen,
                         item.LopHoc.TenLopHoc,
-                        item.NgayDong.Date,
+                        ngayDongHienThi, // Biến này giờ là một chuỗi (string)
                         item.SoTienDaDong
                     );
                 }
 
                 // 5. Gắn DataSource vào Report
-                // LƯU Ý: Chữ "DataSet1" ở dưới phải giống y hệt tên Dataset ở cột Report Data bên trái trong file RDLC của bạn
                 ReportDataSource rds = new ReportDataSource("DataSet1", (DataTable)dtDoanhThu);
                 reportViewer1.LocalReport.DataSources.Clear();
                 reportViewer1.LocalReport.DataSources.Add(rds);
@@ -90,7 +142,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             }
             catch (Exception ex)
             {
-                // Vẫn giữ bẫy lỗi sâu để "phòng thân"
                 string msg = "Lỗi bề nổi: " + ex.Message;
                 if (ex.InnerException != null) msg += "\n\n🔥 NGUYÊN NHÂN GỐC:\n" + ex.InnerException.Message;
                 MessageBox.Show(msg, "Lỗi nạp báo cáo", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -99,7 +150,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnTatCa_Click(object sender, EventArgs e)
         {
-            LoadBaoCao(null, null);
+            if (cboKhoaHoc.Items.Count > 0) cboKhoaHoc.SelectedIndex = 0;
+            if (cboLopHoc.Items.Count > 0) cboLopHoc.SelectedIndex = 0;
+
+            LoadBaoCao(null, null, 0);
         }
 
         private void btnLoc_Click(object sender, EventArgs e)
@@ -110,12 +164,33 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 return;
             }
 
-            LoadBaoCao(dtpTuNgay.Value, dtpDenNgay.Value);
+            // 🔥 LẤY ID LỚP ĐANG CHỌN ĐỂ TRUYỀN VÀO HÀM LỌC
+            int idLopDangChon = 0;
+            if (cboLopHoc.SelectedValue != null && cboLopHoc.SelectedValue is int id)
+            {
+                idLopDangChon = id;
+            }
+
+            LoadBaoCao(dtpTuNgay.Value, dtpDenNgay.Value, idLopDangChon);
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        private void cboKhoaHoc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboKhoaHoc.SelectedValue != null && cboKhoaHoc.SelectedValue is int idKhoa)
+            {
+                LoadCbbLopHoc(idKhoa);
+            }
+        }
+
+        private void cboLopHoc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

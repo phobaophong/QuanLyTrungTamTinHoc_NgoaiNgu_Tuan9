@@ -772,7 +772,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "18.0.0.0")]
-            public ThongKeDoanhThuRow AddThongKeDoanhThuRow(string HoVaTen, string TenLop, System.DateTime NgayDong, decimal SoTien) {
+            public ThongKeDoanhThuRow AddThongKeDoanhThuRow(string HoVaTen, string TenLop, string NgayDong, decimal SoTien) {
                 ThongKeDoanhThuRow rowThongKeDoanhThuRow = ((ThongKeDoanhThuRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         HoVaTen,
@@ -814,7 +814,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Reports {
                 base.Columns.Add(this.columnHoVaTen);
                 this.columnTenLop = new global::System.Data.DataColumn("TenLop", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTenLop);
-                this.columnNgayDong = new global::System.Data.DataColumn("NgayDong", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                this.columnNgayDong = new global::System.Data.DataColumn("NgayDong", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNgayDong);
                 this.columnSoTien = new global::System.Data.DataColumn("SoTien", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSoTien);
@@ -1186,10 +1186,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "18.0.0.0")]
-            public System.DateTime NgayDong {
+            public string NgayDong {
                 get {
                     try {
-                        return ((global::System.DateTime)(this[this.tableThongKeDoanhThu.NgayDongColumn]));
+                        return ((string)(this[this.tableThongKeDoanhThu.NgayDongColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'NgayDong\' in table \'ThongKeDoanhThu\' is DBNull.", e);

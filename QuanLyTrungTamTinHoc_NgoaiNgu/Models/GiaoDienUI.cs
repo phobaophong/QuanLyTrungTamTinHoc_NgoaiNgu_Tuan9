@@ -65,7 +65,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Models.Utils
                 else if (name.Contains("luu")  || name.Contains("xacnhan") || name.Contains("loc") || 
                          name.Contains("tatca") || name.Contains("nghiep") || name.Contains("danghoc") ||
                          name.Contains("giangvien") || name.Contains("nhanvien") || name.Contains("timkiem")||
-                         name.Contains("5diem") || name.Contains("taoloponthi"))
+                         name.Contains("5diem") || name.Contains("taoloponthi") || name.Contains("taotkb"))
                     SetButtonStyle(btn, MauLuu);
 
                 else if (name.Contains("huybo"))
@@ -91,8 +91,12 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Models.Utils
             else if (ctrl is DataGridView dgv)
             {
                 dgv.BackgroundColor = Color.White;
-                dgv.BorderStyle = BorderStyle.None;
-                dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+                dgv.BorderStyle = BorderStyle.FixedSingle;
+                dgv.GridColor = Color.FromArgb(224, 224, 224);
+
+                // 🔥 CHỈ CẦN SỬA DÒNG NÀY: Bỏ chữ "Horizontal" đi thành "Single"
+                dgv.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+
                 dgv.RowHeadersVisible = false;
 
                 dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(236, 240, 241);
@@ -103,6 +107,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Models.Utils
                 dgv.ColumnHeadersDefaultCellStyle.BackColor = MauLuu;
                 dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
                 dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+                dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
                 dgv.ColumnHeadersHeight = 40;
                 dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             }

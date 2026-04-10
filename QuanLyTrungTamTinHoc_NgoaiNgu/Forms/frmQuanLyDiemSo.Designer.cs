@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             groupBox5 = new GroupBox();
             btnTaoLopOnThi = new Button();
@@ -392,6 +398,8 @@
             // ID
             // 
             ID.DataPropertyName = "ID";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            ID.DefaultCellStyle = dataGridViewCellStyle1;
             ID.HeaderText = "ID";
             ID.MinimumWidth = 6;
             ID.Name = "ID";
@@ -399,6 +407,8 @@
             // MaSo
             // 
             MaSo.DataPropertyName = "MaSo";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            MaSo.DefaultCellStyle = dataGridViewCellStyle2;
             MaSo.HeaderText = "Mã số";
             MaSo.MinimumWidth = 6;
             MaSo.Name = "MaSo";
@@ -406,6 +416,8 @@
             // HoVaTen
             // 
             HoVaTen.DataPropertyName = "HoVaTen";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            HoVaTen.DefaultCellStyle = dataGridViewCellStyle3;
             HoVaTen.HeaderText = "Họ và tên";
             HoVaTen.MinimumWidth = 6;
             HoVaTen.Name = "HoVaTen";
@@ -413,6 +425,8 @@
             // TenLop
             // 
             TenLop.DataPropertyName = "TenLop";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TenLop.DefaultCellStyle = dataGridViewCellStyle4;
             TenLop.HeaderText = "Tên lớp";
             TenLop.MinimumWidth = 6;
             TenLop.Name = "TenLop";
@@ -420,6 +434,8 @@
             // DiemThiThu
             // 
             DiemThiThu.DataPropertyName = "DiemThiThu";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            DiemThiThu.DefaultCellStyle = dataGridViewCellStyle5;
             DiemThiThu.HeaderText = "Điểm thi thử";
             DiemThiThu.MinimumWidth = 6;
             DiemThiThu.Name = "DiemThiThu";
@@ -427,6 +443,8 @@
             // DiemThiThat
             // 
             DiemThiThat.DataPropertyName = "DiemThiThat";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            DiemThiThat.DefaultCellStyle = dataGridViewCellStyle6;
             DiemThiThat.HeaderText = "Điểm thi thật";
             DiemThiThat.MinimumWidth = 6;
             DiemThiThat.Name = "DiemThiThat";
@@ -440,7 +458,7 @@
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmQuanLyDiemSo";
-            Text = "frmQuanLyDiemSo";
+            Text = "Quản lý điểm số";
             Load += frmQuanLyDiemSo_Load;
             groupBox1.ResumeLayout(false);
             groupBox5.ResumeLayout(false);
@@ -484,15 +502,15 @@
         private Button btnDsTren5Diem;
         private Button btnTaoLopOnThi;
         private Button btnHuyBo;
+        private Button btnThoat;
+        private Label lblHoiYKien;
+        private Button btnXuatExcel;
+        private Button btnNhapExcel;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn MaSo;
         private DataGridViewTextBoxColumn HoVaTen;
         private DataGridViewTextBoxColumn TenLop;
         private DataGridViewTextBoxColumn DiemThiThu;
         private DataGridViewTextBoxColumn DiemThiThat;
-        private Button btnThoat;
-        private Label lblHoiYKien;
-        private Button btnXuatExcel;
-        private Button btnNhapExcel;
     }
 }

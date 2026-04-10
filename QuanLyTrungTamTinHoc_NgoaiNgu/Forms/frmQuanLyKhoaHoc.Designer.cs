@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyKhoaHoc));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             pictureBox1 = new PictureBox();
             btnThoat = new Button();
@@ -256,7 +259,9 @@
             // colID
             // 
             colID.DataPropertyName = "ID";
-            colID.FillWeight = 50F;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colID.DefaultCellStyle = dataGridViewCellStyle1;
+            colID.FillWeight = 25F;
             colID.HeaderText = "ID";
             colID.MinimumWidth = 6;
             colID.Name = "colID";
@@ -272,11 +277,11 @@
             // HocPhi
             // 
             HocPhi.DataPropertyName = "HocPhi";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = Color.White;
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(128, 128, 255);
-            dataGridViewCellStyle1.Format = "N0";
-            HocPhi.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(128, 128, 255);
+            dataGridViewCellStyle2.Format = "N0";
+            HocPhi.DefaultCellStyle = dataGridViewCellStyle2;
             HocPhi.HeaderText = "Học phí";
             HocPhi.MinimumWidth = 6;
             HocPhi.Name = "HocPhi";
@@ -284,6 +289,8 @@
             // ThoiLuong
             // 
             ThoiLuong.DataPropertyName = "ThoiLuong";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            ThoiLuong.DefaultCellStyle = dataGridViewCellStyle3;
             ThoiLuong.HeaderText = "Thời lượng";
             ThoiLuong.MinimumWidth = 6;
             ThoiLuong.Name = "ThoiLuong";
@@ -291,6 +298,8 @@
             // SoLopDangMo
             // 
             SoLopDangMo.DataPropertyName = "SoLopDangMo";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
+            SoLopDangMo.DefaultCellStyle = dataGridViewCellStyle4;
             SoLopDangMo.HeaderText = "Số lớp đang mở";
             SoLopDangMo.MinimumWidth = 6;
             SoLopDangMo.Name = "SoLopDangMo";

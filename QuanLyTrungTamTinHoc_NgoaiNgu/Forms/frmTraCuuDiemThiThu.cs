@@ -28,7 +28,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             if (string.IsNullOrEmpty(maSoTimKiem))
             {
-                MessageBox.Show("Vui lòng nhập mã số học viên!", "Thông báo");
+                MessageBox.Show("Vui lòng nhập mã số học viên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -42,14 +42,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 var ketQua = hocVien.KetQua.FirstOrDefault();
 
                 string hoTen = hocVien.HoVaTen;
-                string tenLop = ketQua != null ? ketQua.LopHoc.TenLopHoc : "(Chưa xếp lớp)";
-                string diemSo = ketQua != null ? ketQua.DiemThiThu.ToString() : "Chưa có điểm";
+                string tenLop = (ketQua != null && ketQua.LopHoc != null) ? ketQua.LopHoc.TenLopHoc : "(Chưa xếp lớp)";
+
+                string diemThu = (ketQua != null && ketQua.DiemThiThu.HasValue) ? ketQua.DiemThiThu.Value.ToString() : "Chưa có điểm";
+                string diemThat = (ketQua != null && ketQua.DiemThiThat.HasValue) ? ketQua.DiemThiThat.Value.ToString() : "Chưa có điểm";
 
                 lblHienThi.Text = $"Học viên: {hoTen}\n" +
                                  $"Lớp học: {tenLop}\n" +
-                                 $"Điểm thi thử: {diemSo}";
+                                 $"Điểm thi thử: {diemThu}\n" +
+                                 $"Điểm thi thật: {diemThat}";
 
-                lblHienThi.ForeColor = Color.DarkBlue;
+                lblHienThi.ForeColor = Models.Utils.GiaoDien.MauChuDao; 
             }
             else
             {

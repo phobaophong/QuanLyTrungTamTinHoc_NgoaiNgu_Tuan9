@@ -28,14 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             groupBox4 = new GroupBox();
+            btnThoat = new Button();
             cbbKhoaHoc = new ComboBox();
             lblHocPhi = new Label();
             label2 = new Label();
             cbbLopHoc = new ComboBox();
             label3 = new Label();
             groupBox3 = new GroupBox();
+            btnXuatExcel = new Button();
+            btnNhapExcel = new Button();
             txtSoTien = new TextBox();
             label8 = new Label();
             chkTrangThai = new CheckBox();
@@ -59,7 +68,6 @@
             SoTienDaDong = new DataGridViewTextBoxColumn();
             NgayDong = new DataGridViewTextBoxColumn();
             GhiChu = new DataGridViewTextBoxColumn();
-            btnThoat = new Button();
             groupBox1.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -88,17 +96,27 @@
             groupBox4.Dock = DockStyle.Left;
             groupBox4.Location = new Point(3, 23);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(335, 213);
+            groupBox4.Size = new Size(440, 213);
             groupBox4.TabIndex = 24;
             groupBox4.TabStop = false;
             groupBox4.Text = "Bộ lọc";
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(683, 149);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(122, 29);
+            btnThoat.TabIndex = 37;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // cbbKhoaHoc
             // 
             cbbKhoaHoc.FormattingEnabled = true;
             cbbKhoaHoc.Location = new Point(97, 26);
             cbbKhoaHoc.Name = "cbbKhoaHoc";
-            cbbKhoaHoc.Size = new Size(214, 28);
+            cbbKhoaHoc.Size = new Size(299, 28);
             cbbKhoaHoc.TabIndex = 14;
             cbbKhoaHoc.SelectedIndexChanged += cbbKhoaHoc_SelectedIndexChanged;
             // 
@@ -106,7 +124,7 @@
             // 
             lblHocPhi.AutoSize = true;
             lblHocPhi.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblHocPhi.Location = new Point(13, 137);
+            lblHocPhi.Location = new Point(19, 124);
             lblHocPhi.Name = "lblHocPhi";
             lblHocPhi.Size = new Size(63, 20);
             lblHocPhi.TabIndex = 23;
@@ -126,7 +144,7 @@
             cbbLopHoc.FormattingEnabled = true;
             cbbLopHoc.Location = new Point(97, 74);
             cbbLopHoc.Name = "cbbLopHoc";
-            cbbLopHoc.Size = new Size(214, 28);
+            cbbLopHoc.Size = new Size(299, 28);
             cbbLopHoc.TabIndex = 16;
             cbbLopHoc.SelectedIndexChanged += cbbLopHoc_SelectedIndexChanged;
             // 
@@ -142,6 +160,8 @@
             // groupBox3
             // 
             groupBox3.Controls.Add(btnThoat);
+            groupBox3.Controls.Add(btnXuatExcel);
+            groupBox3.Controls.Add(btnNhapExcel);
             groupBox3.Controls.Add(txtSoTien);
             groupBox3.Controls.Add(label8);
             groupBox3.Controls.Add(chkTrangThai);
@@ -158,12 +178,32 @@
             groupBox3.Controls.Add(txtHoVaTen);
             groupBox3.Controls.Add(label5);
             groupBox3.Dock = DockStyle.Right;
-            groupBox3.Location = new Point(344, 23);
+            groupBox3.Location = new Point(449, 23);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(1473, 213);
+            groupBox3.Size = new Size(1368, 213);
             groupBox3.TabIndex = 22;
             groupBox3.TabStop = false;
             groupBox3.Text = "Thông tin học viên";
+            // 
+            // btnXuatExcel
+            // 
+            btnXuatExcel.Location = new Point(541, 149);
+            btnXuatExcel.Name = "btnXuatExcel";
+            btnXuatExcel.Size = new Size(136, 29);
+            btnXuatExcel.TabIndex = 38;
+            btnXuatExcel.Text = "Xuất Excel...";
+            btnXuatExcel.UseVisualStyleBackColor = true;
+            btnXuatExcel.Click += btnXuatExcel_Click;
+            // 
+            // btnNhapExcel
+            // 
+            btnNhapExcel.Location = new Point(396, 149);
+            btnNhapExcel.Name = "btnNhapExcel";
+            btnNhapExcel.Size = new Size(139, 29);
+            btnNhapExcel.TabIndex = 37;
+            btnNhapExcel.Text = "Nhập Excel...";
+            btnNhapExcel.UseVisualStyleBackColor = true;
+            btnNhapExcel.Click += btnNhapExcel_Click;
             // 
             // txtSoTien
             // 
@@ -330,6 +370,9 @@
             // colID
             // 
             colID.DataPropertyName = "ID";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colID.DefaultCellStyle = dataGridViewCellStyle1;
+            colID.FillWeight = 50F;
             colID.HeaderText = "ID";
             colID.MinimumWidth = 6;
             colID.Name = "colID";
@@ -337,6 +380,8 @@
             // HoVaTen
             // 
             HoVaTen.DataPropertyName = "HoVaTen";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            HoVaTen.DefaultCellStyle = dataGridViewCellStyle2;
             HoVaTen.HeaderText = "Họ và tên";
             HoVaTen.MinimumWidth = 6;
             HoVaTen.Name = "HoVaTen";
@@ -344,6 +389,8 @@
             // TenLop
             // 
             TenLop.DataPropertyName = "TenLop";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TenLop.DefaultCellStyle = dataGridViewCellStyle3;
             TenLop.HeaderText = "Tên lớp";
             TenLop.MinimumWidth = 6;
             TenLop.Name = "TenLop";
@@ -351,6 +398,9 @@
             // SoTienDaDong
             // 
             SoTienDaDong.DataPropertyName = "SoTienDaDong";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Format = "N0";
+            SoTienDaDong.DefaultCellStyle = dataGridViewCellStyle4;
             SoTienDaDong.HeaderText = "Số tiền đã đóng";
             SoTienDaDong.MinimumWidth = 6;
             SoTienDaDong.Name = "SoTienDaDong";
@@ -358,6 +408,9 @@
             // NgayDong
             // 
             NgayDong.DataPropertyName = "NgayDong";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Format = "dd/MM/yyyy";
+            NgayDong.DefaultCellStyle = dataGridViewCellStyle5;
             NgayDong.HeaderText = "Ngày đóng";
             NgayDong.MinimumWidth = 6;
             NgayDong.Name = "NgayDong";
@@ -365,19 +418,11 @@
             // GhiChu
             // 
             GhiChu.DataPropertyName = "GhiChu";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            GhiChu.DefaultCellStyle = dataGridViewCellStyle6;
             GhiChu.HeaderText = "Ghi chú";
             GhiChu.MinimumWidth = 6;
             GhiChu.Name = "GhiChu";
-            // 
-            // btnThoat
-            // 
-            btnThoat.Location = new Point(396, 149);
-            btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(122, 29);
-            btnThoat.TabIndex = 37;
-            btnThoat.Text = "Thoát";
-            btnThoat.UseVisualStyleBackColor = true;
-            btnThoat.Click += btnThoat_Click;
             // 
             // frmQuanLyHocPhi
             // 
@@ -388,7 +433,7 @@
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmQuanLyHocPhi";
-            Text = "frmHocPhi";
+            Text = "Quản lý học phí";
             Load += frmHocPhi_Load;
             groupBox1.ResumeLayout(false);
             groupBox4.ResumeLayout(false);
@@ -420,12 +465,6 @@
         private Button btnXacNhan;
         private Button btnInHoaDon;
         private DataGridView dataGridView;
-        private DataGridViewTextBoxColumn colID;
-        private DataGridViewTextBoxColumn HoVaTen;
-        private DataGridViewTextBoxColumn TenLop;
-        private DataGridViewTextBoxColumn SoTienDaDong;
-        private DataGridViewTextBoxColumn NgayDong;
-        private DataGridViewTextBoxColumn GhiChu;
         private Label label7;
         private DateTimePicker dtpNgayDong;
         private CheckBox chkTrangThai;
@@ -434,5 +473,13 @@
         private Label lblHocPhi;
         private GroupBox groupBox4;
         private Button btnThoat;
+        private Button btnXuatExcel;
+        private Button btnNhapExcel;
+        private DataGridViewTextBoxColumn colID;
+        private DataGridViewTextBoxColumn HoVaTen;
+        private DataGridViewTextBoxColumn TenLop;
+        private DataGridViewTextBoxColumn SoTienDaDong;
+        private DataGridViewTextBoxColumn NgayDong;
+        private DataGridViewTextBoxColumn GhiChu;
     }
 }

@@ -28,6 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             btnDangHoc = new Button();
             btnBaoLuu = new Button();
             btnDaTotNghiep = new Button();
@@ -44,6 +52,7 @@
             label2 = new Label();
             cbbKhoaHoc = new ComboBox();
             groupBox1 = new GroupBox();
+            btnThoat = new Button();
             btnXuatExcel = new Button();
             btnNhapExcel = new Button();
             label8 = new Label();
@@ -71,6 +80,7 @@
             label4 = new Label();
             txtMaSo = new TextBox();
             dataGridView = new DataGridView();
+            grbDataGrid = new GroupBox();
             colID = new DataGridViewTextBoxColumn();
             MaSo = new DataGridViewTextBoxColumn();
             HoVaTen = new DataGridViewTextBoxColumn();
@@ -82,8 +92,6 @@
             TrangThai = new DataGridViewTextBoxColumn();
             HinhAnh = new DataGridViewImageColumn();
             XemChiTiet = new DataGridViewLinkColumn();
-            grbDataGrid = new GroupBox();
-            btnThoat = new Button();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -286,6 +294,16 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin học viên";
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(614, 195);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(101, 34);
+            btnThoat.TabIndex = 40;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // btnXuatExcel
             // 
@@ -545,9 +563,22 @@
             dataGridView.CellContentClick += dataGridView_CellContentClick;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
             // 
+            // grbDataGrid
+            // 
+            grbDataGrid.BackColor = Color.White;
+            grbDataGrid.Controls.Add(dataGridView);
+            grbDataGrid.Dock = DockStyle.Fill;
+            grbDataGrid.Location = new Point(355, 248);
+            grbDataGrid.Name = "grbDataGrid";
+            grbDataGrid.Size = new Size(1475, 588);
+            grbDataGrid.TabIndex = 3;
+            grbDataGrid.TabStop = false;
+            // 
             // colID
             // 
             colID.DataPropertyName = "ID";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colID.DefaultCellStyle = dataGridViewCellStyle1;
             colID.FillWeight = 30F;
             colID.HeaderText = "ID";
             colID.MinimumWidth = 6;
@@ -556,6 +587,8 @@
             // MaSo
             // 
             MaSo.DataPropertyName = "MaSo";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            MaSo.DefaultCellStyle = dataGridViewCellStyle2;
             MaSo.FillWeight = 50F;
             MaSo.HeaderText = "Mã số";
             MaSo.MinimumWidth = 6;
@@ -571,6 +604,9 @@
             // NgaySinh
             // 
             NgaySinh.DataPropertyName = "NgaySinh";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
+            NgaySinh.DefaultCellStyle = dataGridViewCellStyle3;
             NgaySinh.HeaderText = "Ngày sinh";
             NgaySinh.MinimumWidth = 6;
             NgaySinh.Name = "NgaySinh";
@@ -578,6 +614,8 @@
             // GioiTinh
             // 
             GioiTinh.DataPropertyName = "GioiTinh";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            GioiTinh.DefaultCellStyle = dataGridViewCellStyle4;
             GioiTinh.FillWeight = 50F;
             GioiTinh.HeaderText = "Giới tính";
             GioiTinh.MinimumWidth = 6;
@@ -586,6 +624,8 @@
             // Sdt
             // 
             Sdt.DataPropertyName = "Sdt";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Sdt.DefaultCellStyle = dataGridViewCellStyle5;
             Sdt.HeaderText = "Số điện thoại";
             Sdt.MinimumWidth = 6;
             Sdt.Name = "Sdt";
@@ -600,6 +640,8 @@
             // Email
             // 
             Email.DataPropertyName = "Email";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Email.DefaultCellStyle = dataGridViewCellStyle6;
             Email.HeaderText = "Email";
             Email.MinimumWidth = 6;
             Email.Name = "Email";
@@ -607,6 +649,8 @@
             // TrangThai
             // 
             TrangThai.DataPropertyName = "TrangThai";
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TrangThai.DefaultCellStyle = dataGridViewCellStyle7;
             TrangThai.HeaderText = "Trạng thái";
             TrangThai.MinimumWidth = 6;
             TrangThai.Name = "TrangThai";
@@ -623,33 +667,14 @@
             // XemChiTiet
             // 
             XemChiTiet.DataPropertyName = "XemChiTiet";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            XemChiTiet.DefaultCellStyle = dataGridViewCellStyle8;
             XemChiTiet.FillWeight = 70F;
             XemChiTiet.HeaderText = "Xem chi tiết";
             XemChiTiet.MinimumWidth = 6;
             XemChiTiet.Name = "XemChiTiet";
             XemChiTiet.Resizable = DataGridViewTriState.True;
             XemChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // grbDataGrid
-            // 
-            grbDataGrid.BackColor = Color.White;
-            grbDataGrid.Controls.Add(dataGridView);
-            grbDataGrid.Dock = DockStyle.Fill;
-            grbDataGrid.Location = new Point(355, 248);
-            grbDataGrid.Name = "grbDataGrid";
-            grbDataGrid.Size = new Size(1475, 588);
-            grbDataGrid.TabIndex = 3;
-            grbDataGrid.TabStop = false;
-            // 
-            // btnThoat
-            // 
-            btnThoat.Location = new Point(614, 195);
-            btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(101, 34);
-            btnThoat.TabIndex = 40;
-            btnThoat.Text = "Thoát";
-            btnThoat.UseVisualStyleBackColor = true;
-            btnThoat.Click += btnThoat_Click;
             // 
             // frmQuanLyHocVien
             // 
@@ -662,7 +687,7 @@
             Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmQuanLyHocVien";
-            Text = "frmQuanLySinhVien";
+            Text = "Quản lý học viên";
             WindowState = FormWindowState.Maximized;
             Load += frmQuanLySinhVien_Load;
             groupBox2.ResumeLayout(false);
@@ -724,6 +749,9 @@
         private TextBox txtDiaChi;
         private Label label10;
         private TextBox txtSdt;
+        private Button btnXuatExcel;
+        private Button btnNhapExcel;
+        private Button btnThoat;
         private DataGridViewTextBoxColumn colID;
         private DataGridViewTextBoxColumn MaSo;
         private DataGridViewTextBoxColumn HoVaTen;
@@ -735,8 +763,5 @@
         private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewImageColumn HinhAnh;
         private DataGridViewLinkColumn XemChiTiet;
-        private Button btnXuatExcel;
-        private Button btnNhapExcel;
-        private Button btnThoat;
     }
 }

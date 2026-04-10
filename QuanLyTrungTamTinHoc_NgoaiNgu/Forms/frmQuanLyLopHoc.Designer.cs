@@ -29,8 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyLopHoc));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             pictureBox1 = new PictureBox();
             btnThoat = new Button();
             btnXoa = new Button();
@@ -299,7 +302,9 @@
             // colID
             // 
             colID.DataPropertyName = "ID";
-            colID.FillWeight = 50F;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colID.DefaultCellStyle = dataGridViewCellStyle1;
+            colID.FillWeight = 25F;
             colID.HeaderText = "ID";
             colID.MinimumWidth = 6;
             colID.Name = "colID";
@@ -315,8 +320,9 @@
             // NgayBatDau
             // 
             NgayBatDau.DataPropertyName = "NgayBatDau";
-            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
-            NgayBatDau.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            NgayBatDau.DefaultCellStyle = dataGridViewCellStyle2;
             NgayBatDau.HeaderText = "Ngày khai giảng";
             NgayBatDau.MinimumWidth = 6;
             NgayBatDau.Name = "NgayBatDau";
@@ -324,8 +330,9 @@
             // NgayKetThuc
             // 
             NgayKetThuc.DataPropertyName = "NgayKetThuc";
-            dataGridViewCellStyle4.Format = "dd/MM/yyyy";
-            NgayKetThuc.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
+            NgayKetThuc.DefaultCellStyle = dataGridViewCellStyle3;
             NgayKetThuc.HeaderText = "Ngày kết thúc";
             NgayKetThuc.MinimumWidth = 6;
             NgayKetThuc.Name = "NgayKetThuc";
@@ -333,6 +340,8 @@
             // TrangThai
             // 
             TrangThai.DataPropertyName = "TrangThai";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TrangThai.DefaultCellStyle = dataGridViewCellStyle4;
             TrangThai.HeaderText = "Trạng thái";
             TrangThai.MinimumWidth = 6;
             TrangThai.Name = "TrangThai";
@@ -340,6 +349,8 @@
             // SiSo
             // 
             SiSo.DataPropertyName = "SiSo";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            SiSo.DefaultCellStyle = dataGridViewCellStyle5;
             SiSo.HeaderText = "Sĩ số";
             SiSo.MinimumWidth = 6;
             SiSo.Name = "SiSo";
@@ -360,7 +371,7 @@
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmQuanLyLopHoc";
-            Text = "frmQuanLyLopHoc";
+            Text = "Quản lý lớp học";
             Load += frmQuanLyLopHoc_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox1.ResumeLayout(false);
@@ -390,6 +401,7 @@
         private DateTimePicker dtpNgayBatDau;
         private RadioButton rdoDangMo;
         private RadioButton rdoDaDong;
+        private Button btnChiTiet;
         private DataGridViewTextBoxColumn colID;
         private DataGridViewTextBoxColumn TenLopHoc;
         private DataGridViewTextBoxColumn NgayBatDau;
@@ -397,6 +409,5 @@
         private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewTextBoxColumn SiSo;
         private DataGridViewTextBoxColumn KhoaHocID;
-        private Button btnChiTiet;
     }
 }

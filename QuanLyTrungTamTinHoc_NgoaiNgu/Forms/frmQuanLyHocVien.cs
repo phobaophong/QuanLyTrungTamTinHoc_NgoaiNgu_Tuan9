@@ -116,20 +116,39 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public void LoadCbbKhoaHoc()
         {
             context = new QuanLyTrungTamContext();
-            var kh = context.KhoaHoc.ToList();
 
-            cbbKhoaHoc.DataSource = kh;
-            cbbKhoaHoc.DisplayMember = "TenKhoaHoc";
-            cbbKhoaHoc.ValueMember = "ID"; ;
+            var kh = context.KhoaHoc.Where(k => k.HocPhi > 0).ToList();
+
+            if (kh.Count > 0)
+            {
+                cbbKhoaHoc.DataSource = kh;
+                cbbKhoaHoc.DisplayMember = "TenKhoaHoc";
+                cbbKhoaHoc.ValueMember = "ID";
+            }
+            else
+            {
+                cbbKhoaHoc.DataSource = null;
+                cbbKhoaHoc.Text = "Chưa có khóa học";
+            }
         }
         public void LoadCbbLopHoc(int id)
         {
             context = new QuanLyTrungTamContext();
             var lop = context.LopHoc.Where(x => x.KhoaHocID == id).ToList();
 
-            cbbLopHoc.DataSource = lop;
-            cbbLopHoc.DisplayMember = "TenLopHoc";
-            cbbLopHoc.ValueMember = "ID";
+            if (lop.Count > 0)
+            {
+                cbbLopHoc.DataSource = lop;
+                cbbLopHoc.DisplayMember = "TenLopHoc";
+                cbbLopHoc.ValueMember = "ID";
+            }
+            else
+            {
+                cbbLopHoc.DataSource = null;
+                cbbLopHoc.Text = "Chưa có lớp học";
+
+                dataGridView.DataSource = null;
+            }
         }
 
         private void cbbKhoaHoc_SelectedIndexChanged(object sender, EventArgs e)
@@ -689,39 +708,32 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     int demThanhCong = 0;
                     int demBoQua = 0;
 
-                    // 🔥 THUẬT TOÁN SINH MÃ TỰ ĐỘNG KHI NHẬP EXCEL
-                    // Lấy ID lớn nhất hiện tại 1 lần duy nhất trước khi chạy vòng lặp
                     int maxId = context.HocVien.Any() ? context.HocVien.Max(h => h.ID) : 0;
 
                     foreach (DataRow dRow in dtData.Rows)
                     {
-                        // Giả định form mẫu Excel: Cột 0 là Mã số (bỏ qua), Cột 1 là Họ Tên
+
                         string hoTen = dRow[1].ToString().Trim();
 
-                        // Nếu dòng đó không có Tên thì bỏ qua (Người dùng để trống dòng)
                         if (string.IsNullOrEmpty(hoTen))
                         {
                             demBoQua++;
                             continue;
                         }
 
-                        // Tăng maxId lên 1 và tự động sinh mã mới cho mỗi học viên
                         maxId++;
                         string maSoMoi = "hv" + maxId.ToString("D2");
 
-                        // 1. Tạo Tài khoản với mã tự sinh
                         TaiKhoan taiKhoanMoi = new TaiKhoan();
                         taiKhoanMoi.TenDN = maSoMoi;
                         taiKhoanMoi.MatKhau = BC.HashPassword("1");
                         taiKhoanMoi.TrangThai = true;
                         taiKhoanMoi.QuyenHan = 3;
 
-                        // 2. Tạo Học Viên
                         HocVien hocVienMoi = new HocVien();
                         hocVienMoi.MaSo = maSoMoi;
                         hocVienMoi.HoVaTen = hoTen;
 
-                        // Xử lý an toàn cho ngày sinh nếu Excel trống
                         DateTime ngaySinh;
                         if (DateTime.TryParse(dRow[2].ToString(), out ngaySinh))
                             hocVienMoi.NgaySinh = ngaySinh.Date;
@@ -732,10 +744,9 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         hocVienMoi.Sdt = dRow[4].ToString();
                         hocVienMoi.DiaChi = dRow[5].ToString();
                         hocVienMoi.Email = dRow[6].ToString();
-                        hocVienMoi.TrangThai = 1; // Mặc định: Đang học
+                        hocVienMoi.TrangThai = 1; 
                         hocVienMoi.TaiKhoan = taiKhoanMoi;
 
-                        // 3. Ghi danh vào Lớp Học
                         HocPhi hocPhiMoi = new HocPhi();
                         hocPhiMoi.LopHocID = idLopDuocChon;
                         hocPhiMoi.HocVien = hocVienMoi;
@@ -748,12 +759,10 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         demThanhCong++;
                     }
 
-                    // Lưu toàn bộ data 1 lần xuống Database
                     context.SaveChanges();
 
                     MessageBox.Show($"Nhập thành công {demThanhCong} học viên vào lớp.\nBỏ qua {demBoQua} dòng trống hoặc không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Tải lại lưới dựa trên lớp vừa nhập
                     LoadDataTheoLop(idLopDuocChon);
                 }
                 catch (Exception ex)

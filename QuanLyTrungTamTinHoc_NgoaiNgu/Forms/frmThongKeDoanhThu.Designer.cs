@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            label4 = new Label();
+            label3 = new Label();
+            cboLopHoc = new ComboBox();
+            cboKhoaHoc = new ComboBox();
             btnThoat = new Button();
             label2 = new Label();
             label1 = new Label();
@@ -42,6 +46,10 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(cboLopHoc);
+            groupBox1.Controls.Add(cboKhoaHoc);
             groupBox1.Controls.Add(btnThoat);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
@@ -52,9 +60,45 @@
             groupBox1.Dock = DockStyle.Top;
             groupBox1.Location = new Point(0, 0);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1124, 89);
+            groupBox1.Size = new Size(1471, 89);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(1148, 30);
+            label4.Name = "label4";
+            label4.Size = new Size(65, 20);
+            label4.TabIndex = 10;
+            label4.Text = "Lớp học:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(833, 32);
+            label3.Name = "label3";
+            label3.Size = new Size(74, 20);
+            label3.TabIndex = 9;
+            label3.Text = "Khóa học:";
+            // 
+            // cboLopHoc
+            // 
+            cboLopHoc.FormattingEnabled = true;
+            cboLopHoc.Location = new Point(1229, 26);
+            cboLopHoc.Name = "cboLopHoc";
+            cboLopHoc.Size = new Size(214, 28);
+            cboLopHoc.TabIndex = 8;
+            cboLopHoc.SelectedIndexChanged += cboLopHoc_SelectedIndexChanged;
+            // 
+            // cboKhoaHoc
+            // 
+            cboKhoaHoc.FormattingEnabled = true;
+            cboKhoaHoc.Location = new Point(924, 26);
+            cboKhoaHoc.Name = "cboKhoaHoc";
+            cboKhoaHoc.Size = new Size(218, 28);
+            cboKhoaHoc.TabIndex = 7;
+            cboKhoaHoc.SelectedIndexChanged += cboKhoaHoc_SelectedIndexChanged;
             // 
             // btnThoat
             // 
@@ -128,19 +172,19 @@
             reportViewer1.Location = new Point(0, 89);
             reportViewer1.Name = "reportViewer1";
             reportViewer1.ServerReport.BearerToken = null;
-            reportViewer1.Size = new Size(1124, 572);
+            reportViewer1.Size = new Size(1471, 572);
             reportViewer1.TabIndex = 1;
             // 
             // frmThongKeDoanhThu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1124, 661);
+            ClientSize = new Size(1471, 661);
             Controls.Add(reportViewer1);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmThongKeDoanhThu";
-            Text = "frmThongKeDoanhThu";
+            Text = "Thống kê doanh thu";
             Load += frmThongKeDoanhThu_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -158,5 +202,9 @@
         private Label label2;
         private Label label1;
         private Button btnThoat;
+        private Label label3;
+        private ComboBox cboLopHoc;
+        private ComboBox cboKhoaHoc;
+        private Label label4;
     }
 }

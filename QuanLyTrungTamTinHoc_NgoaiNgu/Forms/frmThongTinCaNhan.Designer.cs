@@ -258,7 +258,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmThongTinCaNhan";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "frmThongTinCaNhan";
+            Text = "Thông tin cá nhân";
             Load += frmThongTinCaNhan_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

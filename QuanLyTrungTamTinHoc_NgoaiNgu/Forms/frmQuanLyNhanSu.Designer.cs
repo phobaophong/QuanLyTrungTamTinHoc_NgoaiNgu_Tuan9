@@ -29,6 +29,15 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             cbbBoPhan = new ComboBox();
             btnThoat = new Button();
@@ -57,9 +66,6 @@
             txtMaSo = new TextBox();
             grbDataGrid = new GroupBox();
             dataGridView = new DataGridView();
-            groupBox2 = new GroupBox();
-            btnNhanVien = new Button();
-            btnGiangVien = new Button();
             colID = new DataGridViewTextBoxColumn();
             MaSo = new DataGridViewTextBoxColumn();
             HoVaTen = new DataGridViewTextBoxColumn();
@@ -71,6 +77,9 @@
             BoPhan = new DataGridViewTextBoxColumn();
             HinhAnh = new DataGridViewImageColumn();
             XemChiTiet = new DataGridViewLinkColumn();
+            groupBox2 = new GroupBox();
+            btnNhanVien = new Button();
+            btnGiangVien = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picHinhAnh).BeginInit();
             groupBox6.SuspendLayout();
@@ -396,6 +405,110 @@
             dataGridView.CellContentClick += dataGridView_CellContentClick;
             dataGridView.CellFormatting += dataGridView_CellFormatting;
             // 
+            // colID
+            // 
+            colID.DataPropertyName = "ID";
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colID.DefaultCellStyle = dataGridViewCellStyle1;
+            colID.FillWeight = 30F;
+            colID.HeaderText = "ID";
+            colID.MinimumWidth = 6;
+            colID.Name = "colID";
+            // 
+            // MaSo
+            // 
+            MaSo.DataPropertyName = "MaSo";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            MaSo.DefaultCellStyle = dataGridViewCellStyle2;
+            MaSo.FillWeight = 50F;
+            MaSo.HeaderText = "Mã số";
+            MaSo.MinimumWidth = 6;
+            MaSo.Name = "MaSo";
+            // 
+            // HoVaTen
+            // 
+            HoVaTen.DataPropertyName = "HoVaTen";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            HoVaTen.DefaultCellStyle = dataGridViewCellStyle3;
+            HoVaTen.HeaderText = "Họ và tên";
+            HoVaTen.MinimumWidth = 6;
+            HoVaTen.Name = "HoVaTen";
+            // 
+            // NgaySinh
+            // 
+            NgaySinh.DataPropertyName = "NgaySinh";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Format = "dd/MM/yyyy";
+            NgaySinh.DefaultCellStyle = dataGridViewCellStyle4;
+            NgaySinh.HeaderText = "Ngày sinh";
+            NgaySinh.MinimumWidth = 6;
+            NgaySinh.Name = "NgaySinh";
+            // 
+            // GioiTinh
+            // 
+            GioiTinh.DataPropertyName = "GioiTinh";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            GioiTinh.DefaultCellStyle = dataGridViewCellStyle5;
+            GioiTinh.FillWeight = 50F;
+            GioiTinh.HeaderText = "Giới tính";
+            GioiTinh.MinimumWidth = 6;
+            GioiTinh.Name = "GioiTinh";
+            // 
+            // Sdt
+            // 
+            Sdt.DataPropertyName = "Sdt";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Sdt.DefaultCellStyle = dataGridViewCellStyle6;
+            Sdt.HeaderText = "Số điện thoại";
+            Sdt.MinimumWidth = 6;
+            Sdt.Name = "Sdt";
+            // 
+            // DiaChi
+            // 
+            DiaChi.DataPropertyName = "DiaChi";
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            DiaChi.DefaultCellStyle = dataGridViewCellStyle7;
+            DiaChi.HeaderText = "Địa chỉ";
+            DiaChi.MinimumWidth = 6;
+            DiaChi.Name = "DiaChi";
+            // 
+            // Email
+            // 
+            Email.DataPropertyName = "Email";
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Email.DefaultCellStyle = dataGridViewCellStyle8;
+            Email.HeaderText = "Email";
+            Email.MinimumWidth = 6;
+            Email.Name = "Email";
+            // 
+            // BoPhan
+            // 
+            BoPhan.DataPropertyName = "BoPhan";
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            BoPhan.DefaultCellStyle = dataGridViewCellStyle9;
+            BoPhan.HeaderText = "Bộ Phận";
+            BoPhan.MinimumWidth = 6;
+            BoPhan.Name = "BoPhan";
+            // 
+            // HinhAnh
+            // 
+            HinhAnh.HeaderText = "Hình ảnh";
+            HinhAnh.ImageLayout = DataGridViewImageCellLayout.Zoom;
+            HinhAnh.MinimumWidth = 6;
+            HinhAnh.Name = "HinhAnh";
+            HinhAnh.Resizable = DataGridViewTriState.True;
+            HinhAnh.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
+            // XemChiTiet
+            // 
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            XemChiTiet.DefaultCellStyle = dataGridViewCellStyle10;
+            XemChiTiet.HeaderText = "Xem chi tiết";
+            XemChiTiet.MinimumWidth = 6;
+            XemChiTiet.Name = "XemChiTiet";
+            XemChiTiet.Resizable = DataGridViewTriState.True;
+            XemChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
+            // 
             // groupBox2
             // 
             groupBox2.BackColor = Color.White;
@@ -431,91 +544,6 @@
             btnGiangVien.UseVisualStyleBackColor = true;
             btnGiangVien.Click += btnGiangVien_Click;
             // 
-            // colID
-            // 
-            colID.DataPropertyName = "ID";
-            colID.FillWeight = 30F;
-            colID.HeaderText = "ID";
-            colID.MinimumWidth = 6;
-            colID.Name = "colID";
-            // 
-            // MaSo
-            // 
-            MaSo.DataPropertyName = "MaSo";
-            MaSo.FillWeight = 50F;
-            MaSo.HeaderText = "Mã số";
-            MaSo.MinimumWidth = 6;
-            MaSo.Name = "MaSo";
-            // 
-            // HoVaTen
-            // 
-            HoVaTen.DataPropertyName = "HoVaTen";
-            HoVaTen.HeaderText = "Họ và tên";
-            HoVaTen.MinimumWidth = 6;
-            HoVaTen.Name = "HoVaTen";
-            // 
-            // NgaySinh
-            // 
-            NgaySinh.DataPropertyName = "NgaySinh";
-            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
-            NgaySinh.DefaultCellStyle = dataGridViewCellStyle1;
-            NgaySinh.HeaderText = "Ngày sinh";
-            NgaySinh.MinimumWidth = 6;
-            NgaySinh.Name = "NgaySinh";
-            // 
-            // GioiTinh
-            // 
-            GioiTinh.DataPropertyName = "GioiTinh";
-            GioiTinh.FillWeight = 50F;
-            GioiTinh.HeaderText = "Giới tính";
-            GioiTinh.MinimumWidth = 6;
-            GioiTinh.Name = "GioiTinh";
-            // 
-            // Sdt
-            // 
-            Sdt.DataPropertyName = "Sdt";
-            Sdt.HeaderText = "Số điện thoại";
-            Sdt.MinimumWidth = 6;
-            Sdt.Name = "Sdt";
-            // 
-            // DiaChi
-            // 
-            DiaChi.DataPropertyName = "DiaChi";
-            DiaChi.HeaderText = "Địa chỉ";
-            DiaChi.MinimumWidth = 6;
-            DiaChi.Name = "DiaChi";
-            // 
-            // Email
-            // 
-            Email.DataPropertyName = "Email";
-            Email.HeaderText = "Email";
-            Email.MinimumWidth = 6;
-            Email.Name = "Email";
-            // 
-            // BoPhan
-            // 
-            BoPhan.DataPropertyName = "BoPhan";
-            BoPhan.HeaderText = "Bộ Phận";
-            BoPhan.MinimumWidth = 6;
-            BoPhan.Name = "BoPhan";
-            // 
-            // HinhAnh
-            // 
-            HinhAnh.HeaderText = "Hình ảnh";
-            HinhAnh.ImageLayout = DataGridViewImageCellLayout.Zoom;
-            HinhAnh.MinimumWidth = 6;
-            HinhAnh.Name = "HinhAnh";
-            HinhAnh.Resizable = DataGridViewTriState.True;
-            HinhAnh.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
-            // XemChiTiet
-            // 
-            XemChiTiet.HeaderText = "Xem chi tiết";
-            XemChiTiet.MinimumWidth = 6;
-            XemChiTiet.Name = "XemChiTiet";
-            XemChiTiet.Resizable = DataGridViewTriState.True;
-            XemChiTiet.SortMode = DataGridViewColumnSortMode.Automatic;
-            // 
             // frmQuanLyNhanSu
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -526,7 +554,7 @@
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmQuanLyNhanSu";
-            Text = "frmQuanLyNhanSu";
+            Text = "Quản lý nhân sự";
             Load += frmQuanLyNhanSu_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

@@ -296,9 +296,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDoiMatKhau.Enabled = false;
 
             mnuQuanLy.Visible = false;
+            mnuXemTKB.Visible = false;
 
+            mnuHocPhi.Visible = true;
+            mnuTraCuuDiemThiThu.Visible = true;
 
-            // Hiển thị thông tin trên thanh trạng thái 
             lblTrangThai.Text = "Chưa đăng nhập.";
         }
 
@@ -309,6 +311,23 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = true;
+            mnuQuanLyKhoaHoc.Visible = true;
+            mnuQuanLyLopHoc.Visible = true;
+            mnuQuanLyHocVien.Visible = true;
+            mnuQuanLyHocPhi.Visible = true;
+            mnuQuanLyDoanhThu.Visible = true;
+            mnuQuanLyDiemSo.Visible = true;
+            mnuQuanLyNhanSu.Visible = true;
+
+
+            mnuXemTKB.Visible = true;
+            lịchHọcToolStripMenuItem.Visible = true;
+
+            mnuHocPhi.Visible = true;
+            mnuTraCuuDiemThiThu.Visible = true;
+
+            mnuHocPhi.Visible = true;
+
             lblTrangThai.Text = "Quản trị viên: " + hoVaTen;
         }
 
@@ -319,7 +338,17 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = true;
+            mnuQuanLyKhoaHoc.Visible = true;
+            mnuQuanLyLopHoc.Visible = true;
+            mnuQuanLyHocVien.Visible = true;
+            mnuQuanLyNhanSu.Visible = true;
+
+            mnuXemTKB.Visible = true;
+            lịchHọcToolStripMenuItem.Visible = true;
+
+            mnuQuanLyHocPhi.Visible = false;
             mnuQuanLyDoanhThu.Visible = false;
+
             lblTrangThai.Text = "Nhân viên: " + hoVaTen;
         }
         public void QuyenThuNgan()
@@ -337,6 +366,8 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuQuanLyHocVien.Visible = false;
             mnuQuanLyNhanSu.Visible = false;
             mnuQuanLyDiemSo.Visible = false;
+            mnuXemTKB.Visible = false;
+            mnuHocPhi.Visible = false;
 
             lblTrangThai.Text = "Nhân viên thu ngân: " + hoVaTen;
         }
@@ -347,6 +378,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = true;
+            mnuQuanLyDiemSo.Visible = true;
+
+            mnuXemTKB.Visible = true;
+            lịchHọcToolStripMenuItem.Visible = true;
+
             mnuQuanLyHocPhi.Visible = false;
             mnuQuanLyLopHoc.Visible = false;
             mnuQuanLyKhoaHoc.Visible = false;
@@ -364,6 +400,12 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             mnuDangXuat.Enabled = true;
 
             mnuQuanLy.Visible = false;
+
+            mnuXemTKB.Visible = true;
+            lịchHọcToolStripMenuItem.Visible = true;
+
+            mnuHocPhi.Visible = true;
+            mnuTraCuuDiemThiThu.Visible = true;
 
             lblTrangThai.Text = "Học viên: " + hoVaTen;
         }

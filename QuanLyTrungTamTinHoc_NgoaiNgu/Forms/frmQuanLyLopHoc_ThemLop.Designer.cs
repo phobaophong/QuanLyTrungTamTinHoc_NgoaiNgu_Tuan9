@@ -277,7 +277,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmQuanLyLopHoc_ThemLop";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "frmQuanLyLopHoc_ThemLop";
+            Text = "Thêm lớp học";
             Load += frmQuanLyLopHoc_ThemLop_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

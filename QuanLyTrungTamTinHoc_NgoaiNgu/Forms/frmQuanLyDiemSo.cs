@@ -270,6 +270,19 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         context.KetQua.Remove(kq);
                     }
                 }
+
+                var hv = context.HocVien.Find(idHV);
+                if (hv != null)
+                {
+                    if (diemThiThat.HasValue && diemThiThat.Value >= 5.0f)
+                    {
+                        hv.TrangThai = 3; // 3 = Đã tốt nghiệp
+                    }
+                    else
+                    {
+                        hv.TrangThai = 1; // 1 = Đang học
+                    }
+                }
             }
 
             try
@@ -369,6 +382,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                             {
                                 kq.DiemThiThu = diemThu;
                                 kq.DiemThiThat = diemThat;
+                            }
+
+                            if (diemThat.HasValue && diemThat.Value >= 5.0f)
+                            {
+                                hocVien.TrangThai = 3; // Đã tốt nghiệp
+                            }
+                            else
+                            {
+                                hocVien.TrangThai = 1; // Đang học
                             }
 
                             demThanhCong++;

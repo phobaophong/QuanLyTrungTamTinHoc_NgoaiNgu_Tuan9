@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            btnThoat = new Button();
             btnTimKiem = new Button();
             lblHienThi = new Label();
             txtMaSo = new TextBox();
             label1 = new Label();
-            btnThoat = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -54,6 +54,17 @@
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Tra cứu";
+            // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(718, 55);
+            btnThoat.Margin = new Padding(4);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(159, 39);
+            btnThoat.TabIndex = 4;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
             // 
             // btnTimKiem
             // 
@@ -94,17 +105,6 @@
             label1.TabIndex = 0;
             label1.Text = "Mã số sinh viên: ";
             // 
-            // btnThoat
-            // 
-            btnThoat.Location = new Point(718, 55);
-            btnThoat.Margin = new Padding(4);
-            btnThoat.Name = "btnThoat";
-            btnThoat.Size = new Size(159, 39);
-            btnThoat.TabIndex = 4;
-            btnThoat.Text = "Thoát";
-            btnThoat.UseVisualStyleBackColor = true;
-            btnThoat.Click += btnThoat_Click;
-            // 
             // frmTraCuuDiemThiThu
             // 
             AutoScaleDimensions = new SizeF(11F, 28F);
@@ -115,7 +115,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
             Name = "frmTraCuuDiemThiThu";
-            Text = "frmTraCuuDiemThiThu";
+            Text = "Tra cứu điểm thi ";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
