@@ -106,72 +106,84 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             var khHienTai = bindingSource.Current as KhoaHoc;
             if (khHienTai == null) return;
 
-            string canhBao = $"CẢNH BÁO CỰC ĐỘ: Bạn đang yêu cầu xóa khóa học '{khHienTai.TenKhoaHoc}'.\n\n" +
-                             $"Hành động này sẽ XÓA VĨNH VIỄN:\n" +
-                             $"- Tất cả các Lớp Học thuộc khóa này.\n" +
-                             $"- Toàn bộ Lịch Học của các lớp đó.\n" +
-                             $"- TOÀN BỘ HỌC VIÊN đang học (Bao gồm xóa Tài Khoản, Điểm Số, và Học Phí của họ).\n\n" +
-                             $"Bạn có CHẮC CHẮN muốn tiêu diệt toàn bộ hệ sinh thái của khóa học này?";
-
-            if (MessageBox.Show(canhBao, "Xác nhận Xóa Tận Gốc", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+            using (frmXacNhanLaiMatKhau frm = new frmXacNhanLaiMatKhau())
             {
-                try
+                frm.ShowDialog();
+
+                if (frm.XacNhanThanhCong)
                 {
-                    var khoaHoc = context.KhoaHoc.Find(khHienTai.ID);
-                    if (khoaHoc != null)
+                    string canhBao = $"CẢNH BÁO CỰC ĐỘ: Bạn đang yêu cầu xóa khóa học '{khHienTai.TenKhoaHoc}'.\n\n" +
+                                     $"Hành động này sẽ XÓA VĨNH VIỄN:\n" +
+                                     $"- Tất cả các Lớp Học thuộc khóa này.\n" +
+                                     $"- Toàn bộ Lịch Học của các lớp đó.\n" +
+                                     $"- TOÀN BỘ HỌC VIÊN đang học (Bao gồm xóa Tài Khoản, Điểm Số, và Học Phí của họ).\n\n" +
+                                     $"Bạn có CHẮC CHẮN muốn tiêu diệt toàn bộ hệ sinh thái của khóa học này?";
+
+                    if (MessageBox.Show(canhBao, "Xác nhận Xóa Tận Gốc", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                     {
-                        var cacLopHoc = context.LopHoc.Where(l => l.KhoaHocID == khoaHoc.ID).ToList();
-                        var listIdLop = cacLopHoc.Select(l => l.ID).ToList();
-
-                        var listIdHocVien = context.HocPhi
-                                                .Where(hp => listIdLop.Contains(hp.LopHocID))
-                                                .Select(hp => hp.HocVienID)
-                                                .Distinct()
-                                                .ToList();
-
-                        foreach (var hvID in listIdHocVien)
+                        try
                         {
-                            var hv = context.HocVien.Find(hvID);
-                            if (hv != null)
+                            var khoaHoc = context.KhoaHoc.Find(khHienTai.ID);
+                            if (khoaHoc != null)
                             {
-                                var ketQua = context.KetQua.Where(kq => kq.HocVienID == hv.ID).ToList();
-                                if (ketQua.Any()) context.KetQua.RemoveRange(ketQua);
+                                var cacLopHoc = context.LopHoc.Where(l => l.KhoaHocID == khoaHoc.ID).ToList();
+                                var listIdLop = cacLopHoc.Select(l => l.ID).ToList();
 
-                                var hocPhi = context.HocPhi.Where(hp => hp.HocVienID == hv.ID).ToList();
-                                if (hocPhi.Any()) context.HocPhi.RemoveRange(hocPhi);
+                                var listIdHocVien = context.HocPhi
+                                                        .Where(hp => listIdLop.Contains(hp.LopHocID))
+                                                        .Select(hp => hp.HocVienID)
+                                                        .Distinct()
+                                                        .ToList();
 
-                                int? idTaiKhoan = hv.TaiKhoanID;
-
-                                context.HocVien.Remove(hv);
-
-                                if (idTaiKhoan != null)
+                                foreach (var hvID in listIdHocVien)
                                 {
-                                    var tk = context.TaiKhoan.Find(idTaiKhoan);
-                                    if (tk != null) context.TaiKhoan.Remove(tk);
+                                    var hv = context.HocVien.Find(hvID);
+                                    if (hv != null)
+                                    {
+                                        var ketQua = context.KetQua.Where(kq => kq.HocVienID == hv.ID).ToList();
+                                        if (ketQua.Any()) context.KetQua.RemoveRange(ketQua);
+
+                                        var hocPhi = context.HocPhi.Where(hp => hp.HocVienID == hv.ID).ToList();
+                                        if (hocPhi.Any()) context.HocPhi.RemoveRange(hocPhi);
+
+                                        int? idTaiKhoan = hv.TaiKhoanID;
+
+                                        context.HocVien.Remove(hv);
+
+                                        if (idTaiKhoan != null)
+                                        {
+                                            var tk = context.TaiKhoan.Find(idTaiKhoan);
+                                            if (tk != null) context.TaiKhoan.Remove(tk);
+                                        }
+                                    }
                                 }
+
+                                if (listIdLop.Any())
+                                {
+                                    var lichHoc = context.LichHoc.Where(l => listIdLop.Contains(l.LopHocID)).ToList();
+                                    if (lichHoc.Any()) context.LichHoc.RemoveRange(lichHoc);
+
+                                    context.LopHoc.RemoveRange(cacLopHoc);
+                                }
+
+                                context.KhoaHoc.Remove(khoaHoc);
+                                context.SaveChanges();
+
+                                MessageBox.Show("Đã tiêu hủy sạch sẽ Khóa học cùng toàn bộ Lớp và Học viên trực thuộc!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                frmQuanLyKhoaHoc_Load(sender, e);
                             }
                         }
-
-                        if (listIdLop.Any())
+                        catch (Exception ex)
                         {
-                            var lichHoc = context.LichHoc.Where(l => listIdLop.Contains(l.LopHocID)).ToList();
-                            if (lichHoc.Any()) context.LichHoc.RemoveRange(lichHoc);
-
-                            context.LopHoc.RemoveRange(cacLopHoc);
+                            string inner = ex.InnerException != null ? "\nChi tiết gốc: " + ex.InnerException.Message : "";
+                            MessageBox.Show("Không thể xóa. Lỗi: " + ex.Message + inner, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-
-                        context.KhoaHoc.Remove(khoaHoc);
-                        context.SaveChanges();
-
-                        MessageBox.Show("Đã tiêu hủy sạch sẽ Khóa học cùng toàn bộ Lớp và Học viên trực thuộc!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        frmQuanLyKhoaHoc_Load(sender, e);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    string inner = ex.InnerException != null ? "\nChi tiết gốc: " + ex.InnerException.Message : "";
-                    MessageBox.Show("Không thể xóa. Lỗi: " + ex.Message + inner, "Lỗi SQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Thao tác xóa đã bị hủy do chưa xác thực được quyền Quản trị!", "Bảo mật", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

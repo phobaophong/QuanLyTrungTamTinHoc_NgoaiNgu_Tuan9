@@ -22,9 +22,13 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         string fileNameHinhAnh = "";
 
         bool temp = true;
-        public frmQuanLyHocVien()
+
+        int quyenHanDangNhap;
+        public frmQuanLyHocVien(int quyenHan)
         {
             InitializeComponent();
+
+            quyenHanDangNhap = quyenHan;
 
             Models.Utils.GiaoDien.ApDungGiaoDien(this);
         }
@@ -112,6 +116,15 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             btnThem.Enabled = !giaTri;
             btnXoa.Enabled = !giaTri;
             btnSua.Enabled = !giaTri;
+
+            if (!giaTri && (quyenHanDangNhap == 4 || quyenHanDangNhap == 1))
+            {
+                btnXoa.Visible = true;
+            }
+            else
+            {
+                btnXoa.Visible = false;
+            }
         }
         public void LoadCbbKhoaHoc()
         {
@@ -431,61 +444,81 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 return;
             }
 
-            if (MessageBox.Show($"CẢNH BÁO: Bạn có chắc chắn muốn xóa học viên {txtHoVaTen.Text}?\n\nThao tác này sẽ xóa VĨNH VIỄN toàn bộ Tài khoản, Học phí, Lớp học và Điểm số của học viên này!", "Xác nhận xóa dữ liệu", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            var hvHienTai = bindingSource.Current as HocVien;
+            if (hvHienTai == null) return;
+
+            using (frmXacNhanLaiMatKhau frm = new frmXacNhanLaiMatKhau(quyenHanDangNhap))
             {
-                try
+                frm.ShowDialog();
+
+
+                if (frm.XacNhanThanhCong)
                 {
-                    var hvHienTai = bindingSource.Current as HocVien;
-                    if (hvHienTai == null) return;
 
-                    HocVien hv = context.HocVien.Find(hvHienTai.ID);
-
-                    if (hv != null)
+                    if (MessageBox.Show($"CẢNH BÁO: Bạn có chắc chắn muốn xóa học viên {txtHoVaTen.Text}?\n\nThao tác này sẽ xóa VĨNH VIỄN toàn bộ Tài khoản, Học phí, Lớp học và Điểm số của học viên này!", "Xác nhận xóa dữ liệu", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
-                        var dsKetQua = context.KetQua.Where(k => k.HocVienID == hv.ID).ToList();
-                        if (dsKetQua.Any())
+                        try
                         {
-                            context.KetQua.RemoveRange(dsKetQua);
-                        }
+                            HocVien hv = context.HocVien.Find(hvHienTai.ID);
 
-                        var dsHocPhi = context.HocPhi.Where(hp => hp.HocVienID == hv.ID).ToList();
-                        if (dsHocPhi.Any())
-                        {
-                            context.HocPhi.RemoveRange(dsHocPhi);
-                        }
-
-                        var idTaiKhoan = hv.TaiKhoanID;
-
-                        context.HocVien.Remove(hv);
-
-                        if (idTaiKhoan != null)
-                        {
-                            var tk = context.TaiKhoan.Find(idTaiKhoan);
-                            if (tk != null)
+                            if (hv != null)
                             {
-                                context.TaiKhoan.Remove(tk);
+                                // Xóa Điểm số
+                                var dsKetQua = context.KetQua.Where(k => k.HocVienID == hv.ID).ToList();
+                                if (dsKetQua.Any())
+                                {
+                                    context.KetQua.RemoveRange(dsKetQua);
+                                }
+
+                                // Xóa Học phí
+                                var dsHocPhi = context.HocPhi.Where(hp => hp.HocVienID == hv.ID).ToList();
+                                if (dsHocPhi.Any())
+                                {
+                                    context.HocPhi.RemoveRange(dsHocPhi);
+                                }
+
+                                var idTaiKhoan = hv.TaiKhoanID;
+
+                                // Xóa Học viên
+                                context.HocVien.Remove(hv);
+
+                                // Xóa Tài khoản
+                                if (idTaiKhoan != null)
+                                {
+                                    var tk = context.TaiKhoan.Find(idTaiKhoan);
+                                    if (tk != null)
+                                    {
+                                        context.TaiKhoan.Remove(tk);
+                                    }
+                                }
+
+                                context.SaveChanges();
+
+                                MessageBox.Show("Đã xóa sạch toàn bộ dữ liệu của học viên!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                // Reset lại giao diện sau khi xóa
+                                BatTatCaChucNang(false);
+                                txtHoVaTen.Clear();
+                                txtMaSo.Clear();
+                                txtDiaChi.Clear();
+                                txtSdt.Clear();
+                                txtEmail.Clear();
+                                if (picHinhAnh.Image != null) picHinhAnh.Image.Dispose();
+                                picHinhAnh.Image = Properties.Resources.nam_avatar;
+
+                                frmQuanLySinhVien_Load(sender, e);
                             }
                         }
-
-                        context.SaveChanges();
-
-                        MessageBox.Show("Đã xóa sạch toàn bộ dữ liệu của học viên!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        BatTatCaChucNang(false);
-                        txtHoVaTen.Clear();
-                        txtMaSo.Clear();
-                        txtDiaChi.Clear();
-                        txtSdt.Clear();
-                        txtEmail.Clear();
-                        if (picHinhAnh.Image != null) picHinhAnh.Image.Dispose();
-                        picHinhAnh.Image = Properties.Resources.nam_avatar;
-
-                        frmQuanLySinhVien_Load(sender, e);
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Lỗi khi xóa dữ liệu: " + ex.Message, "Lỗi cơ sở dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Lỗi khi xóa dữ liệu: " + ex.Message, "Lỗi cơ sở dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Trượt mật khẩu hoặc bấm Hủy
+                    MessageBox.Show("Thao tác xóa học viên đã bị hủy do chưa xác thực được quyền Quản trị!", "Bảo mật", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -499,19 +532,51 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnXacNhan_Click(object sender, EventArgs e)
         {
+            txtHoVaTen.Text = ChuanHoaChuoi(txtHoVaTen.Text);
+            txtDiaChi.Text = ChuanHoaChuoi(txtDiaChi.Text);
+
+            string hoTenNhap = txtHoVaTen.Text;
+            string sdtNhap = txtSdt.Text.Trim();
+            string emailNhap = txtEmail.Text.Trim();
+
+            // 2. KIỂM TRA RỖNG CƠ BẢN
             if (string.IsNullOrWhiteSpace(txtMaSo.Text))
             {
                 MessageBox.Show("Mã số học viên không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(txtHoVaTen.Text))
+            if (string.IsNullOrWhiteSpace(hoTenNhap))
             {
                 MessageBox.Show("Vui lòng nhập họ và tên học viên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtHoVaTen.Focus();
                 return;
             }
 
-            // check tuổi hợp lý trên 5 dưới 100
+            // 3. KIỂM TRA ĐỊNH DẠNG SỐ ĐIỆN THOẠI (Bắt đầu bằng số 0, dài 10 chữ số, toàn là số)
+            if (string.IsNullOrWhiteSpace(sdtNhap) || !sdtNhap.StartsWith("0") || sdtNhap.Length != 10 || !sdtNhap.All(char.IsDigit))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ!\nVui lòng nhập đúng 10 chữ số và bắt đầu bằng số 0.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSdt.Focus();
+                return;
+            }
+
+            // 4. KIỂM TRA ĐỊNH DẠNG EMAIL (Nếu có nhập thì phải nhập đúng định dạng @gmail.com)
+            if (!string.IsNullOrWhiteSpace(emailNhap))
+            {
+                try
+                {
+                    var addr = new System.Net.Mail.MailAddress(emailNhap);
+                    if (addr.Address != emailNhap) throw new Exception();
+                }
+                catch
+                {
+                    MessageBox.Show("Định dạng Email không hợp lệ!\nVí dụ đúng: nguyenvan@gmail.com", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
+                    return;
+                }
+            }
+
+            // 5. KIỂM TRA ĐỘ TUỔI
             int tuoi = DateTime.Now.Year - dtpNgaySinh.Value.Year;
             if (DateTime.Now.DayOfYear < dtpNgaySinh.Value.DayOfYear)
             {
@@ -522,12 +587,12 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             {
                 MessageBox.Show($"Ngày sinh không hợp lệ! Tuổi hiện tại đang là {tuoi}.\nHọc viên trung tâm phải nằm trong độ tuổi từ 5 đến 100 tuổi.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpNgaySinh.Focus();
-                return; 
+                return;
             }
 
             try
             {
-                if (temp) // thêm true
+                if (temp) // THÊM MỚI
                 {
                     if (cbbLopHoc.SelectedValue == null)
                     {
@@ -536,44 +601,82 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     }
                     int idLop = Convert.ToInt32(cbbLopHoc.SelectedValue);
 
-                    // tạo tài khoản
-                    TaiKhoan tk = new TaiKhoan();
-                    tk.TenDN = txtMaSo.Text.Trim();
-                    tk.MatKhau = BC.HashPassword("1");
-                    tk.TrangThai = true;
-                    tk.QuyenHan = 3;
+                    // kiểm tra hv cũ quay lại học
+                    bool gioiTinhNhap = rdoNam.Checked;
+                    DateTime ngaySinhNhap = dtpNgaySinh.Value.Date;
 
-                    context.TaiKhoan.Add(tk);
-                    context.SaveChanges();
+                    var hvCu = context.HocVien.FirstOrDefault(h =>
+                        h.HoVaTen == hoTenNhap &&
+                        h.NgaySinh.Date == ngaySinhNhap &&
+                        h.GioiTinh == gioiTinhNhap);
 
-                    // tạo học viên
-                    HocVien hv = new HocVien();
-                    hv.MaSo = txtMaSo.Text.Trim();
-                    hv.HoVaTen = txtHoVaTen.Text.Trim();
-                    hv.NgaySinh = dtpNgaySinh.Value.Date;
-                    hv.GioiTinh = rdoNam.Checked ? true : false;
-                    hv.TrangThai = 1;
-                    hv.HinhAnh = fileNameHinhAnh;
-                    hv.TaiKhoanID = tk.ID;
-                    hv.DiaChi = txtDiaChi.Text.Trim();
-                    hv.Sdt = txtSdt.Text.Trim();
-                    hv.Email = txtEmail.Text.Trim();
+                    if (hvCu != null)
+                    {
+                        bool daHocLopNay = context.HocPhi.Any(hp => hp.HocVienID == hvCu.ID && hp.LopHocID == idLop);
+                        if (daHocLopNay)
+                        {
+                            MessageBox.Show($"Học viên {hoTenNhap} (Sinh ngày: {ngaySinhNhap:dd/MM/yyyy}) đã có tên trong lớp {cbbLopHoc.Text} từ trước rồi!", "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
 
-                    context.HocVien.Add(hv);
-                    context.SaveChanges();
+                        string tbCapNhatSdt = "";
+                        if (hvCu.Sdt != sdtNhap)
+                        {
+                            hvCu.Sdt = sdtNhap;
+                            tbCapNhatSdt = $"\n- Đã tự động cập nhật số điện thoại mới: {sdtNhap}";
+                        }
 
-                    // ghi danh vào lớp
-                    HocPhi hp = new HocPhi();
-                    hp.HocVienID = hv.ID;
-                    hp.LopHocID = idLop;
-                    hp.NgayDong = DateTime.Now;
+                        HocPhi hpMoi = new HocPhi();
+                        hpMoi.HocVienID = hvCu.ID;
+                        hpMoi.LopHocID = idLop;
+                        hpMoi.NgayDong = DateTime.Now;
 
-                    context.HocPhi.Add(hp);
-                    context.SaveChanges();
+                        context.HocPhi.Add(hpMoi);
+                        hvCu.TrangThai = 1;
 
-                    MessageBox.Show("Thêm học viên và tự động cấp tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        context.SaveChanges();
+
+                        MessageBox.Show($"Phát hiện học viên cũ: {hoTenNhap}.\n- Hệ thống đã tự động ghi danh vào lớp mới.{tbCapNhatSdt}\n(Không tạo dư thừa tài khoản mới)", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // học viên mới
+                        TaiKhoan tk = new TaiKhoan();
+                        tk.TenDN = txtMaSo.Text.Trim();
+                        tk.MatKhau = BC.HashPassword("1");
+                        tk.TrangThai = true;
+                        tk.QuyenHan = 3;
+
+                        context.TaiKhoan.Add(tk);
+                        context.SaveChanges();
+
+                        HocVien hv = new HocVien();
+                        hv.MaSo = txtMaSo.Text.Trim();
+                        hv.HoVaTen = hoTenNhap; 
+                        hv.NgaySinh = dtpNgaySinh.Value.Date;
+                        hv.GioiTinh = rdoNam.Checked ? true : false;
+                        hv.TrangThai = 1;
+                        hv.HinhAnh = fileNameHinhAnh;
+                        hv.TaiKhoanID = tk.ID;
+                        hv.DiaChi = txtDiaChi.Text.Trim(); 
+                        hv.Sdt = sdtNhap;
+                        hv.Email = emailNhap;
+
+                        context.HocVien.Add(hv);
+                        context.SaveChanges();
+
+                        HocPhi hp = new HocPhi();
+                        hp.HocVienID = hv.ID;
+                        hp.LopHocID = idLop;
+                        hp.NgayDong = DateTime.Now;
+
+                        context.HocPhi.Add(hp);
+                        context.SaveChanges();
+
+                        MessageBox.Show("Thêm học viên mới và tự động cấp tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-                else // sửa false
+                else // SỬA
                 {
                     if (dataGridView.CurrentRow == null)
                     {
@@ -587,13 +690,13 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     if (hvEdit != null)
                     {
                         hvEdit.MaSo = txtMaSo.Text.Trim();
-                        hvEdit.HoVaTen = txtHoVaTen.Text.Trim();
+                        hvEdit.HoVaTen = hoTenNhap; 
                         hvEdit.NgaySinh = dtpNgaySinh.Value.Date;
                         hvEdit.GioiTinh = rdoNam.Checked ? true : false;
                         hvEdit.TrangThai = Convert.ToInt32(cbbTrangThai.SelectedValue);
-                        hvEdit.DiaChi = txtDiaChi.Text.Trim();
-                        hvEdit.Sdt = txtSdt.Text.Trim();
-                        hvEdit.Email = txtEmail.Text.Trim();
+                        hvEdit.DiaChi = txtDiaChi.Text.Trim(); 
+                        hvEdit.Sdt = sdtNhap;
+                        hvEdit.Email = emailNhap;
 
                         if (!string.IsNullOrEmpty(fileNameHinhAnh))
                         {
@@ -637,7 +740,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             LoadDataNhanh(2);
             grbDataGrid.Text = "Danh sách sinh viên - BẢO LƯU";
 
-            btnThem.Enabled = false; // chặn thêm vì không đang load tất cả
+            btnThem.Enabled = false; // chặn thêm 
         }
 
         private void btnDaTotNghiep_Click(object sender, EventArgs e)
@@ -645,7 +748,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             LoadDataNhanh(3);
             grbDataGrid.Text = "Danh sách sinh viên - ĐÃ TỐT NGHIỆP";
 
-            btnThem.Enabled = false; // chặn thêm vì không đang load tất cả
+            btnThem.Enabled = false; // chặn thêm 
         }
 
         private void btnDangHoc_Click(object sender, EventArgs e)
@@ -653,7 +756,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             LoadDataNhanh(1);
             grbDataGrid.Text = "Danh sách sinh viên - ĐANG HỌC";
 
-            btnThem.Enabled = false; // chặn thêm vì không đang load tất cả
+            btnThem.Enabled = false; // chặn thêm 
         }
 
         private void btnNhapExcel_Click(object sender, EventArgs e)
@@ -705,15 +808,16 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         }
                     }
 
-                    int demThanhCong = 0;
+                    int demThanhCongMoi = 0;
+                    int demThanhCongCu = 0;
                     int demBoQua = 0;
 
                     int maxId = context.HocVien.Any() ? context.HocVien.Max(h => h.ID) : 0;
 
                     foreach (DataRow dRow in dtData.Rows)
                     {
-
-                        string hoTen = dRow[1].ToString().Trim();
+                        string hoTen = dRow.Table.Columns.Count > 1 ? dRow[1].ToString().Trim() : "";
+                        string sdt = dRow.Table.Columns.Count > 4 ? dRow[4].ToString().Trim() : "";
 
                         if (string.IsNullOrEmpty(hoTen))
                         {
@@ -721,47 +825,88 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                             continue;
                         }
 
-                        maxId++;
-                        string maSoMoi = "hv" + maxId.ToString("D2");
-
-                        TaiKhoan taiKhoanMoi = new TaiKhoan();
-                        taiKhoanMoi.TenDN = maSoMoi;
-                        taiKhoanMoi.MatKhau = BC.HashPassword("1");
-                        taiKhoanMoi.TrangThai = true;
-                        taiKhoanMoi.QuyenHan = 3;
-
-                        HocVien hocVienMoi = new HocVien();
-                        hocVienMoi.MaSo = maSoMoi;
-                        hocVienMoi.HoVaTen = hoTen;
-
                         DateTime ngaySinh;
-                        if (DateTime.TryParse(dRow[2].ToString(), out ngaySinh))
-                            hocVienMoi.NgaySinh = ngaySinh.Date;
+                        if (dRow.Table.Columns.Count <= 2 || !DateTime.TryParse(dRow[2].ToString(), out ngaySinh))
+                        {
+                            ngaySinh = DateTime.Now.Date; 
+                        }
+
+                        string strGioiTinh = dRow.Table.Columns.Count > 3 ? dRow[3].ToString().Trim().ToLower() : "nam";
+                        bool gioiTinh = (strGioiTinh == "nam" || strGioiTinh == "1" || strGioiTinh == "true");
+
+                        var hvCu = context.HocVien.FirstOrDefault(h =>
+                            h.HoVaTen == hoTen &&
+                            h.NgaySinh.Date == ngaySinh.Date &&
+                            h.GioiTinh == gioiTinh);
+
+                        if (hvCu != null)
+                        {
+
+                            bool daHocLopNay = context.HocPhi.Any(hp => hp.HocVienID == hvCu.ID && hp.LopHocID == idLopDuocChon);
+                            if (daHocLopNay)
+                            {
+                                demBoQua++;
+                                continue;
+                            }
+
+                            if (!string.IsNullOrEmpty(sdt) && hvCu.Sdt != sdt)
+                            {
+                                hvCu.Sdt = sdt;
+                            }
+
+                            HocPhi hpMoi = new HocPhi();
+                            hpMoi.LopHocID = idLopDuocChon;
+                            hpMoi.HocVienID = hvCu.ID;
+                            hpMoi.NgayDong = DateTime.Now;
+
+                            hvCu.TrangThai = 1; 
+                            context.HocPhi.Add(hpMoi);
+
+                            demThanhCongCu++;
+                        }
                         else
-                            hocVienMoi.NgaySinh = DateTime.Now.Date;
+                        {
+   
+                            maxId++;
+                            string maSoMoi = "hv" + maxId.ToString("D2");
 
-                        hocVienMoi.GioiTinh = (dRow[3].ToString().Trim().ToLower() == "nam");
-                        hocVienMoi.Sdt = dRow[4].ToString();
-                        hocVienMoi.DiaChi = dRow[5].ToString();
-                        hocVienMoi.Email = dRow[6].ToString();
-                        hocVienMoi.TrangThai = 1; 
-                        hocVienMoi.TaiKhoan = taiKhoanMoi;
+                            TaiKhoan taiKhoanMoi = new TaiKhoan();
+                            taiKhoanMoi.TenDN = maSoMoi;
+                            taiKhoanMoi.MatKhau = BC.HashPassword("1");
+                            taiKhoanMoi.TrangThai = true;
+                            taiKhoanMoi.QuyenHan = 3;
 
-                        HocPhi hocPhiMoi = new HocPhi();
-                        hocPhiMoi.LopHocID = idLopDuocChon;
-                        hocPhiMoi.HocVien = hocVienMoi;
-                        hocPhiMoi.NgayDong = DateTime.Now;
+                            HocVien hocVienMoi = new HocVien();
+                            hocVienMoi.MaSo = maSoMoi;
 
-                        context.TaiKhoan.Add(taiKhoanMoi);
-                        context.HocVien.Add(hocVienMoi);
-                        context.HocPhi.Add(hocPhiMoi);
 
-                        demThanhCong++;
+                            hocVienMoi.HoVaTen = ChuanHoaChuoi(hoTen);
+                            hocVienMoi.NgaySinh = ngaySinh.Date;
+                            hocVienMoi.GioiTinh = gioiTinh;
+                            hocVienMoi.Sdt = sdt;
+
+                            hocVienMoi.DiaChi = dRow.Table.Columns.Count > 5 ? ChuanHoaChuoi(dRow[5].ToString()) : "";
+                            hocVienMoi.Email = dRow.Table.Columns.Count > 6 ? dRow[6].ToString().Trim() : "";
+
+                            hocVienMoi.TrangThai = 1;
+                            hocVienMoi.TaiKhoan = taiKhoanMoi;
+
+                            HocPhi hocPhiMoi = new HocPhi();
+                            hocPhiMoi.LopHocID = idLopDuocChon;
+                            hocPhiMoi.HocVien = hocVienMoi;
+                            hocPhiMoi.NgayDong = DateTime.Now;
+
+                            context.TaiKhoan.Add(taiKhoanMoi);
+                            context.HocVien.Add(hocVienMoi);
+                            context.HocPhi.Add(hocPhiMoi);
+
+                            demThanhCongMoi++;
+                        }
                     }
 
                     context.SaveChanges();
 
-                    MessageBox.Show($"Nhập thành công {demThanhCong} học viên vào lớp.\nBỏ qua {demBoQua} dòng trống hoặc không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Kết quả Nhập Excel:\n- Đã tạo MỚI và xếp lớp cho {demThanhCongMoi} học viên.\n- Đã ghi danh {demThanhCongCu} học viên CŨ vào lớp.\n- Bỏ qua {demBoQua} dòng (trống hoặc học viên đã có sẵn trong lớp này).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     LoadDataTheoLop(idLopDuocChon);
                 }
@@ -790,7 +935,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             saveDialog.Title = "Xuất danh sách học viên ra Excel";
             saveDialog.Filter = "Tập tin Excel *.xlsx|*.xlsx";
 
-            // 🔥 CẬP NHẬT TÊN FILE GẮN LIỀN VỚI TÊN LỚP
             saveDialog.FileName = $"DanhSachHocVien_{tenLop}_{DateTime.Now.ToString("dd_MM_yyyy")}.xlsx";
 
             if (saveDialog.ShowDialog() == DialogResult.OK)
@@ -806,7 +950,6 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                     dtHocVien.Columns.Add("Địa chỉ", typeof(string));
                     dtHocVien.Columns.Add("Email", typeof(string));
 
-                    // 2. CHỈ XUẤT NHỮNG HỌC VIÊN ĐANG HIỂN THỊ TRÊN LƯỚI
                     foreach (DataGridViewRow row in dataGridView.Rows)
                     {
                         var hocVien = row.DataBoundItem as HocVien;
@@ -837,6 +980,20 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private string ChuanHoaChuoi(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return "";
+
+            input = input.Trim();
+            // Xóa khoảng trắng thừa ở giữa các từ
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"\s+", " ");
+
+            // Ép viết hoa chữ cái đầu
+            System.Globalization.CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
+            System.Globalization.TextInfo textInfo = cultureInfo.TextInfo;
+
+            return textInfo.ToTitleCase(input.ToLower());
         }
     }
 }

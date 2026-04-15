@@ -209,7 +209,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             if (quanLyHocVien == null || quanLyHocVien.IsDisposed)
             {
-                quanLyHocVien = new frmQuanLyHocVien();
+                quanLyHocVien = new frmQuanLyHocVien(idQuyenHan);
                 quanLyHocVien.MdiParent = this;
                 quanLyHocVien.Dock = DockStyle.Fill;
                 quanLyHocVien.Show();
@@ -286,6 +286,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 child.Close();
             }
             ChuaDangNhap();
+            DangNhap();
         }
 
 

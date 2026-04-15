@@ -98,7 +98,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         public void LoadData(int idLop, float? locDiemThat)
         {
             var dsHocVien = context.HocVien
-                .Where(hv => hv.HocPhi.Any(hp => hp.LopHocID == idLop))
+                .Where(hv => hv.HocPhi.Any(hp => hp.LopHocID == idLop) && hv.TrangThai != 2)
                 .ToList();
 
             var dsKetQua = context.KetQua
