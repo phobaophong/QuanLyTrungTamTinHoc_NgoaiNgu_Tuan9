@@ -539,7 +539,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             string sdtNhap = txtSdt.Text.Trim();
             string emailNhap = txtEmail.Text.Trim();
 
-            // 2. KIỂM TRA RỖNG CƠ BẢN
+            // kiểm tra rỗng
             if (string.IsNullOrWhiteSpace(txtMaSo.Text))
             {
                 MessageBox.Show("Mã số học viên không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -552,7 +552,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 return;
             }
 
-            // 3. KIỂM TRA ĐỊNH DẠNG SỐ ĐIỆN THOẠI (Bắt đầu bằng số 0, dài 10 chữ số, toàn là số)
+            // kiểm tra số đt
             if (string.IsNullOrWhiteSpace(sdtNhap) || !sdtNhap.StartsWith("0") || sdtNhap.Length != 10 || !sdtNhap.All(char.IsDigit))
             {
                 MessageBox.Show("Số điện thoại không hợp lệ!\nVui lòng nhập đúng 10 chữ số và bắt đầu bằng số 0.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -560,7 +560,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 return;
             }
 
-            // 4. KIỂM TRA ĐỊNH DẠNG EMAIL (Nếu có nhập thì phải nhập đúng định dạng @gmail.com)
+            // kiểm tra email
             if (!string.IsNullOrWhiteSpace(emailNhap))
             {
                 try
@@ -576,7 +576,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 }
             }
 
-            // 5. KIỂM TRA ĐỘ TUỔI
+            // kiểm tra tuổi
             int tuoi = DateTime.Now.Year - dtpNgaySinh.Value.Year;
             if (DateTime.Now.DayOfYear < dtpNgaySinh.Value.DayOfYear)
             {
@@ -592,7 +592,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             try
             {
-                if (temp) // THÊM MỚI
+                if (temp) // thêm
                 {
                     if (cbbLopHoc.SelectedValue == null)
                     {
@@ -676,7 +676,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                         MessageBox.Show("Thêm học viên mới và tự động cấp tài khoản thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                else // SỬA
+                else // sửa
                 {
                     if (dataGridView.CurrentRow == null)
                     {

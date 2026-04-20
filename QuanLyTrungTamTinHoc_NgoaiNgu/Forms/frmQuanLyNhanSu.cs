@@ -318,27 +318,52 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void btnXacNhan_Click(object sender, EventArgs e)
         {
+            txtHoVaTen.Text = ChuanHoaChuoi(txtHoVaTen.Text);
+            txtDiaChi.Text = ChuanHoaChuoi(txtDiaChi.Text);
+
+            string hoTenNhap = txtHoVaTen.Text;
+            string sdtNhap = txtSdt.Text.Trim();
+            string emailNhap = txtEmail.Text.Trim();
+
+            // kiểm tra rỗng
             if (string.IsNullOrWhiteSpace(txtMaSo.Text))
             {
-                MessageBox.Show("Vui lòng nhập mã số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Mã số nhân sự không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(txtHoVaTen.Text))
+            if (string.IsNullOrWhiteSpace(hoTenNhap))
             {
-                MessageBox.Show("Vui lòng nhập họ và tên!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Vui lòng nhập họ và tên nhân sự!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtHoVaTen.Focus();
                 return;
             }
 
+            // kiểm tra số điện thoại
+            if (string.IsNullOrWhiteSpace(sdtNhap) || !sdtNhap.StartsWith("0") || sdtNhap.Length != 10 || !sdtNhap.All(char.IsDigit))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ!\nVui lòng nhập đúng 10 chữ số và bắt đầu bằng số 0.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtSdt.Focus();
+                return;
+            }
+
+            // kiểm tra email
+            if (string.IsNullOrWhiteSpace(emailNhap) || !System.Text.RegularExpressions.Regex.IsMatch(emailNhap, @"^[a-zA-Z0-9._%+-]+@gmail\.com$"))
+            {
+                MessageBox.Show("Email không hợp lệ hoặc bị bỏ trống!\nVui lòng sử dụng đúng định dạng thư điện tử (VD: nguyenvan@gmail.com).", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
+
+            // kiểm tra tuổi
             int tuoi = DateTime.Now.Year - dtpNgaySinh.Value.Year;
             if (DateTime.Now.DayOfYear < dtpNgaySinh.Value.DayOfYear)
             {
                 tuoi--;
             }
 
-            if (tuoi < 18 || tuoi > 70)
+            if (tuoi < 5 || tuoi > 100)
             {
-                MessageBox.Show($"Ngày sinh không hợp lệ! Tuổi hiện tại đang là {tuoi}.\nĐộ tuổi nhân sự (Giảng viên/Nhân viên) phải từ 18 đến 70 tuổi.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Ngày sinh không hợp lệ! Tuổi hiện tại đang là {tuoi}.\nHọc viên trung tâm phải nằm trong độ tuổi từ 5 đến 100 tuổi.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpNgaySinh.Focus();
                 return;
             }
@@ -659,6 +684,21 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         private void btnThoat_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private string ChuanHoaChuoi(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return "";
+
+            input = input.Trim();
+            // Xóa khoảng trắng thừa ở giữa các từ
+            input = System.Text.RegularExpressions.Regex.Replace(input, @"\s+", " ");
+
+            // Ép viết hoa chữ cái đầu
+            System.Globalization.CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
+            System.Globalization.TextInfo textInfo = cultureInfo.TextInfo;
+
+            return textInfo.ToTitleCase(input.ToLower());
         }
     }
 }

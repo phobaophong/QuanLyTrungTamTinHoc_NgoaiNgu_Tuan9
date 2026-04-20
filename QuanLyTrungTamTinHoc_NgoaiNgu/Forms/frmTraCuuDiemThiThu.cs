@@ -39,20 +39,31 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
             if (hocVien != null)
             {
-                var ketQua = hocVien.KetQua.FirstOrDefault();
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine($"Học viên: {hocVien.HoVaTen.ToUpper()}");
+                sb.AppendLine("------------------------------------------");
 
-                string hoTen = hocVien.HoVaTen;
-                string tenLop = (ketQua != null && ketQua.LopHoc != null) ? ketQua.LopHoc.TenLopHoc : "(Chưa xếp lớp)";
+                if (hocVien.KetQua.Count > 0)
+                {
+                    foreach (var kq in hocVien.KetQua)
+                    {
+                        string tenLop = kq.LopHoc != null ? kq.LopHoc.TenLopHoc : "(Lớp không xác định)";
+                        string diemThu = kq.DiemThiThu.HasValue ? kq.DiemThiThu.Value.ToString() : "Chưa có";
+                        string diemThat = kq.DiemThiThat.HasValue ? kq.DiemThiThat.Value.ToString() : "Chưa có";
 
-                string diemThu = (ketQua != null && ketQua.DiemThiThu.HasValue) ? ketQua.DiemThiThu.Value.ToString() : "Chưa có điểm";
-                string diemThat = (ketQua != null && ketQua.DiemThiThat.HasValue) ? ketQua.DiemThiThat.Value.ToString() : "Chưa có điểm";
+                        sb.AppendLine($"Lớp: {tenLop}");
+                        sb.AppendLine($"- Điểm thi thử: {diemThu}");
+                        sb.AppendLine($"- Điểm thi thật: {diemThat}");
+                        sb.AppendLine(""); 
+                    }
+                }
+                else
+                {
+                    sb.AppendLine("Học viên này hiện chưa được xếp lớp nào.");
+                }
 
-                lblHienThi.Text = $"Học viên: {hoTen}\n" +
-                                 $"Lớp học: {tenLop}\n" +
-                                 $"Điểm thi thử: {diemThu}\n" +
-                                 $"Điểm thi thật: {diemThat}";
-
-                lblHienThi.ForeColor = Models.Utils.GiaoDien.MauChuDao; 
+                lblHienThi.Text = sb.ToString();
+                lblHienThi.ForeColor = Models.Utils.GiaoDien.MauChuDao;
             }
             else
             {
