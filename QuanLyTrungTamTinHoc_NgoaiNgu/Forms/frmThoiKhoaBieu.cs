@@ -297,6 +297,30 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         public void TaoLich(List<DayOfWeek> dsThuChon)
         {
+            if (cbbLopHoc.SelectedValue == null)
+            {
+                MessageBox.Show("Hệ thống chưa tải xong Lớp học. Vui lòng thử lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (cbbCaHoc.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn Ca học để xếp lịch!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbbCaHoc.Focus();
+                return;
+            }
+            if (cbbPhongHoc.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn Phòng học trước khi tạo lịch!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbbPhongHoc.Focus();
+                return;
+            }
+            if (cbbGiangVien.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn Giảng viên phụ trách lớp này!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbbGiangVien.Focus();
+                return;
+            }
+
             try
             {
                 int idLop = (int)cbbLopHoc.SelectedValue;
@@ -307,27 +331,32 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                 if (lop == null || lop.KhoaHoc == null) return;
 
                 int tongSoBuoi = lop.KhoaHoc.ThoiLuong;
-                int soBuoiDaXep = 0;
                 DateTime ngayChay = lop.NgayBatDau.Date;
 
                 int idCa = (int)cbbCaHoc.SelectedValue;
                 int idPhong = (int)cbbPhongHoc.SelectedValue;
                 int idGiangVien = (int)cbbGiangVien.SelectedValue;
-                List<string> thongBaoLoi = new List<string>();
 
-                while (soBuoiDaXep < tongSoBuoi)
+                List<LichHoc> danhSachDuKien = new List<LichHoc>();
+                List<string> thongBaoLoi = new List<string>();
+                int soBuoiDaKiemTra = 0;
+
+                while (soBuoiDaKiemTra < tongSoBuoi)
                 {
                     if (dsThuChon.Contains(ngayChay.DayOfWeek))
                     {
-                        // Kiểm tra trùng lịch trước khi Add
                         bool biTrungLich = context.LichHoc.Any(l =>
                             l.NgayHoc.Date == ngayChay.Date &&
                             l.CaHocID == idCa &&
                             (l.PhongHocID == idPhong || l.GiangVienID == idGiangVien || l.LopHocID == idLop));
 
-                        if (!biTrungLich)
+                        if (biTrungLich)
                         {
-                            context.LichHoc.Add(new LichHoc
+                            thongBaoLoi.Add($"- Ngày {ngayChay:dd/MM/yyyy}: Kẹt Phòng hoặc Giảng viên");
+                        }
+                        else
+                        {
+                            danhSachDuKien.Add(new LichHoc
                             {
                                 LopHocID = idLop,
                                 CaHocID = idCa,
@@ -335,39 +364,35 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
                                 GiangVienID = idGiangVien,
                                 NgayHoc = ngayChay
                             });
-                            soBuoiDaXep++;
                         }
-                        else
-                        {
-                            thongBaoLoi.Add($"- Ngày {ngayChay:dd/MM/yyyy}: Trùng Phòng/GV/Lớp");
-                        }
+
+                        soBuoiDaKiemTra++;
                     }
                     ngayChay = ngayChay.AddDays(1);
-                    if (ngayChay > lop.NgayBatDau.AddYears(1)) break; // Tránh lặp vô hạn
                 }
 
-                if (soBuoiDaXep > 0)
+                if (thongBaoLoi.Count > 0)
                 {
-                    context.SaveChanges(); // Lưu Data
+                    string msg = "Tạo lịch THẤT BẠI!\nPhát hiện xung đột tài nguyên trong khoảng thời gian dự kiến.\nVui lòng chọn Ca học, Phòng học hoặc Giảng viên khác.\n\nChi tiết các ngày bị trùng:\n" + string.Join("\n", thongBaoLoi);
+                    MessageBox.Show(msg, "Trùng lịch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    context.LichHoc.AddRange(danhSachDuKien);
+                    context.SaveChanges();
 
                     btnTaoTKB.Visible = false;
                     grbTaoTKB.Visible = false;
+
+                    MessageBox.Show($"Đã tạo thành công toàn bộ {tongSoBuoi} buổi học!\nLịch bắt đầu từ {lop.NgayBatDau:dd/MM/yyyy} đến {danhSachDuKien.Last().NgayHoc:dd/MM/yyyy}.", "Hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (cbbTuan.SelectedItem is ItemTuan tuan)
+                        LoadData(tuan.TuNgay, tuan.DenNgay, idLop);
                 }
-
-                // Thông báo tạo thành công hoặc thất bại
-                string msg = $"Đã tạo xong {soBuoiDaXep}/{tongSoBuoi} buổi học!";
-                if (thongBaoLoi.Count > 0)
-                    MessageBox.Show(msg + "\n\nKhông thể xếp lịch các ngày sau:\n" + string.Join("\n", thongBaoLoi), "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
-                    MessageBox.Show(msg, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Load lại Data lên Grid
-                if (cbbTuan.SelectedItem is ItemTuan tuan)
-                    LoadData(tuan.TuNgay, tuan.DenNgay, idLop);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                MessageBox.Show("Lỗi trong quá trình xếp lịch: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

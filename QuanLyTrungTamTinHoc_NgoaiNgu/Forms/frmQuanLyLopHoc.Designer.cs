@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmQuanLyLopHoc));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             pictureBox1 = new PictureBox();
             btnThoat = new Button();
             btnXoa = new Button();
@@ -60,6 +60,7 @@
             TrangThai = new DataGridViewTextBoxColumn();
             SiSo = new DataGridViewTextBoxColumn();
             KhoaHocID = new DataGridViewTextBoxColumn();
+            btnDongLop = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -143,6 +144,7 @@
             // 
             groupBox1.BackColor = Color.White;
             groupBox1.BackgroundImageLayout = ImageLayout.Zoom;
+            groupBox1.Controls.Add(btnDongLop);
             groupBox1.Controls.Add(btnChiTiet);
             groupBox1.Controls.Add(rdoDaDong);
             groupBox1.Controls.Add(rdoDangMo);
@@ -302,8 +304,8 @@
             // colID
             // 
             colID.DataPropertyName = "ID";
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colID.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colID.DefaultCellStyle = dataGridViewCellStyle6;
             colID.FillWeight = 25F;
             colID.HeaderText = "ID";
             colID.MinimumWidth = 6;
@@ -320,9 +322,9 @@
             // NgayBatDau
             // 
             NgayBatDau.DataPropertyName = "NgayBatDau";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            NgayBatDau.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.Format = "dd/MM/yyyy";
+            NgayBatDau.DefaultCellStyle = dataGridViewCellStyle7;
             NgayBatDau.HeaderText = "Ngày khai giảng";
             NgayBatDau.MinimumWidth = 6;
             NgayBatDau.Name = "NgayBatDau";
@@ -330,9 +332,9 @@
             // NgayKetThuc
             // 
             NgayKetThuc.DataPropertyName = "NgayKetThuc";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "dd/MM/yyyy";
-            NgayKetThuc.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Format = "dd/MM/yyyy";
+            NgayKetThuc.DefaultCellStyle = dataGridViewCellStyle8;
             NgayKetThuc.HeaderText = "Ngày kết thúc";
             NgayKetThuc.MinimumWidth = 6;
             NgayKetThuc.Name = "NgayKetThuc";
@@ -340,8 +342,8 @@
             // TrangThai
             // 
             TrangThai.DataPropertyName = "TrangThai";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            TrangThai.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            TrangThai.DefaultCellStyle = dataGridViewCellStyle9;
             TrangThai.HeaderText = "Trạng thái";
             TrangThai.MinimumWidth = 6;
             TrangThai.Name = "TrangThai";
@@ -349,8 +351,8 @@
             // SiSo
             // 
             SiSo.DataPropertyName = "SiSo";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            SiSo.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            SiSo.DefaultCellStyle = dataGridViewCellStyle10;
             SiSo.HeaderText = "Sĩ số";
             SiSo.MinimumWidth = 6;
             SiSo.Name = "SiSo";
@@ -361,6 +363,16 @@
             KhoaHocID.HeaderText = "Khóa học";
             KhoaHocID.MinimumWidth = 6;
             KhoaHocID.Name = "KhoaHocID";
+            // 
+            // btnDongLop
+            // 
+            btnDongLop.Location = new Point(514, 190);
+            btnDongLop.Name = "btnDongLop";
+            btnDongLop.Size = new Size(129, 39);
+            btnDongLop.TabIndex = 36;
+            btnDongLop.Text = "Đóng Lớp";
+            btnDongLop.UseVisualStyleBackColor = true;
+            btnDongLop.Click += btnDongLop_Click;
             // 
             // frmQuanLyLopHoc
             // 
@@ -409,5 +421,6 @@
         private DataGridViewTextBoxColumn TrangThai;
         private DataGridViewTextBoxColumn SiSo;
         private DataGridViewTextBoxColumn KhoaHocID;
+        private Button btnDongLop;
     }
 }

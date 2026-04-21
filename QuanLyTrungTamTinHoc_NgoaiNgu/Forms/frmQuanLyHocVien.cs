@@ -130,7 +130,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             context = new QuanLyTrungTamContext();
 
-            var kh = context.KhoaHoc.Where(k => k.HocPhi > 0).ToList();
+            var kh = context.KhoaHoc.Where(k => k.HocPhi >= 0).ToList();
 
             if (kh.Count > 0)
             {

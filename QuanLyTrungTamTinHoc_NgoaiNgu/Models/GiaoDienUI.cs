@@ -59,7 +59,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Models.Utils
                 else if (name.Contains("xoa") || name.Contains("thoat"))
                     SetButtonStyle(btn, MauXoa);
 
-                else if (name.Contains("sua") || name.Contains("doianh"))
+                else if (name.Contains("sua") || name.Contains("doianh") || name.Contains("donglop"))
                     SetButtonStyle(btn, MauSua);
 
                 else if (name.Contains("luu")  || name.Contains("xacnhan") || name.Contains("loc") || 

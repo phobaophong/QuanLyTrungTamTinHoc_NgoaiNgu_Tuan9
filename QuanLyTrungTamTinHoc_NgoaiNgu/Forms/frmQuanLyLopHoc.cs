@@ -212,7 +212,11 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
 
         private void dataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridView.CurrentRow == null) return;
+            if (dataGridView.CurrentRow == null)
+            {
+                btnDongLop.Enabled = false; // Khóa nút nếu không chọn dòng nào
+                return;
+            }
 
             var current = (LopHoc)dataGridView.CurrentRow.DataBoundItem;
 
@@ -220,6 +224,18 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             {
                 rdoDangMo.Checked = current.TrangThai;
                 rdoDaDong.Checked = !current.TrangThai;
+
+                btnDongLop.Visible = true;
+                btnDongLop.Enabled = true;
+
+                if (current.TrangThai == true)
+                {
+                    btnDongLop.Text = "Đóng Lớp Học";
+                }
+                else
+                {
+                    btnDongLop.Text = "Mở Lại Lớp";
+                }
             }
         }
         private void dataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -278,6 +294,51 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             dataGridView.AutoGenerateColumns = false;
             LoadData();
             BatTatChucNang(false);
+        }
+
+        private void btnDongLop_Click(object sender, EventArgs e)
+        {
+            if (bindingSource.Current == null) return;
+
+            var lopHienTai = bindingSource.Current as LopHoc;
+            if (lopHienTai == null) return;
+
+            string hanhDong = lopHienTai.TrangThai ? "ĐÓNG KẾT THÚC" : "MỞ LẠI";
+            string canhBao = $"Bạn có chắc chắn muốn {hanhDong} lớp học '{lopHienTai.TenLopHoc}' không?\n\n(Thao tác này yêu cầu xác thực bảo mật)";
+
+            if (MessageBox.Show(canhBao, "Xác nhận thao tác", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                using (frmXacNhanLaiMatKhau frm = new frmXacNhanLaiMatKhau())
+                {
+                    frm.ShowDialog();
+
+                    if (frm.XacNhanThanhCong)
+                    {
+                        try
+                        {
+                            var lopHoc = context.LopHoc.Find(lopHienTai.ID);
+                            if (lopHoc != null)
+                            {
+                                lopHoc.TrangThai = !lopHoc.TrangThai;
+
+                                context.SaveChanges();
+
+                                MessageBox.Show($"Đã {hanhDong.ToLower()} lớp học thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                LoadData();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Có lỗi xảy ra khi lưu vào CSDL: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Thao tác {hanhDong.ToLower()} lớp học đã bị hủy do chưa xác thực được quyền Quản trị!", "Bảo mật", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
         }
     }
 }

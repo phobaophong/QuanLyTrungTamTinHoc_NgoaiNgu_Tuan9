@@ -414,7 +414,7 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
         {
             ChuaDangNhap();
             DangNhap();
-
+            TuDongDongLopHetHan();
         }
 
         private void mnuDangNhap_Click(object sender, EventArgs e)
@@ -447,6 +447,31 @@ namespace QuanLyTrungTamTinHoc_NgoaiNgu.Forms
             if (MessageBox.Show("Bạn có chắc chắn muốn thoát phần mềm?", "Xác nhận thoát", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Application.Exit(); 
+            }
+        }
+        private void TuDongDongLopHetHan()
+        {
+            try
+            {
+                using (var context = new QuanLyTrungTamContext())
+                {
+                    var dsLopHetHan = context.LopHoc
+                        .Where(l => l.NgayKetThuc.Date < DateTime.Now.Date && l.TrangThai == true)
+                        .ToList();
+
+                    if (dsLopHetHan.Count > 0)
+                    {
+                        foreach (var lop in dsLopHetHan)
+                        {
+                            lop.TrangThai = false;
+                        }
+
+                        context.SaveChanges();
+                    }
+                }
+            }
+            catch
+            {
             }
         }
     }

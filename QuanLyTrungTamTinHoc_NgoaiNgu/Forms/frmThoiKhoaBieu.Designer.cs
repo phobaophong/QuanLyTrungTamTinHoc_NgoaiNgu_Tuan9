@@ -70,9 +70,9 @@
             // cbbKhoaHoc
             // 
             cbbKhoaHoc.FormattingEnabled = true;
-            cbbKhoaHoc.Location = new Point(114, 36);
+            cbbKhoaHoc.Location = new Point(101, 36);
             cbbKhoaHoc.Name = "cbbKhoaHoc";
-            cbbKhoaHoc.Size = new Size(231, 28);
+            cbbKhoaHoc.Size = new Size(261, 28);
             cbbKhoaHoc.TabIndex = 0;
             cbbKhoaHoc.SelectedIndexChanged += cbbKhoaHoc_SelectedIndexChanged;
             // 
@@ -88,9 +88,9 @@
             // cbbLopHoc
             // 
             cbbLopHoc.FormattingEnabled = true;
-            cbbLopHoc.Location = new Point(114, 84);
+            cbbLopHoc.Location = new Point(101, 84);
             cbbLopHoc.Name = "cbbLopHoc";
-            cbbLopHoc.Size = new Size(231, 28);
+            cbbLopHoc.Size = new Size(261, 28);
             cbbLopHoc.TabIndex = 4;
             cbbLopHoc.SelectedIndexChanged += cbbLopHoc_SelectedIndexChanged;
             // 
@@ -108,7 +108,7 @@
             cbbTuan.FormattingEnabled = true;
             cbbTuan.Location = new Point(17, 135);
             cbbTuan.Name = "cbbTuan";
-            cbbTuan.Size = new Size(328, 28);
+            cbbTuan.Size = new Size(345, 28);
             cbbTuan.TabIndex = 6;
             cbbTuan.SelectedIndexChanged += cbbTuan_SelectedIndexChanged_1;
             // 
@@ -135,7 +135,7 @@
             // 
             // btnThoat
             // 
-            btnThoat.Location = new Point(351, 168);
+            btnThoat.Location = new Point(368, 169);
             btnThoat.Name = "btnThoat";
             btnThoat.Size = new Size(125, 37);
             btnThoat.TabIndex = 12;
@@ -145,7 +145,7 @@
             // 
             // btnHuyBo
             // 
-            btnHuyBo.Location = new Point(351, 125);
+            btnHuyBo.Location = new Point(368, 126);
             btnHuyBo.Name = "btnHuyBo";
             btnHuyBo.Size = new Size(125, 37);
             btnHuyBo.TabIndex = 11;
@@ -155,7 +155,7 @@
             // 
             // btnXacNhan
             // 
-            btnXacNhan.Location = new Point(351, 82);
+            btnXacNhan.Location = new Point(368, 83);
             btnXacNhan.Name = "btnXacNhan";
             btnXacNhan.Size = new Size(125, 37);
             btnXacNhan.TabIndex = 10;
@@ -165,7 +165,7 @@
             // 
             // btnTaoTKB
             // 
-            btnTaoTKB.Location = new Point(351, 35);
+            btnTaoTKB.Location = new Point(368, 36);
             btnTaoTKB.Name = "btnTaoTKB";
             btnTaoTKB.Size = new Size(125, 37);
             btnTaoTKB.TabIndex = 9;
